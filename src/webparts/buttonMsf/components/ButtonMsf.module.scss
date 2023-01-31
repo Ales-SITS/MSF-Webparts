@@ -1,0 +1,76 @@
+@import '~office-ui-fabric-react/dist/sass/References.scss';
+
+.ButtonMsfWrapper {
+ display: flex;
+ align-content: center;
+ 
+}
+
+.ButtonMsfWrapperLeft{
+  justify-content: flex-start;
+}
+
+.ButtonMsfWrapperCenter{
+  justify-content: center;
+}
+
+.ButtonMsfWrapperRight{
+  justify-content: flex-end;
+}
+
+.ButtonMsfWrapperLeftV{
+  align-items: flex-start;
+}
+
+.ButtonMsfWrapperCenterV{
+  align-items: center;
+}
+
+.ButtonMsfWrapperRightV{
+  align-items: flex-end;
+}
+
+
+.ButtonMsf {
+  text-decoration: none;
+  overflow: hidden;
+  background-color: "[theme: themePrimary]";
+  min-height: 40px;
+  min-width: 40px;
+  width: fit-content;
+  color: white;
+  display: flex;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  padding: 0px 3px;
+}
+
+.ButtonMsfWrapperVertical {
+  flex-direction: column;
+}
+.ButtonMsfWrapperHorizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ButtonMsfLink{
+  text-decoration: none;
+  margin: 2px;
+}
+
+.ButtonMsfText{
+  font-size: 15px;
+  margin-left: 5px
+}
+
+.ButtonMsf:hover{
+  filter: brightness(117%)
+}
+
+.iconClass {
+ font-size: 24px;
+ margin: 0px 3px
+}

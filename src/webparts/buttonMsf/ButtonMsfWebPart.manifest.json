@@ -1,0 +1,24 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "4e450f69-0568-4912-addc-a322fdb1790a",
+  "alias": "ButtonMsfWebPart",
+  "componentType": "WebPart",
+
+  "version": "*",
+  "manifestVersion": 2,
+
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart", "TeamsPersonalApp", "TeamsTab", "SharePointFullPage"],
+  "supportsThemeVariants": true,
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
+    "group": { "default": "Advanced" },
+    "title": { "default": "Button (MSF)" },
+    "description": { "default": "Button (MSF) description" },
+    "iconImageUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAO8lK0OWB/UAAAABdFJOUwBA5thmAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABFklEQVRoQ+3MoQ0DQBDEwE//TYcMWpRIhjfUkt855/znkzFcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasDwnHN+8t4XResVZeGEBvUAAAAASUVORK5CYII=",
+    "properties": {
+      "description": "Button (MSF)"
+    }
+  }]
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "MSF webparts package",
+    "id": "8e76caf6-67fb-48dd-94e8-87cf9db80c85",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "iconPath": "MSF.png",
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.15.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "A package with webparts created for all SPO developers in MSF. Made by MSF SITS team."
+      },
+      "longDescription": {
+        "default": "This package includes webparts create for all SPO site designers in MSF. Presently there are 2 webpart - 1) Welcome user (MSF) which can help you to create a simple welcome message, 2) Button (MSF) which give SPO designers much more visual options than standard SPO Button or Quick Links webpart."
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "MSF webparts package",
+        "description": "The feature that activates elements of the msf-webparts solution.",
+        "id": "e0da02d2-a66d-47be-8dd7-844c1d9c8848",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/msf-webparts.sppkg"
+  }
+}

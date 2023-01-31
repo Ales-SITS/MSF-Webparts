@@ -1,0 +1,28 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "welcome-user-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/welcomeUserMsf/WelcomeUserMsfWebPart.js",
+          "manifest": "./src/webparts/welcomeUserMsf/WelcomeUserMsfWebPart.manifest.json"
+        }
+      ]
+    },
+    "button-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/buttonMsf/ButtonMsfWebPart.js",
+          "manifest": "./src/webparts/buttonMsf/ButtonMsfWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "WelcomeUserMsfWebPartStrings": "lib/webparts/welcomeUserMsf/loc/{locale}.js",
+    "ButtonMsfWebPartStrings": "lib/webparts/buttonMsf/loc/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+  }
+}
