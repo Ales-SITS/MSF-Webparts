@@ -17,12 +17,27 @@
           "manifest": "./src/webparts/buttonMsf/ButtonMsfWebPart.manifest.json"
         }
       ]
+    },
+    "tabs-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/tabsMsf/TabsMsfWebPart.js",
+          "manifest": "./src/webparts/tabsMsf/TabsMsfWebPart.manifest.json"
+        }
+      ]
     }
   },
-  "externals": {},
+  "externals": {     
+    "tinymce": {
+      "path": "https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js",
+      "globalName": "tinymce"
+    }
+  },
   "localizedResources": {
     "WelcomeUserMsfWebPartStrings": "lib/webparts/welcomeUserMsf/loc/{locale}.js",
     "ButtonMsfWebPartStrings": "lib/webparts/buttonMsf/loc/{locale}.js",
-    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
+    "TabsMsfWebPartStrings": "lib/webparts/tabsMsf/loc/{locale}.js"
   }
 }
