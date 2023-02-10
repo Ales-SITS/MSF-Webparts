@@ -1,25 +1,55 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
-.welcome {
-  text-align: center;
+.anchorListWrapper {
+  text-align: left;
+}
+
+.headerWrapper{
+ display:flex;
+ flex-direction: row;
+ justify-content: start;
+ height: 25px;
+ line-height: 25px;
+ margin-bottom: 5px;
+ 
 }
 
 .header {
-  font-size:22px;
-  color:#A80000;
+  font-size:20px;
+}
+
+.refreshButton {
+  border: none;
+  background: none;
+  color: rgb(212, 212, 212);
+  font-size: 16px;
+  margin-left: 20px;
   margin-bottom: 5px;
+  cursor: pointer;
+ }
+
+.refreshButton:hover{
+  color:  rgb(109, 109, 109);
+}
+
+.anchorList {
+  background-color: blue;
 }
 
 .links {
-    font-size: 14px;
+    font-size: 16px;
     text-decoration: none;
-    color: #605e5c;
-    
+    color: #605e5c; 
 }
 
 .linksbox{
   margin-top: 5px;
 }
+
+.symbol {
+  margin-right: 5px;
+}
+
 
 .links:hover{
   color:#3b3a39

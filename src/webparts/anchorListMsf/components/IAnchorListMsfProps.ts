@@ -1,4 +1,4 @@
 export interface IAnchorListMsfProps {
-  description: string;
-
+  AnchorListTitle: string;
+  AnchorListSymbol: string
 }

@@ -3,15 +3,18 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneChoiceGroup
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'AnchorListMsfWebPartStrings';
 import AnchorListMsf from './components/AnchorListMsf';
+
 import { IAnchorListMsfProps } from './components/IAnchorListMsfProps';
 
 export interface IAnchorListMsfWebPartProps {
-  description: string;
+  AnchorListTitle: string;
+  AnchorListSymbol: string;
 }
 
 export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorListMsfWebPartProps> {
@@ -20,7 +23,8 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
     const element: React.ReactElement<IAnchorListMsfProps> = React.createElement(
       AnchorListMsf,
       {
-        description: this.properties.description,
+        AnchorListTitle: this.properties.AnchorListTitle,
+        AnchorListSymbol: this.properties.AnchorListSymbol
       }
     );
 
@@ -49,11 +53,21 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: "Anchor list settings",
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
-                })
+                PropertyPaneTextField('AnchorListTitle', {
+                  label: "Anchor List Title"
+                }),
+                PropertyPaneChoiceGroup("AnchorListSymbol", {
+                  label: "Preppend with",
+                  options: [
+                    { key: "⚬", text: "circle ⚬" },
+                    { key: "●", text: "fullcircle ●" },
+                    { key: "▪", text: "square ▪" },
+                    { key: "▸", text: "arrow ▸" },
+                    { key: "", text: "none" }
+                  ]
+                }),
               ]
             }
           ]
