@@ -1,46 +1,46 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
 .anchorListWrapper {
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  width: auto;
 }
 
-.headerWrapper{
- display:flex;
- flex-direction: row;
- justify-content: start;
- height: 25px;
- line-height: 25px;
- margin-bottom: 5px;
- 
+.anchorListBox {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+}
+
+.anchorLinksWrapper {
+  padding: 2px 5px
 }
 
 .header {
-  font-size:20px;
+  width: 270px;
+  font-size:22px;
+  padding: 5px 5px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 
-.refreshButton {
-  border: none;
-  background: none;
-  color: rgb(212, 212, 212);
-  font-size: 16px;
-  margin-left: 20px;
-  margin-bottom: 5px;
-  cursor: pointer;
- }
-
-.refreshButton:hover{
-  color:  rgb(109, 109, 109);
+.anchorLink{
+  display: flex;
+  flex-direction: row;
+  font-size: 17px;
+  padding: 3px 5px;
+  width: 260px;
+  text-decoration: none;
+  color: #605e5c;
 }
 
-.anchorList {
-  background-color: blue;
+.anchorLink:hover {
+  filter: brightness(117%)
 }
 
-.links {
-    font-size: 16px;
-    text-decoration: none;
-    color: #605e5c; 
-}
 
 .linksbox{
   margin-top: 5px;
@@ -48,6 +48,10 @@
 
 .symbol {
   margin-right: 5px;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 

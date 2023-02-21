@@ -3,19 +3,20 @@ import styles from './ButtonMsf.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { FontIcon } from '@fluentui/react/lib/Icon';
 
-function ButtonMsfButton (props:any) {
+function ButtonDetail (props:any) {
 
   const[
-    d_link, d_label, d_blank, d_icon, d_iconPicker, d_width, d_height, d_borderRadius, d_color, d_textColor, d_textAlignment, d_textSize
+    d_link, d_label, d_blank, d_icon, d_iconPicker, d_width, d_height, d_borderRadius, d_color, d_margin, d_textColor, d_textAlignment, d_textSize
    ] = props.details[0];
   
   const[
-    link, label, blank, icon, iconPicker, width, height, borderRadius, color, textColor, textAlignment, textSize
+    link, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize
    ] = props.details[1];
 
 
    const inlineStyles:any = {
     container: {
+      margin: `${margin===undefined || margin==='' ? d_margin : margin}`,
       width:`${width===undefined || width==='' ? d_width : width}px`,
       height:`${height===undefined || height==='' ? d_height : height}px`,
       borderRadius:`${borderRadius===undefined || borderRadius==='' ? d_borderRadius : borderRadius}px`,
@@ -25,7 +26,17 @@ function ButtonMsfButton (props:any) {
       textAlign:`${textAlignment===undefined || textAlignment==='' ? d_textAlignment : textAlignment}`,
     }
    }
+
+  /* 
+  function camelize(str) {
+    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
+      return index === 0 ? word.toLowerCase() : word.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
+  */
+
 console.log(label===undefined || label=== "" ? "Nothing": "Label present")
+
     return (
         <a className={styles.ButtonMsfLink} href={escape(link)} target={blank ? "_blank":"_self"} data-interception="off" >
           <div className={styles.ButtonMsf} style={inlineStyles.container}>
@@ -36,4 +47,4 @@ console.log(label===undefined || label=== "" ? "Nothing": "Label present")
     );
 }
 
-export default ButtonMsfButton
+export default ButtonDetail
