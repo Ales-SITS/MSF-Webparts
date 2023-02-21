@@ -9,11 +9,19 @@ import {
   PropertyPaneSlider
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import ButtonMsf from './components/ButtonMsf';
+import ButtonMsfHandler from './components/ButtonMsfHandler';
 import { PropertyFieldIconPicker } from '@pnp/spfx-property-controls/lib/PropertyFieldIconPicker';
 import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
 
 export interface IButtonMsfProps {
+  inputToggle:boolean;
+  inputPnP: boolean;
+  inputAlignment: string;
+  inputPlaceholderText: string;
+  inputWidth: string;
+  inputFont: string;
+  inputBorderRadius: string;
+  inputBorder: string;
   buttonsNumber: number;
   buttonAlignment: string;
   buttonsDirection:string;
@@ -34,8 +42,16 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
   
   public render(): void {
     const element: React.ReactElement<IButtonMsfProps> = React.createElement(
-      ButtonMsf,
+      ButtonMsfHandler,
       {
+        inputToggle: this.properties.inputToggle,
+        inputPnP: this.properties.inputPnP,
+        inputAlignment: this.properties.inputAlignment,
+        inputPlaceholderText: this.properties.inputPlaceholderText,
+        inputWidth: this.properties.inputWidth,
+        inputFont: this.properties.inputFont,
+        inputBorderRadius: this.properties.inputBorderRadius,
+        inputBorder: this.properties.inputBorder,
         buttonsNumber: this.properties.buttonsNumber,
         buttonAlignment: this.properties.buttonAlignment,
         buttonsDirection:this.properties.buttonsDirection,
@@ -65,10 +81,46 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
     const pagesArray = [ 
       {
       header: {
-        description: "Welcome! On this page (1), you can set number of buttons (up to 10) and their general layout. You can also set all the details for your first button, which visuals works as default for other buttons too. In the next pages (i.e. button 2 = page(2)) you can set other buttons and rewrite the default visual settings for that specific button if needed."
+        description: "Welcome! On this page (1), you can set number of buttons (up to 10) and their general layout. You can also set all the details for your first button, which visuals works as default for other buttons too. In the next pages (i.e. button 2 = page(2)) you can set other buttons and rewrite the default visual settings for that specific button if needed. You can also use dynamic URL with the optional input field, which value is added automatically to the end of buttons URL (Select PnP Search solution on, if you are using PnP Search webparts)."
       },
       displayGroupsAsAccordion: true,
-      groups: [           
+      groups: [ 
+        { 
+          groupName: "Input field settings",
+          isCollapsed:true,
+          groupFields: [
+            PropertyPaneToggle('inputToggle',{
+              label:"Display connected input field?"
+            }),
+            PropertyPaneToggle('inputPnP',{
+              label:"PnP Search solution?"
+            }),
+            PropertyPaneChoiceGroup("inputAlignment", {
+              label: "Input field alignment",
+              options: [
+                { key: "start", text: "Start" },
+                { key: "center", text: "Center" },
+                { key: "end", text: "End" }
+              ]
+            }),
+            PropertyPaneTextField('inputPlaceholderText', {
+              label: "Add placeholder text",          
+            }),
+            PropertyPaneTextField('inputWidth', {
+              label: "Set width (px)",
+            }),
+            PropertyPaneTextField('inputFont', {
+              label: "Set font size (px)",
+            }),
+            PropertyPaneTextField('inputBorderRadius', {
+              label: "Set border radius (px)",
+            }),
+            PropertyPaneTextField('inputBorder', {
+              label: "Set border",
+              description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
+            }),
+          ]
+        },          
         { 
           groupName: "General settings",
           isCollapsed:false,

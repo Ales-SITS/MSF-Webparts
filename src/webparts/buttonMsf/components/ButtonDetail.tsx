@@ -13,7 +13,7 @@ function ButtonDetail (props:any) {
     link, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize
    ] = props.details[1];
 
-
+   
    const inlineStyles:any = {
     container: {
       margin: `${margin===undefined || margin==='' ? d_margin : margin}`,
@@ -27,18 +27,24 @@ function ButtonDetail (props:any) {
     }
    }
 
-  /* 
-  function camelize(str) {
-    return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(word, index) {
-      return index === 0 ? word.toLowerCase() : word.toUpperCase();
-    }).replace(/\s+/g, '');
-  }
-  */
+//console.log(label===undefined || label=== "" ? "Nothing": "Label present")
+    const searchTerm = props.search[0]
+    const searchOption = props.search[1]
 
-console.log(label===undefined || label=== "" ? "Nothing": "Label present")
+    let searchTermOption 
+    if (searchTerm === ""){
+      searchTermOption = ""
+    } else {
+        if(searchOption === false){
+          searchTermOption = `${searchTerm}`
+        } else if (searchOption === true) {
+          searchTermOption = `#${searchTerm}*`
+        }
+    }  
+    // const searchTermOption = searchTerm === "" ? "" : `#${searchTerm}*`
 
     return (
-        <a className={styles.ButtonMsfLink} href={escape(link)} target={blank ? "_blank":"_self"} data-interception="off" >
+        <a className={styles.ButtonMsfLink} href={`${escape(link)}${searchTermOption}`} target={blank ? "_blank":"_self"} data-interception="off" >
           <div className={styles.ButtonMsf} style={inlineStyles.container}>
             {icon===false? "":<FontIcon aria-label={iconPicker} iconName={iconPicker} className={`${styles.iconClass}`} style={{fontSize:`${textSize===undefined || textSize==='' ? d_textSize : textSize}px`}}/>}
             {label===undefined || label=== "" ? "":<span className={`${styles.ButtonMsfText}`} style={{fontSize:`${textSize===undefined || textSize==='' ? d_textSize : textSize}px`}}>{label}</span>}

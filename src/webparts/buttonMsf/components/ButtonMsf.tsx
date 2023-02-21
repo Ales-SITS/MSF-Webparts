@@ -1,12 +1,19 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ButtonMsf.module.scss';
 import { IButtonMsfProps } from '../ButtonMsfWebPart';
 import ButtonDetail from './ButtonDetail'
 
-export default class ButtonMsf extends React.Component<IButtonMsfProps, {}> {
-
-  public render(): React.ReactElement<IButtonMsfProps> {
+export default function ButtonMsf (props) {
     const {
+      inputToggle,
+      inputPnP,
+      inputAlignment,
+      inputPlaceholderText,
+      inputWidth,
+      inputFont,
+      inputBorderRadius,
+      inputBorder,
       buttonsNumber,
       buttonAlignment,
       buttonsDirection,
@@ -20,7 +27,7 @@ export default class ButtonMsf extends React.Component<IButtonMsfProps, {}> {
       link8, label8, blank8, icon8, iconPicker8, width8, height8, borderRadius8, color8, margin8, textColor8, textAlignment8, textSize8,
       link9, label9, blank9, icon9, iconPicker9, width9, height9, borderRadius9, color9, margin9, textColor9, textAlignment9, textSize9,
       link10, label10, blank10, icon10, iconPicker10, width10, height10, borderRadius10, margin10, color10, textColor10, textAlignment10, textSize10
-    } = this.props;
+    } = props.details;
 
    const details_1 = [link, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize]
    const details_2 = [link2, label2, blank2, icon2, iconPicker2, width2, height2, borderRadius2, color2, margin2, textColor2, textAlignment2, textSize2]
@@ -74,19 +81,51 @@ export default class ButtonMsf extends React.Component<IButtonMsfProps, {}> {
      }
    }
     
+   const[searchTerm,setSearchTerm] = useState("")
+   const setSearchTermHandler = (event) => {
+    setSearchTerm(event.target.value)
+    console.log(event.target.value)
+   }
+
+  const inputInlineStyles:any = {
+    container: {
+      width:`${inputWidth}px`,
+      borderRadius:`${inputBorderRadius}px`,
+      fontSize:`${inputFont}px`,
+      border: `${inputBorder}`
+    }
+   }
+
+   const inputInlineAlignment:any = {
+    container: {
+      justifyContent: `${inputAlignment}`
+    }
+   }
+
+
     return (
+      <>
+      {inputToggle === false || inputToggle === undefined ? "" : (<div className={styles.InputWrapper}  style={inputInlineAlignment.container}>
+        <input 
+        style={inputInlineStyles.container}
+        type="text"
+        onChange={setSearchTermHandler}
+        value={searchTerm}
+        placeholder={inputPlaceholderText}
+        ></input>
+      </div>)}
       <div className={`${styles.ButtonMsfWrapper} ${wrapperAlignment} ${wrapperDirection}`}>
-        <ButtonDetail details={detailsArr1}/>
-        {buttonsNumber > 1 ? <ButtonDetail details={detailsArr2}/> : ""}
-        {buttonsNumber > 2 ? <ButtonDetail details={detailsArr3}/> : ""}
-        {buttonsNumber > 3 ? <ButtonDetail details={detailsArr4}/> : ""}
-        {buttonsNumber > 4 ? <ButtonDetail details={detailsArr5}/> : ""}
-        {buttonsNumber > 5 ? <ButtonDetail details={detailsArr6}/> : ""}
-        {buttonsNumber > 6 ? <ButtonDetail details={detailsArr7}/> : ""}
-        {buttonsNumber > 7 ? <ButtonDetail details={detailsArr8}/> : ""}
-        {buttonsNumber > 8 ? <ButtonDetail details={detailsArr9}/> : ""}
-        {buttonsNumber > 9 ? <ButtonDetail details={detailsArr10}/> : ""}
+        <ButtonDetail details={detailsArr1} search={inputToggle === false? ["",false]: [searchTerm,inputPnP]}/>
+        {buttonsNumber > 1 ? <ButtonDetail details={detailsArr2} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 2 ? <ButtonDetail details={detailsArr3} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 3 ? <ButtonDetail details={detailsArr4} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 4 ? <ButtonDetail details={detailsArr5} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 5 ? <ButtonDetail details={detailsArr6} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 6 ? <ButtonDetail details={detailsArr7} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 7 ? <ButtonDetail details={detailsArr8} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 8 ? <ButtonDetail details={detailsArr9} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
+        {buttonsNumber > 9 ? <ButtonDetail details={detailsArr10} search={inputToggle === false?  ["",false] : [searchTerm,inputPnP]}/> : ""}
       </div>
+      </>
     );
-}
 }

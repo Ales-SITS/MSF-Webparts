@@ -1,32 +1,47 @@
 @import '~office-ui-fabric-react/dist/sass/References.scss';
 
+.InputWrapper {
+ width: 100%;
+ margin: 10px 0px;
+ display: flex;
+ justify-content: center;
+}
+
+.InputWrapper input[type=text] {
+  padding: 5px
+}
+
+.InputWrapper input[type=text]:focus {
+  outline: none;
+}
+
 .ButtonMsfWrapper {
  display: flex;
  align-content: center;
  
 }
 
-.ButtonMsfWrapperLeft{
+.ButtonMsfWrapperLeft {
   justify-content: flex-start;
 }
 
-.ButtonMsfWrapperCenter{
+.ButtonMsfWrapperCenter {
   justify-content: center;
 }
 
-.ButtonMsfWrapperRight{
+.ButtonMsfWrapperRight {
   justify-content: flex-end;
 }
 
-.ButtonMsfWrapperLeftV{
+.ButtonMsfWrapperLeftV {
   align-items: flex-start;
 }
 
-.ButtonMsfWrapperCenterV{
+.ButtonMsfWrapperCenterV {
   align-items: center;
 }
 
-.ButtonMsfWrapperRightV{
+.ButtonMsfWrapperRightV {
   align-items: flex-end;
 }
 
@@ -56,17 +71,18 @@
   flex-wrap: wrap;
 }
 
-.ButtonMsfLink{
+.ButtonMsfLink {
+  width: fit-content;
   text-decoration: none;
   margin: 2px;
 }
 
-.ButtonMsfText{
+.ButtonMsfText {
   font-size: 15px;
   margin-left: 5px
 }
 
-.ButtonMsf:hover{
+.ButtonMsf:hover {
   filter: brightness(117%)
 }
 
