@@ -1,24 +1,28 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
-  "id": "e42c6f82-7b96-4c65-a4bd-7c78d6f520d9",
+  "id": "75f37118-b07b-4b32-ba6a-ca74e1cb6445",
   "alias": "DropzoneMsfWebPart",
   "componentType": "WebPart",
+
+  // The "*" signifies that the version should be taken from the package.json
   "version": "*",
   "manifestVersion": 2,
+
+  // If true, the component can only be installed on sites where Custom Script is allowed.
+  // Components that allow authors to embed arbitrary script code should set this to true.
+  // https://support.office.com/en-us/article/Turn-scripting-capabilities-on-or-off-1f2c515f-5d7e-448a-9fd7-835da935584f
   "requiresCustomScript": false,
   "supportedHosts": ["SharePointWebPart", "TeamsPersonalApp", "TeamsTab", "SharePointFullPage"],
   "supportsThemeVariants": true,
+
   "preconfiguredEntries": [{
-    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Advanced
     "group": { "default": "Advanced" },
-    "title": { "default": "Dropzone (MSF)" },
-    "description": { "default": "dropzoneMsf description" },
-    "iconImageUrl": "data:image/png;base64,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",
+    "title": { "default": "DropzoneMSF" },
+    "description": { "default": "DropzoneMSF description" },
+    "officeFabricIconFontName": "Page",
     "properties": {
-      "listName": "",
-      "fileTypes":"doc, pdf, xlsx",
-      "uploadFilesTo":"DocumentLibrary",
-      "itemName": ""
+      "description": "DropzoneMSF"
     }
   }]
 }

@@ -2,8 +2,10 @@ declare interface IDropzoneMsfWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
   DescriptionFieldLabel: string;
-  ListNameFieldLabel: string;
-  ItemNameFieldLabel: string;
+  AppLocalEnvironmentSharePoint: string;
+  AppLocalEnvironmentTeams: string;
+  AppSharePointEnvironment: string;
+  AppTeamsTabEnvironment: string;
 }
 
 declare module 'DropzoneMsfWebPartStrings' {
