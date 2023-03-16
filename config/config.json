@@ -33,6 +33,14 @@
           "manifest": "./src/webparts/anchorListMsf/AnchorListMsfWebPart.manifest.json"
         }
       ]
+    },
+    "dropzone-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/dropzoneMsf/DropzoneMsfWebPart.js",
+          "manifest": "./src/webparts/dropzoneMsf/DropzoneMsfWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -47,6 +55,7 @@
     "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
     "TabsMsfWebPartStrings": "lib/webparts/tabsMsf/loc/{locale}.js",
-    "AnchorListMsfWebPartStrings": "lib/webparts/anchorListMsf/loc/{locale}.js"
+    "AnchorListMsfWebPartStrings": "lib/webparts/anchorListMsf/loc/{locale}.js",
+    "DropzoneMsfWebPartStrings": "lib/webparts/dropzoneMsf/loc/{locale}.js"
   }
 }

@@ -2,5 +2,5 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/spfx-serve.schema.json",
   "port": 4321,
   "https": true,
-  "initialPage": "https://msfintltestgeneva.sharepoint.com/sites/SITS-testAlesCommunication/_layouts/workbench.aspx"
+  "initialPage": "https://msfintltestgeneva.sharepoint.com/sites/GRP-SITS-ShareWithGuest/_layouts/workbench.aspx"
 }
