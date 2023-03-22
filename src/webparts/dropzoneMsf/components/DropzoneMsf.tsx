@@ -85,7 +85,7 @@ export default class DropzoneMsf extends React.Component<IDropzoneMsfProps, {}> 
 
     return (
       <DropzoneComponent eventHandlers={eventHandlers} djsConfig={djsConfig} config={componentConfig}>
-        <div className="dz-message">{_message}</div>  
+        <div className="dz-message">{_message}</div> 
       </DropzoneComponent>
     );
   }
