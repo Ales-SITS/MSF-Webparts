@@ -31,20 +31,25 @@ function ButtonDetail (props:any) {
     const searchTerm = props.search[0]
     const searchOption = props.search[1]
 
+    console.log(searchTerm)
+    console.log(searchOption)
+
     let searchTermOption 
     if (searchTerm === ""){
-      searchTermOption = ""
+      searchTermOption = `${escape(link)}`
     } else {
         if(searchOption === false){
-          searchTermOption = `${searchTerm}`
+          searchTermOption = `${escape(link)}${searchTerm}`
         } else if (searchOption === true) {
-          searchTermOption = `#${searchTerm}*`
+          searchTermOption = `${escape(link)}#${searchTerm}*`
         }
     }  
     // const searchTermOption = searchTerm === "" ? "" : `#${searchTerm}*`
+    const url = searchTermOption.replace("amp;","")
+
 
     return (
-        <a className={styles.ButtonMsfLink} href={`${escape(link)}${searchTermOption}`} target={blank ? "_blank":"_self"} data-interception="off" >
+        <a className={styles.ButtonMsfLink} href={url} target={blank ? "_blank":"_self"} data-interception="off" >
           <div className={styles.ButtonMsf} style={inlineStyles.container}>
             {icon===false? "":<FontIcon aria-label={iconPicker} iconName={iconPicker} className={`${styles.iconClass}`} style={{fontSize:`${textSize===undefined || textSize==='' ? d_textSize : textSize}px`}}/>}
             {label===undefined || label=== "" ? "":<span className={`${styles.ButtonMsfText}`} style={{fontSize:`${textSize===undefined || textSize==='' ? d_textSize : textSize}px`}}>{label}</span>}

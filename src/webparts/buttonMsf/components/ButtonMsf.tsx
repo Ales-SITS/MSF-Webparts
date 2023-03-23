@@ -84,7 +84,7 @@ export default function ButtonMsf (props) {
    const[searchTerm,setSearchTerm] = useState("")
    const setSearchTermHandler = (event) => {
     setSearchTerm(event.target.value)
-    console.log(event.target.value)
+    //console.log(event.target.value)
    }
 
   const inputInlineStyles:any = {
