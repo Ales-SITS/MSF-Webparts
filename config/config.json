@@ -33,6 +33,14 @@
           "manifest": "./src/webparts/anchorListMsf/AnchorListMsfWebPart.manifest.json"
         }
       ]
+    },
+    "buttoncss-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/buttoncssMsf/ButtoncssMsfWebPart.js",
+          "manifest": "./src/webparts/buttoncssMsf/ButtoncssMsfWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -47,6 +55,7 @@
     "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
     "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js",
     "TabsMsfWebPartStrings": "lib/webparts/tabsMsf/loc/{locale}.js",
-    "AnchorListMsfWebPartStrings": "lib/webparts/anchorListMsf/loc/{locale}.js"
+    "AnchorListMsfWebPartStrings": "lib/webparts/anchorListMsf/loc/{locale}.js",
+    "ButtoncssMsfWebPartStrings": "lib/webparts/buttoncssMsf/loc/{locale}.js"
   }
 }

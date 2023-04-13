@@ -27,12 +27,8 @@ function ButtonDetail (props:any) {
     }
    }
 
-//console.log(label===undefined || label=== "" ? "Nothing": "Label present")
     const searchTerm = props.search[0]
     const searchOption = props.search[1]
-
-    console.log(searchTerm)
-    console.log(searchOption)
 
     let searchTermOption 
     if (searchTerm === ""){
@@ -44,7 +40,7 @@ function ButtonDetail (props:any) {
           searchTermOption = `${escape(link)}#${searchTerm}*`
         }
     }  
-    // const searchTermOption = searchTerm === "" ? "" : `#${searchTerm}*`
+
     const url = searchTermOption.replace("amp;","")
 
 

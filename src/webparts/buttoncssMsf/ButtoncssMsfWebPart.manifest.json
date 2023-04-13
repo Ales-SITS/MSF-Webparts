@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "a7113d9a-dd09-4fba-b1c6-b53e5b100090",
+  "alias": "ButtoncssMsfWebPart",
+  "componentType": "WebPart",
+  "version": "*",
+  "manifestVersion": 2,
+
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart", "TeamsPersonalApp", "TeamsTab", "SharePointFullPage"],
+  "supportsThemeVariants": true,
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
+    "group": { "default": "Advanced" },
+    "title": { "default": "Button CSS (MSF)" },
+    "description": { "default": "Create your own button with CSS." },
+    "iconImageUrl":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAMsAAADLAAShkWtsAAAhsSURBVHhe7ZwLcFXFGcf/55z7yM2rFCiIlYJP5KFtdaCtjxLLayg+IpBCES0CIlCmOkxRXjVYhBKBoagQASvypiBQUCgPlUIZq7ZYZKQOILXgoxWCkNzc9z33dHfPF7gBgvcmN9kT2N9Mcr5vz4FJzj+737ff7l4oFAqFQqFQKBQKhUKhUDQcGl1Twn/NzS1MI96WXMeRPaUYrj69gPx8apGDpmmH2dcpci9KWgKcvK7jKF3DfHKdidsN/YqW0Nu2hdG+HVw3dYJxy/ehf6s5PVD/WJZVqOv6RnIvyqUnwIXQNBg3XA93QVe4e/eE0aE93agf0hFAp+uljWXBPHgI4QWL4C8sgr9PISJLlsHy++kBeVweApyDefhjhKaVoKKgB0IzZiJRVkZ3Gp7LUoAqLH8lIi8vgb/7TxGeVworFKI7DcdlLUAVVjCI8Nx5YmiK7d5DrQ2DEiCJxGefI/DIKAQnFQtRGgIlwLmwgB1duw6V/QaKWFHfKAFqwDzyb1QOGIzYzl3UUj8oAS6CVVmJwOhfiR5RXygBvg7TRHDyFEQWL6WGzKIESAUWF/h8IbrmVWrIHEqAVGEiBIunIvbGW9SQGZQA6cCHo1+PF2WNTKEESBM+PwiMeVwE6EygBKgFiaPHEJryDHl1QwlQS6KbXkds+xvk1R4lQB0ITZ3OhqIAebVDCVAHEl8eR7h0AXm1QwlQRyJLliPxvy/JSx8lQF2JRhFZsIic9FECZIDI2vWwyk6Slx5KgEzAe8HqNeSkhxIgQ0RfXS/KFemiBMgQiS/+i/g775GXOo4TwGh3A3wTn0TempXI27IRuYsXwjtsCLRvNqEnnEts6zayUscxG7O0bB98k8bD07+v2Eh1LlaFH6EZz7KuvoFanAffkZe/+002EjWyjVlakybIXbEEnqJ+F3z5HC0/D9nTpyLrsV9Si/Pg8wHz4yPkpYZ8Adxu5JQ+B6NjB2pgf+2BAMLzXhRrspUDByPy0mLWv+PiXtbokXD37C5sJ2L+Yy9ZqSFdAN/jY+C69Rby7MVw/339EZ77AuL/3If4+/sQenY2KoeOYCLERA/xjX2MnnYe8f0fkpUaUgXgG2a9wx4mj3Xh48cRGDIciWOfUstZ4u++h/DLrwhba9qU/eSOyx8E5sGDZKWG1N/CO2LY2RfJl/yemCgKXDURXbpCrErxKiQSCWp1FolPjpKVGvIE8Ljh7tGNHDa67NyF+NvvkHdhEifK4L/7fkRf2wy9RQtkTy1G/l92IH/PW8h5fg5cnW+lJ+XBV8rMvanHAWkCGG3aQPP5yKOZZArwGKFf9W3kblgDz4Ai6Fe2EmK4e/VA7vJXkD3tt4DLRU/LwdyW+kKNvB6Q9PI56WwD5Olo8okXi28vpwDtKeoreoPMGBFlyUOqSPspE59+Jsb9KvSWLcm6OPp3WsP1wy7kAeEXF6H8tgJUFPRE/G/vijZ3t7vgfWiwsKVw5BMyvh5pAlinTrHM5u/ksYA85MEaJ2HJ6C1bkGUT2/iauCZOnEBg5BgxRHHc3QrEVQbxYOonb+T1UwbP7xG3J1ju7j9B9tNPsbiQJfyaSHz+BVk2/ABeFfyARWh6ifg/wy+UUquzkSqA+eEBBH/zNHurdkrpGViEvO2b4Rs/Dp777oHe+irRngyvOppJk52s4UOYCgZ57N3veRv+okHVepeTkSoAJ7puAwKPjoH11VfC57HAO/QXyJ75u2rliWSSF8L1q6+G92f9yWOwuGIe+JdtGzq8gwchb+1Klq5uR+7iRfDc26eaYLKRLgAntms3Kvg5rTnPiW1/VjiMyLKViG3bAV/xpGqlCk7szZ2I732fPBY/Hhl6/ktlWVDO72fD99REGN+9maWrV8J1+4+QPatECKK3akUPysURAnD4BCZcuhD+e/qi/HudxWyXl6a9D/wcWaMfpafOEpm/kCz2S7B5QXJmxOGVVT43qMKKRISwHKNTR+SuWirKx7JxjADVSNjpqXHtNeLquvN2ePr0FnYVogckpbFG2+qfoOAdNIAsFmvYkFTBU9UudyDyB7uexCdw2SXThC0TZwpARJatOHNYzjfjGXv8Jlxd76yWtiZOnybLJjmA8y2E/FA27wGhklmIrPyjaHf9oAu0Jt8QtiwcLQBPOUOTikWWpHm99vi9aZ0IpjlzZtJTrCOcLkd811/Js0muqBo3dSLLJjxrDqzycibEavFvZeJoATjRzX9GYOwTZ3qCcWM7EUzPlBqYOMHJxedtF49t3U4Wm2Pc1VWUvqvgz1YOHyVOy8vG8QJwYlu2ikPU0XV/EqtlVZiHDrMXOfKCu5Qjq9fCqqiwHZYhZY0ba9uE+cF+9s0kTx6NQgAOH46CEyajvPNtLGXtLeo/vDTNJ16i9sPXFpKwWEwIL3iJPNYLfnxHvX9KSm1oNAKcIW6K8V1UQBliXWDmDGSNGnFeQI0uXyV2Uwh4pbRfoW07iMYnwDnobVpDy82BlpMD34QnqdWG14bM/WyoIYzrriXLOTR6Afh8IL7vA2F77r8XvskTmOERvta8GYz2NwqbY5VTTHAQjV4APmnjJxetk3YtyfvQA8jfsQU5c2cjf9N6aM2aiXZOdPNWspxD4xeAwWNC5YMPI/Efe0Fcb3UF3L17iR5QRfT1LYhtO5uaOoVLQgAO35Em9hM9P/9MgOaITV6lCxEcx4YmB+KYvaEZhWU8fOlSc7thHj3GJhIxutEwWFqisOmhjy7jD+2zLHGWV+zTbOCXny6XpgCNCCWAZJQAklECSEYJIBklgGSUAJJRAkhGCSAZJYBklACSUQJIRgkgGSWAZJQAklECSEYJIJm0liTLru/QxYB2N7mKGjCBVc0PH/iIXIVCoVAoFAqFQqFQKBQE8H+uQumEcHPrDwAAAABJRU5ErkJggg==",
+    "properties": {
+      "description": "buttoncssMsf"
+    }
+  }]
+}
