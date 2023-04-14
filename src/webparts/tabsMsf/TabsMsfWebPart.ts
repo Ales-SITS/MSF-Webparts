@@ -106,7 +106,6 @@ export default class TabsMsfWebPart extends BaseClientSideWebPart<ITabsMsfWebPar
   }
 
   private detectmob(): boolean {
-    //console.log('inside detectmob');
     if(window.innerWidth <= 480) {
       return true;
     } else {
