@@ -99,7 +99,7 @@ export default class Tabs extends React.Component<ITabsProps, ITabsState> {
         }*/
     
         return React.Children.map(children, (child, index) => {
-          let childitem = child as React.ReactElement<any>;        
+          const childitem = child as React.ReactElement<any>;        
          /* if (!childitem) {
             return childitem;
           }*/

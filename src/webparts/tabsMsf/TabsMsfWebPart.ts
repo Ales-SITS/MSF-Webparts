@@ -126,9 +126,6 @@ export default class TabsMsfWebPart extends BaseClientSideWebPart<ITabsMsfWebPar
     const { PropertyFieldCollectionData, CustomCollectionFieldType } = await import (
       '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData'
     );
-
-    
-
     this.propertyFieldCollectionData = PropertyFieldCollectionData;
     this.customCollectionFieldType = CustomCollectionFieldType;
   }
