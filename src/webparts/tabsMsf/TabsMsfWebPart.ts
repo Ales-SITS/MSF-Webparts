@@ -2,15 +2,12 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version} from '@microsoft/sp-core-library';
 import {
-  BaseClientSideWebPart,
   IWebPartPropertiesMetadata,
   WebPartContext
 } from '@microsoft/sp-webpart-base';
 
 import {
-  IPropertyPaneConfiguration,
-  PropertyPaneDropdown,
-  PropertyPaneTextField
+  PropertyPaneDropdown
 } from '@microsoft/sp-property-pane';
 
 import * as strings from 'TabsMsfWebPartStrings';
@@ -18,6 +15,7 @@ import Tab from './components/CTab';
 import { ICTabProps } from './components/ICTabProps';
 import Accordion from './components/CAccordion';
 import { ICAccordionProps } from './components/ICAccordionProps';
+import { IPropertyPaneConfiguration, PropertyPaneTextField, BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import 'tinymce';
 export interface ITabsMsfWebPartProps {
   tabs: any[]; 
@@ -97,7 +95,7 @@ export default class TabsMsfWebPart extends BaseClientSideWebPart<ITabsMsfWebPar
   }
 
   protected get dataVersion(): Version {
-    return Version.parse('1.0');
+    return Version.parse('1.1');
   }
 
   private getGuid(): string {
