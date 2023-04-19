@@ -14,27 +14,31 @@ import DropzoneMsf from './components/DropzoneMsf';
 import { IDropzoneMsfProps } from './components/IDropzoneMsfProps';
 import { spfi,SPFx } from "@pnp/sp";
 
+import "@pnp/sp/webs";
+import "@pnp/sp/lists";
+import "@pnp/sp/items";
+import "@pnp/sp/folders";
+
 export interface IDropzoneMsfWebPartProps {
   instructions: string;
-  listName: string;
+  listObj: {id:string, title: string, url:string};
+  folder: string
 }
 
 let foldersOptions:any[] = []
 export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneMsfWebPartProps> {
 
-  //Custom fce
   public async getFolders(): Promise<any> {
-    console.log("***INITIALIZED***")
     const sp = spfi().using(SPFx(this.context));
     let Options = [{key:"", text:"", library: ""}]
-    this.properties.listName !== "" ? 
-    await sp.web.lists.getById(this.properties.listName).rootFolder.folders().then((fs)=>{
+    this.properties.listObj.id !== "" ? 
+    await sp.web.lists.getById(this.properties.listObj.id).rootFolder.folders().then((fs)=>{
       if (Array.isArray(fs)){
         fs.map((folder) => { 
           Options.push({key:folder.Name, text:folder.Name, library: folder.ServerRelativeUrl})
         })}
       }) : console.log("***SKIPPED***")
-
+   
 
     if (JSON.stringify(foldersOptions) !== JSON.stringify(Options)) {
       foldersOptions = Options
@@ -56,7 +60,8 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
       DropzoneMsf,
       {
         instructions: this.properties.instructions,
-        listName: this.properties.listName,
+        listObj: this.properties.listObj,
+        folder: this.properties.folder,
         context: this.context,
       }
     );
@@ -73,7 +78,10 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 
+
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+    this.getFolders() 
+    
     return {
       pages: [
         {
@@ -87,20 +95,22 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
                 PropertyPaneTextField('instructions', {
                   label: 'Dropzone instructions'
                 }),
-                PropertyFieldListPicker('listName', {
+                PropertyFieldListPicker('listObj', {
                   label: 'Select a list or library',
-                  selectedList: this.properties.listName,
+                  selectedList: this.properties.listObj,
                   includeHidden: false,
                   orderBy: PropertyFieldListPickerOrderBy.Title,
                   disabled: false,
+                  baseTemplate: 101,
                   onPropertyChange: this.onPropertyPaneFieldChanged.bind(this),
                   properties: this.properties,
-                  context: this.context,
+                  context: this.context as any,
                   onGetErrorMessage: null,
                   deferredValidationTime: 0,
+                  includeListTitleAndUrl: true,
                   key: 'listPickerFieldId'
                 }),
-                PropertyPaneDropdown('folderName', {
+                PropertyPaneDropdown('folder', {
                   label:"Select folder",
                   options: foldersOptions.filter(folder => folder.key !=="Forms"),
                 })

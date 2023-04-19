@@ -1,4 +1,5 @@
 export interface IDropzoneMsfProps {
   instructions: string;
-  listName:string,
+  listObj:string,
+  folder: string
 }

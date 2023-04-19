@@ -15,7 +15,7 @@
     "@microsoft/sp-property-pane": "1.16.1",
     "@microsoft/sp-webpart-base": "1.16.1",
     "@pnp/logging": "^3.13.0",
-    "@pnp/sp": "^3.13.0",
+    "@pnp/sp": "^3.14.0",
     "@pnp/spfx-controls-react": "1.14.0",
     "@pnp/spfx-property-controls": "^3.12.0",
     "@tinymce/tinymce-react": "^2.6.1",
