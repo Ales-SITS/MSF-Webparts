@@ -36,6 +36,11 @@ const rejectStyle = {
 
 
 export default function DropzoneMsf (props) {
+
+  const listName = props.listName
+  const instructions = props.instructions
+  const context = props.context
+
   interface dropfile extends File{
     path: string
   }
@@ -73,7 +78,7 @@ export default function DropzoneMsf (props) {
     <section className="container">
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>{props.instructions}</p>
+        <p>{instructions}</p>
       </div>
       <aside>
         <h4>Files</h4>
