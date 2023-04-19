@@ -4,6 +4,7 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
+  PropertyPaneDropdown
 } from '@microsoft/sp-property-pane';
 import { IDigestCache, DigestCache } from '@microsoft/sp-http';
 import { PropertyFieldListPicker, PropertyFieldListPickerOrderBy } from '@pnp/spfx-property-controls/lib/PropertyFieldListPicker';
@@ -17,7 +18,35 @@ export interface IDropzoneMsfWebPartProps {
   listName: string;
 }
 
+let foldersOptions:any[] = []
 export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneMsfWebPartProps> {
+
+  //Custom fce
+  public async getFolders(): Promise<any> {
+    console.log("***INITIALIZED***")
+    const sp = spfi().using(SPFx(this.context));
+    let Options = [{key:"", text:"", library: ""}]
+    this.properties.listName !== "" ? 
+    await sp.web.lists.getById(this.properties.listName).rootFolder.folders().then((fs)=>{
+      if (Array.isArray(fs)){
+        fs.map((folder) => { 
+          Options.push({key:folder.Name, text:folder.Name, library: folder.ServerRelativeUrl})
+        })}
+      }) : console.log("***SKIPPED***")
+
+
+    if (JSON.stringify(foldersOptions) !== JSON.stringify(Options)) {
+      foldersOptions = Options
+      this.context.propertyPane.refresh()
+
+    } 
+  }
+
+  public reloader(folder): any {
+
+  }
+
+
 
   public digest: string = "";
   
@@ -69,6 +98,10 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
                   onGetErrorMessage: null,
                   deferredValidationTime: 0,
                   key: 'listPickerFieldId'
+                }),
+                PropertyPaneDropdown('folderName', {
+                  label:"Select folder",
+                  options: foldersOptions.filter(folder => folder.key !=="Forms"),
                 })
               ]
             }
