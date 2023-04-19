@@ -12,6 +12,7 @@ import { BaseClientSideWebPart, WebPartContext } from '@microsoft/sp-webpart-bas
 import * as strings from 'DropzoneMsfWebPartStrings';
 import DropzoneMsf from './components/DropzoneMsf';
 import { IDropzoneMsfProps } from './components/IDropzoneMsfProps';
+import { spfi,SPFx } from "@pnp/sp";
 
 export interface IDropzoneMsfWebPartProps {
   instructions: string;
