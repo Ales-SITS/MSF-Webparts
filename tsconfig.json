@@ -13,6 +13,7 @@
     "outDir": "lib",
     "inlineSources": false,
     "strictNullChecks": false,
+    "resolveJsonModule": true,
     "noUnusedLocals": false,
     
 
@@ -33,5 +34,5 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx"
-, "src/webparts/dropzoneMsf/components/DropzoneMsf.tsx"  ]
+, "src/webparts/dropzoneMsf/components/DropzoneMsf.tsx", "src/webparts/dropzoneMsf/components/mime.js"  ]
 }

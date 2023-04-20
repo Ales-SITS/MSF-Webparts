@@ -1,12 +1,11 @@
 import * as React from 'react';
 import {useState} from 'react'
 import styles from './DropzoneMsf.module.scss';
-import { IDropzoneMsfProps } from './IDropzoneMsfProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import {useCallback, useMemo, CSSProperties} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
 import { spfi,SPFx } from "@pnp/sp";
+//import * as mime from './mime.json'
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/items";
@@ -25,6 +24,13 @@ export interface ChunkedFileUploadProgressData {
 interface dropfile extends File{
   path: string
 }
+
+
+interface MimeTypes {
+  [key: string]: string;
+}
+
+const mime: MimeTypes = require('./mime.json');
 
 const baseStyle = {
   flex: 1,
@@ -62,12 +68,24 @@ export default function DropzoneMsf (props) {
   const listTitle = listObj.title === "Documents" || listObj.title ==="" ? "Shared Documents" : listObj.title
   const instructions = props.instructions
   const context = props.context
-  const folder = props.folder
+  const folder = props.folderpath === "" ? props.folder : props.folderpath
   const sp = spfi().using(SPFx(context));
+  const accepted = props.accepted
+  
+  const relativePath:string = folder === "" || folder === undefined ? listTitle : `${listTitle}/${folder}`
+  
+  const accArr:string[] = accepted === "" || accepted === undefined ? [] : accepted.split(',')
+  let acceptArr: any[] = []
 
-  const realtivePath:string = folder === "" || folder === undefined ? listTitle : `${listTitle}/${folder}`
- 
-  const {
+  let itemObj = {}
+  accArr.forEach( item => {
+     itemObj[`'${mime[item]}'`] = [`.${item}`]
+  })
+
+  console.log(acceptArr)
+  console.log(itemObj)
+
+   const {
     getRootProps,
     getInputProps,
     acceptedFiles,
@@ -75,12 +93,10 @@ export default function DropzoneMsf (props) {
     isDragAccept,
     isDragReject
   } = useDropzone({
-    /*
-    accept: {
+    accept: itemObj /*{
     'image/*': [],
     'text/*': []
-    },
-    */
+    }*/,
     onDrop: files => uploadFile(files)
 });
 
@@ -95,19 +111,12 @@ export default function DropzoneMsf (props) {
     isDragReject
   ]) as CSSProperties ;
  
-  
-    const [test, setTest] = useState()
-    const testHandler = (f) => {
-      console.log(f)
-    }
-
+ 
     const filesToDisplay = acceptedFiles.map((file: dropfile) => (  
           <span>
-            {test} {file.path} - {(file.size/1000000).toFixed(2)} MB
+            {file.path}   <span className={styles.filesize}>{(file.size/1000000).toFixed(2)} MB</span>
           </span>
     ))
-
-
 
     const [state,setState] = useState({
       showProgress: false,
@@ -116,13 +125,16 @@ export default function DropzoneMsf (props) {
       progressPercent: 0
     })
 
+    const [stateColor, setStateColor] = useState (true)
+
     let chunkSize = 5000000
     async function uploadFile (files:any[]) {
-      testHandler(files)
+      event.stopPropagation()
       try {
         await files.forEach((file,indx) => {
           const fileNamePath = encodeURI(file.name);
-          sp.web.getFolderByServerRelativePath(realtivePath).files.addChunked(fileNamePath, file, data => {
+
+          sp.web.getFolderByServerRelativePath(relativePath).files.addChunked(fileNamePath, file, data => {
             let percent = (data.blockNumber / data.totalBlocks)
             setState({
               progressPercent: percent,
@@ -134,15 +146,22 @@ export default function DropzoneMsf (props) {
           chunkSize).then(r => {
           setState({
             progressPercent: 0,
-            progressDescription: "Succesfully uploaded",
+            progressDescription: "✔ Succesfully uploaded",
             progressLabel: "",
             showProgress: false
           });
-          //setTest("✔")
+          setStateColor(true)
         })
         .catch(e => {
           console.log("Error while uploading file");
           console.log(e);
+          setState({
+            progressPercent: 0,
+            progressDescription: "✘ Upload Failed",
+            progressLabel: "",
+            showProgress: false
+          })
+          setStateColor(false)
         });     
             }, true);       
       } catch (error) {
@@ -152,16 +171,20 @@ export default function DropzoneMsf (props) {
 
 
   return (
-    <section className="container">
+    <section>
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
         <p>{instructions}</p>
       </div>
-      <ProgressIndicator
+      <ProgressIndicator 
           label={state.progressLabel}
-          description={state.progressDescription}
+          //description={state.progressDescription}
           percentComplete={state.progressPercent}
           barHeight={5} />
+      {stateColor ?
+        <span className={styles.success}>{state.progressDescription}</span> :
+        <span className={styles.fail}>{state.progressDescription}</span>
+        }
       <div className={styles.file_list}>{filesToDisplay}</div>
     </section>
   );

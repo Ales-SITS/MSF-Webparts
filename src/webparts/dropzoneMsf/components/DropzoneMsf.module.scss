@@ -3,4 +3,19 @@
 .file_list {
   display: flex;
   flex-direction: column;
+  max-height: 80px;
+  overflow-y: scroll;
+}
+
+.filesize {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.success {
+  color: green
+}
+
+.fail {
+  color: red
 }

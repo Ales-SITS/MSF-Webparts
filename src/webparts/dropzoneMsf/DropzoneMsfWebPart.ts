@@ -8,8 +8,7 @@ import {
 } from '@microsoft/sp-property-pane';
 import { IDigestCache, DigestCache } from '@microsoft/sp-http';
 import { PropertyFieldListPicker, PropertyFieldListPickerOrderBy } from '@pnp/spfx-property-controls/lib/PropertyFieldListPicker';
-import { BaseClientSideWebPart, WebPartContext } from '@microsoft/sp-webpart-base';
-import * as strings from 'DropzoneMsfWebPartStrings';
+import { BaseClientSideWebPart} from '@microsoft/sp-webpart-base';
 import DropzoneMsf from './components/DropzoneMsf';
 import { IDropzoneMsfProps } from './components/IDropzoneMsfProps';
 import { spfi,SPFx } from "@pnp/sp";
@@ -22,7 +21,9 @@ import "@pnp/sp/folders";
 export interface IDropzoneMsfWebPartProps {
   instructions: string;
   listObj: {id:string, title: string, url:string};
-  folder: string
+  folder: string;
+  folderpath: string;
+  accepted: string
 }
 
 let foldersOptions:any[] = []
@@ -62,7 +63,9 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
         instructions: this.properties.instructions,
         listObj: this.properties.listObj,
         folder: this.properties.folder,
+        folderpath: this.properties.folderpath,
         context: this.context,
+        accepted: this.properties.accepted
       }
     );
 
@@ -86,17 +89,17 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
       pages: [
         {
           header: {
-            description: 'Placeholder'
+            description: 'Here you can add dropzone instructions and select target document library. You can either choose from dropzone or if you have deeply nested folders, you can write a folder path instead.'
           },
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: "Settings",
               groupFields: [
                 PropertyPaneTextField('instructions', {
                   label: 'Dropzone instructions'
                 }),
                 PropertyFieldListPicker('listObj', {
-                  label: 'Select a list or library',
+                  label: 'Select a library',
                   selectedList: this.properties.listObj,
                   includeHidden: false,
                   orderBy: PropertyFieldListPickerOrderBy.Title,
@@ -113,6 +116,19 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
                 PropertyPaneDropdown('folder', {
                   label:"Select folder",
                   options: foldersOptions.filter(folder => folder.key !=="Forms"),
+                })
+              ]
+            },
+            {
+              groupName: "OR",
+              groupFields: [
+                PropertyPaneTextField('folderpath', {
+                  label: 'Folder path',
+                  description: 'First select a library then write you path in pattern "folder1/folder2/folder3". If this input field includes any text, it will take precedence over the select folder option.'
+                }),
+                PropertyPaneTextField('accepted', {
+                  label: 'Accepted file types',
+                  description: ''
                 })
               ]
             }
