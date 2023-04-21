@@ -19,3 +19,25 @@
 .fail {
   color: red
 }
+
+.instructions {
+  font-size: 20px
+}
+
+.iconwrapper {
+  width: 100%;
+  display:flex;
+  justify-content: center;
+}
+
+.icon {
+  height: 30px;
+  width: 25px;
+  border-radius: 4px;
+  font-size: 9px;
+  background-color: #b6b6b6;
+  color: #fafafa;
+  margin: 2px;
+  text-align: center;
+  line-height: 30px;
+}

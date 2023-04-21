@@ -11,6 +11,9 @@ import "@pnp/sp/lists";
 import "@pnp/sp/items";
 import "@pnp/sp/files";
 import "@pnp/sp/folders";
+import "@pnp/sp/sites";
+import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';  
+
 
 export interface ChunkedFileUploadProgressData {
   stage: "starting" | "continue" | "finishing";
@@ -74,15 +77,20 @@ export default function DropzoneMsf (props) {
   
   const relativePath:string = folder === "" || folder === undefined ? listTitle : `${listTitle}/${folder}`
   
-  const accArr:string[] = accepted === "" || accepted === undefined ? [] : accepted.split(',')
-  let acceptArr: any[] = []
+  const accArr:string[] = accepted === "" || accepted === undefined ? [] : accepted.replaceAll(" ","").split(',')
+ 
+ 
+  interface Accept {
+    [key: string]: string[];
+  }
+  
 
-  let itemObj = {}
+
+  let itemObj: Accept = {}
   accArr.forEach( item => {
-     itemObj[`'${mime[item]}'`] = [`.${item}`]
+     itemObj[mime[item]] = [item]
   })
 
-  console.log(acceptArr)
   console.log(itemObj)
 
    const {
@@ -93,11 +101,8 @@ export default function DropzoneMsf (props) {
     isDragAccept,
     isDragReject
   } = useDropzone({
-    accept: itemObj /*{
-    'image/*': [],
-    'text/*': []
-    }*/,
-    onDrop: files => uploadFile(files)
+    accept: itemObj,
+    onDrop: files => uploadDocument(files) //uploadFile(files)
 });
 
   const style = useMemo(() => ({
@@ -126,8 +131,8 @@ export default function DropzoneMsf (props) {
     })
 
     const [stateColor, setStateColor] = useState (true)
-
     let chunkSize = 5000000
+   
     async function uploadFile (files:any[]) {
       event.stopPropagation()
       try {
@@ -169,16 +174,53 @@ export default function DropzoneMsf (props) {
       } 
   }
 
+  console.log(accArr)
+
+
+
+///TESTING EXTERNAL SITE
+console.log("v4")
+function uploadDocument(files) { 
+  event.stopPropagation()
+  files.forEach ((file) => {   
+    const spOPts: ISPHttpClientOptions = {
+      headers: {
+        "Accept" : "application/json",
+        "Content-Type" : "application/json"
+      },
+      body:file
+    };
+
+    const url = `https://msfintltestgeneva.sharepoint.com/sites/SITS-testAles/_api/web/lists/getByTitle('Documents')/RootFolder/Files/Add(url='${file.name}', overwrite=true)`;
+
+    context.spHttpClient.post(url,SPHttpClient.configurations.v1,spOPts).then((response: SPHttpClientResponse) => {
+      response.json().then((responseJSON)=> {
+        console.log(responseJSON.Name)
+      })
+    })
+  }) 
+
+}
+
+
+
+///TESTING EXTERNAL SITE*
+
+
+
+
 
   return (
     <section>
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>{instructions}</p>
+        <p className={styles.instructions}>{instructions}</p>
+        <div className={styles.iconwrapper}>
+            {accArr.map( file => <div className={styles.icon}>{file.toUpperCase()}</div>)}
+        </div>
       </div>
       <ProgressIndicator 
           label={state.progressLabel}
-          //description={state.progressDescription}
           percentComplete={state.progressPercent}
           barHeight={5} />
       {stateColor ?

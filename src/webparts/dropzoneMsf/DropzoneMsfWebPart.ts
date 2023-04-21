@@ -4,7 +4,9 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
-  PropertyPaneDropdown
+  PropertyPaneDropdown,
+  PropertyPaneToggle,
+  PropertyPaneLabel
 } from '@microsoft/sp-property-pane';
 import { IDigestCache, DigestCache } from '@microsoft/sp-http';
 import { PropertyFieldListPicker, PropertyFieldListPickerOrderBy } from '@pnp/spfx-property-controls/lib/PropertyFieldListPicker';
@@ -24,6 +26,7 @@ export interface IDropzoneMsfWebPartProps {
   folder: string;
   folderpath: string;
   accepted: string
+  siteToggle: boolean
 }
 
 let foldersOptions:any[] = []
@@ -51,7 +54,6 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
   public reloader(folder): any {
 
   }
-
 
 
   public digest: string = "";
@@ -85,19 +87,32 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     this.getFolders() 
     
+    const externalSiteField = this.properties.siteToggle ? 
+    PropertyPaneTextField('siteurl', {
+      label: 'External site url'
+
+    }) : PropertyPaneLabel('emptyLabel', {
+      text: ""
+    });
+
     return {
       pages: [
         {
           header: {
-            description: 'Here you can add dropzone instructions and select target document library. You can either choose from dropzone or if you have deeply nested folders, you can write a folder path instead.'
+            description: 'Here you can add dropzone instructions and select target document library. You can select first level folders or if you have deeply nested folders, you can write a folder path instead.'
           },
+          displayGroupsAsAccordion: true,
           groups: [
             {
               groupName: "Settings",
+              isCollapsed:false,
               groupFields: [
-                PropertyPaneTextField('instructions', {
-                  label: 'Dropzone instructions'
+                PropertyPaneToggle('siteToggle', {
+                  offText: "This site",
+                  onText: "External site",
+                  checked: false
                 }),
+                externalSiteField,
                 PropertyFieldListPicker('listObj', {
                   label: 'Select a library',
                   selectedList: this.properties.listObj,
@@ -116,20 +131,28 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
                 PropertyPaneDropdown('folder', {
                   label:"Select folder",
                   options: foldersOptions.filter(folder => folder.key !=="Forms"),
-                })
-              ]
-            },
-            {
-              groupName: "OR",
-              groupFields: [
+                }),
+                PropertyPaneLabel('emptyLabel', {
+                  text: "OR"
+                }),
                 PropertyPaneTextField('folderpath', {
                   label: 'Folder path',
-                  description: 'First select a library then write you path in pattern "folder1/folder2/folder3". If this input field includes any text, it will take precedence over the select folder option.'
+                  description: 'Write in this format: "folder1/folder2/folder3". If this field includes any text, it takes precedence over the select folder option above.'
                 }),
                 PropertyPaneTextField('accepted', {
                   label: 'Accepted file types',
-                  description: ''
+                  description: 'Write in this format: "docx, doc, pdf". If empty, all file formats wil be accepted.'
                 })
+ 
+              ]
+            },
+            {
+              groupName: "Visuals",
+              isCollapsed:false,
+              groupFields: [
+                PropertyPaneTextField('instructions', {
+                  label: 'Dropzone instructions'
+                }),
               ]
             }
           ]
