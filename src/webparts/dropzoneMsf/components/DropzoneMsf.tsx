@@ -12,7 +12,6 @@ import "@pnp/sp/files";
 import "@pnp/sp/folders";
 import "@pnp/sp/sites";
 import { Web } from "@pnp/sp/webs";
-//import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions } from '@microsoft/sp-http';  
 
 const mime: MimeTypes = require('./mime.json');
 
@@ -110,10 +109,9 @@ export default function DropzoneMsf (props) {
 
 const inputProps = getInputProps({
   onChange: event => {
-    console.log("triggered")
     const fileList = event.target.files;
     const filesArray = Array.from(fileList);
-    uploadSelectedFile(filesArray);
+    uploadFile(filesArray);
   }
 });
 
@@ -141,112 +139,8 @@ const inputProps = getInputProps({
     
     let chunkSize = 2000000
   
-    async function uploadSelectedFile (files: any[]) {
-      console.log("selected")
-      if (files.length === 0) {
-        setState({
-          progressPercent: 0,
-          progressDescription: `Wrong file type! Accepted file types: ${accArr}`,
-          progressLabel: "",
-          showProgress: false
-        })
-        setStateStatus('fail')
-      }
-
-      if(!externalSite){
-        console.log("Internal fce")
-        const listObj:{id:string, title: string, url:string} = props.listObj === undefined ? {id:"", title: "", url:""} : props.listObj
-        const folder = props.folderPath === "" || props.folderPath === undefined ? props.folder : props.folderPath
-        const listTitle = listObj.title === "Documents" || listObj.title ==="" ? "Shared Documents" : listObj.title
-        const relativePath:string = folder === "" || folder === undefined ? listTitle : `${listTitle}/${folder}`
-        try {
-          await files.forEach((file,indx) => {
-            const fileNamePath = encodeURI(file.name)
-            sp.web.getFolderByServerRelativePath(relativePath).files.addChunked(fileNamePath, file, data => {
-                let percent = (data.blockNumber / data.totalBlocks)
-                setState({
-                  progressPercent: percent,
-                  progressDescription: "Uploading ... ",
-                  progressLabel: "",
-                  showProgress: true
-                  });
-              }, overwrite,
-              chunkSize).then(r => {
-              setState({
-                progressPercent: 100,
-                progressDescription: "Succesfully uploaded",
-                progressLabel: "",
-                showProgress: true
-              });
-              setStateStatus('success')
-            })
-            .catch( async e => {
-              const err = await e.response.json();
-              console.log("Error while uploading file");             
-              setState({
-                progressPercent: 0,
-                progressDescription: `Upload Failed. ${err['odata.error'].message.value.replaceAll("i:0#.f|membership|","")}`,
-                progressLabel: "",
-                showProgress: false
-              })
-              setStateStatus('fail')
-            });     
-                }, true);       
-          } catch (error) {
-            alert(error.message)
-          }
-    } else {
-          console.log("External fce")
-          const eSiteUrl = props.eSiteUrl
-          const eLibrary = props.eLibrary
-          const eFolder = props.eFolder
-          const eListTitle = eLibrary === "Documents" || eLibrary ==="" || eLibrary === undefined ? "Shared Documents" : eLibrary
-          const eRelativePath:string = eFolder === undefined || eFolder === "" ? `${eListTitle}` : `${eListTitle}/${eFolder}`
-
-          try {
-            await files.forEach( async (file,indx) => {
-              const fileNamePath = encodeURI(file.name)
-              const w = Web([sp.web, eSiteUrl])
-              w.getFolderByServerRelativePath(eRelativePath).files.addChunked(fileNamePath, file, data => {
-                  let percent = (data.blockNumber / data.totalBlocks)
-                  setState({
-                    progressPercent: percent,
-                    progressDescription: "Uploading ... ",  //`${isNaN(Math.round(percent * 100)) ? "-" : Math.round(percent * 100)} %`,
-                    progressLabel: "",
-                    showProgress: true
-                    });
-                  setStateStatus('progress')
-                }, overwrite,
-                chunkSize).then(r => {
-                setState({
-                  progressPercent: 100,
-                  progressDescription: "Succesfully uploaded",
-                  progressLabel: "",
-                  showProgress: true
-                });
-                setStateStatus('success')
-              })
-              .catch( async (e) => {
-                console.log("Error while uploading file");
-                const err = await e.response.json();
-                setState({
-                  progressPercent: 0,
-                  progressDescription: `Upload Failed. ${err['odata.error'].message.value.replaceAll("i:0#.f|membership|","")}`,
-                  progressLabel: "",
-                  showProgress: false
-                })
-                setStateStatus('fail')
-              });     
-                  }, true);       
-            } catch (error) {
-              alert(error.message)
-            }
-    }
-  }
-
     async function uploadFile (files: any[]) {
-      console.log("dropped")
-      event.stopPropagation()
+         
       if (files.length === 0) {
         setState({
           progressPercent: 0,
@@ -259,13 +153,10 @@ const inputProps = getInputProps({
 
       if(!externalSite){
 
-        console.log("Internal fce")
-
         const listObj:{id:string, title: string, url:string} = props.listObj === undefined ? {id:"", title: "", url:""} : props.listObj
         const folder = props.folderPath === "" || props.folderPath === undefined ? props.folder : props.folderPath
         const listTitle = listObj.title === "Documents" || listObj.title ==="" ? "Shared Documents" : listObj.title
         const relativePath:string = folder === "" || folder === undefined ? listTitle : `${listTitle}/${folder}`
-        console.log(relativePath)
         try {
           await files.forEach((file,indx) => {
             const fileNamePath = encodeURI(file.name)
@@ -288,8 +179,7 @@ const inputProps = getInputProps({
               setStateStatus('success')
             })
             .catch( async e => {
-              const err = await e.response.json();
-              console.log("Error while uploading file");             
+              const err = await e.response.json();     
               setState({
                 progressPercent: 0,
                 progressDescription: `Upload Failed. ${err['odata.error'].message.value.replaceAll("i:0#.f|membership|","")}`,
@@ -303,8 +193,6 @@ const inputProps = getInputProps({
             alert(error.message)
           }
     } else {
-          console.log("External fce")
-
           const eSiteUrl = props.eSiteUrl
           const eLibrary = props.eLibrary
           const eFolder = props.eFolder
@@ -335,7 +223,6 @@ const inputProps = getInputProps({
                 setStateStatus('success')
               })
               .catch( async (e) => {
-                console.log("Error while uploading file");
                 const err = await e.response.json();
                 setState({
                   progressPercent: 0,

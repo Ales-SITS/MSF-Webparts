@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import  AnchorLink from './AnchorLink'
 import styles from './AnchorListMsf.module.scss';
 
@@ -27,14 +27,6 @@ export default function AnchorList (props:any) {
         )})
       return anchorInit
    }
-
-  /* 
-  let anchorlinkcreator = new Promise (function (resolve,reject){
-    resolve(
-      anchorInit = document.querySelectorAll('a[data-sp-anchor-id]')
-      )
-    })
-  */
 
   const {
         AnchorListTitle,

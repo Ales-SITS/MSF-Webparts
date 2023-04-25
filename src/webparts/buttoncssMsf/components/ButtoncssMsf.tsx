@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import styles from './ButtoncssMsf.module.scss';
-import { IButtoncssMsfProps } from '../ButtoncssMsfWebPart';
 import ButtoncssDetail from './ButtoncssDetail'
 
 export default function ButtoncssMsf (props) {
