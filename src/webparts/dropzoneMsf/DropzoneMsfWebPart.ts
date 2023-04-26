@@ -171,7 +171,7 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
       pages: [
         {
           header: {
-            description: 'Here you can add dropzone instructions and select target document library. You can select first level folders or if you have deeply nested folders, you can write a folder path instead.'
+            description: 'Here you can change the general settings, select the target document library or change the drop zone visuals.'
           },
           displayGroupsAsAccordion: true,
           groups: [
