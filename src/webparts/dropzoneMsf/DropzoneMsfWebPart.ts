@@ -223,10 +223,9 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
                   onText: "On",
                   checked: false
               }),
-
-
               ]
-            }
+            }           
+
           ]
         }
       ]

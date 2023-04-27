@@ -5,7 +5,8 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
   PropertyPaneChoiceGroup,
-  PropertyPaneDropdown
+  PropertyPaneDropdown,
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'AnchorListMsfWebPartStrings';
@@ -16,15 +17,29 @@ import { IAnchorListMsfProps } from './components/IAnchorListMsfProps';
 
 export interface IAnchorListMsfWebPartProps {
   AnchorListTitle: string;
-  AnchorListSymbol: string;
   ListAlignment:string;
   TextAlignment:string;
   BorderRadius: string;
   ListBG: string;
-  ListColor: string;
   HeaderBG:string;
   HeaderColor:string;
-  Line: string
+  header_size: string;
+  Line: string;
+  h2_toggle: boolean;
+  h2_size: string;
+  h2_ind: string;
+  h2_color: string;
+  h2_symbol: string;
+  h3_toggle: boolean;
+  h3_size: string;
+  h3_ind: string;
+  h3_color: string;
+  h3_symbol: string;
+  h4_toggle: boolean;
+  h4_size: string;
+  h4_ind: string;
+  h4_color: string;
+  h4_symbol: string;
 }
 
 export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorListMsfWebPartProps> {
@@ -34,15 +49,29 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
       AnchorListMsf,
       {
         AnchorListTitle: this.properties.AnchorListTitle,
-        AnchorListSymbol: this.properties.AnchorListSymbol,
         ListAlignment:this.properties.ListAlignment,
         TextAlignment:this.properties.TextAlignment,
         BorderRadius: this.properties.BorderRadius,
         ListBG: this.properties.ListBG,
-        ListColor: this.properties.ListColor,
         HeaderBG: this.properties.HeaderBG,
         HeaderColor: this.properties.HeaderColor,
-        Line: this.properties.Line
+        header_size: this.properties.header_size,
+        Line: this.properties.Line,
+        h2_toggle: this.properties.h2_toggle,
+        h2_size: this.properties.h2_size,
+        h2_ind: this.properties.h2_ind,
+        h2_color: this.properties.h2_color,
+        h2_symbol: this.properties.h2_symbol,
+        h3_toggle: this.properties.h3_toggle,
+        h3_size: this.properties.h3_size,
+        h3_ind: this.properties.h3_ind,
+        h3_color: this.properties.h3_color,
+        h3_symbol: this.properties.h3_symbol,
+        h4_toggle: this.properties.h4_toggle,
+        h4_size: this.properties.h4_size,
+        h4_ind: this.properties.h4_ind,
+        h4_color: this.properties.h4_color,
+        h4_symbol: this.properties.h4_symbol,
       }
     );
 
@@ -67,12 +96,13 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: "This webpart reads the page DOM and finds automatically all anchors created by text webpart headings and displayes them in a clickable list."
           },
           displayGroupsAsAccordion: true,
           groups: [
             {
-              groupName: "Anchor list settings",
+              groupName: "General settings",
+              isCollapsed:true,
               groupFields: [
                 PropertyPaneChoiceGroup("ListAlignment", {
                   label: "List alignment",
@@ -103,31 +133,21 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   iconName: 'Precipitation',
                   key: 'colorFieldId'
                 }),
-                PropertyFieldColorPicker('ListColor', {
-                  label: 'Font color',
-                  selectedColor: this.properties.ListColor,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
-                  properties: this.properties,
-                  disabled: false,
-                  debounce: 1000,
-                  isHidden: false,
-                  alphaSliderHidden: false,
-                  style: PropertyFieldColorPickerStyle.Inline,
-                  iconName: 'Precipitation',
-                  key: 'colorFieldId'
-                }),
                 PropertyPaneTextField('BorderRadius', {
                   label: "Border radius (px)"
                 }),
               ]
             },
             {
-              groupName: "Customize Header",
+              groupName: "Header settings",
               isCollapsed:true,
               groupFields: [
                 PropertyPaneTextField('AnchorListTitle', {
                   label: "Anchor List Title"
                 }),
+                PropertyPaneTextField('header_size', {
+                  label: "Font size (px)"
+                }), 
                 PropertyFieldColorPicker('HeaderBG', {
                   label: 'Header background color',
                   selectedColor: this.properties.HeaderBG,
@@ -159,23 +179,149 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   label: "Header bottom line"
                 }),
               ]
-            },
+            },           
             {
-              groupName: "Customize Anchor",
+              groupName: "Heading 1 level",
               isCollapsed:true,
               groupFields: [
-                PropertyPaneDropdown("AnchorListSymbol", {
-                  label: "Preppend with",
+                PropertyPaneToggle('h2_toggle', {
+                  label: "Hide Heading 1",
+                  offText: "Off",
+                  onText: "On",
+                  checked: false
+                }),
+                PropertyPaneTextField('h2_size', {
+                  label: "Font size (px)"
+                }),
+                PropertyPaneTextField('h2_ind', {
+                  label: "Indentation (px)"
+                }),
+                PropertyFieldColorPicker('h2_color', {
+                  label: 'Font color',
+                  selectedColor: this.properties.h2_color,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
+                PropertyPaneDropdown('h2_symbol',{
+                  label: "Prefix" ,
                   options: [
-                    { key: "", text: "Nothing" },
-                    { key: "⚬", text: "Circle ⚬" },
-                    { key: "●", text: "Full circle ●" },
-                    { key: "▪", text: "Square ▪" },
-                    { key: "▸", text: "Arrow ▸" }, 
-                  ]
+                    { key: '', text: 'none'},
+                    { key: '●', text: '●'},
+                    { key: '⬤', text: '⬤' },
+                    { key: '○', text: '○' },
+                    { key: '◯', text: '◯' },
+                    { key: '▪', text: '▪' },
+                    { key: '■', text: '■'},
+                    { key: '□', text: '□'},
+                    { key: '◻', text: '◻'},
+                    { key: '◆', text: '◆'},
+                    { key: '◇', text: '◇'},
+                  ] 
                 })
               ]
+            },
+            {
+              groupName: "Heading 2 level",
+              isCollapsed:true,
+              groupFields: [
+                PropertyPaneToggle('h3_toggle', {
+                  label: "Hide Heading 2",
+                  offText: "Off",
+                  onText: "On",
+                  checked: false
+              }),
+              PropertyPaneTextField('h3_size', {
+                label: "Font size (px)"
+              }),
+              PropertyPaneTextField('h3_ind', {
+                label: "Indentation (px)"
+              }),
+              PropertyFieldColorPicker('h3_color', {
+                label: 'Font color',
+                selectedColor: this.properties.h3_color,
+                onPropertyChange: this.onPropertyPaneFieldChanged,
+                properties: this.properties,
+                disabled: false,
+                debounce: 1000,
+                isHidden: false,
+                alphaSliderHidden: false,
+                style: PropertyFieldColorPickerStyle.Inline,
+                iconName: 'Precipitation',
+                key: 'colorFieldId'
+              }),
+              PropertyPaneDropdown('h3_symbol',{
+                label: "Prefix" ,
+                options: [
+                  { key: '', text: 'none'},
+                  { key: '●', text: '●'},
+                  { key: '⬤', text: '⬤' },
+                  { key: '○', text: '○' },
+                  { key: '◯', text: '◯' },
+                  { key: '▪', text: '▪' },
+                  { key: '■', text: '■'},
+                  { key: '□', text: '□'},
+                  { key: '◻', text: '◻'},
+                  { key: '◆', text: '◆'},
+                  { key: '◇', text: '◇'},
+                ] 
+              })
+              ]
+            },
+            {
+              groupName: "Heading 3 level",
+              isCollapsed:true,
+              groupFields: [
+                PropertyPaneToggle('h4_toggle', {
+                  label: "Hide Heading 3",
+                  offText: "Off",
+                  onText: "On",
+                  checked: false
+              }),
+              PropertyPaneTextField('h4_size', {
+                label: "Font size (px)"
+              }),
+              PropertyPaneTextField('h4_ind', {
+                label: "Indentation (px)"
+              }),
+              PropertyFieldColorPicker('h4_color', {
+                label: 'Font color',
+                selectedColor: this.properties.h4_color,
+                onPropertyChange: this.onPropertyPaneFieldChanged,
+                properties: this.properties,
+                disabled: false,
+                debounce: 1000,
+                isHidden: false,
+                alphaSliderHidden: false,
+                style: PropertyFieldColorPickerStyle.Inline,
+                iconName: 'Precipitation',
+                key: 'colorFieldId'
+              }),
+              PropertyPaneDropdown('h4_symbol',{
+                label: "Prefix" ,
+                options: [
+                  { key: '', text: 'none'},
+                  { key: '●', text: '●'},
+                  { key: '⬤', text: '⬤' },
+                  { key: '○', text: '○' },
+                  { key: '◯', text: '◯' },
+                  { key: '▪', text: '▪' },
+                  { key: '■', text: '■'},
+                  { key: '□', text: '□'},
+                  { key: '◻', text: '◻'},
+                  { key: '◆', text: '◆'},
+                  { key: '◇', text: '◇'},
+                ] 
+              })
+              ]
             }
+            
           ]
         }
       ]

@@ -18,7 +18,6 @@
 
 .header {
   width: 270px;
-  font-size:22px;
   padding: 5px 5px; 
   display: flex;
   flex-direction: row;
@@ -30,7 +29,6 @@
 .anchorLink{
   display: flex;
   flex-direction: row;
-  font-size: 17px;
   padding: 3px 5px;
   width: 260px;
   text-decoration: none;
@@ -39,6 +37,11 @@
 
 .anchorLink:hover {
   filter: brightness(117%)
+}
+
+.anchorWrapper {
+  display: flex;
+  align-items: center;
 }
 
 

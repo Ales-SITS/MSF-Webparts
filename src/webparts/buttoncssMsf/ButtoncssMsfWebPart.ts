@@ -81,7 +81,7 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
     const pagesArray = [ 
       {
       header: {
-        description: "Welcome!"
+        description: "Welcome! Welcome! On this page (1), you can set number of buttons (up to 10) and their general layout. You can also set all the details for your first button, which visuals works as default for other buttons too. In the next pages (i.e. button 2 = page(2)) you can set other buttons and rewrite the default visual settings for that specific button if needed. You can also use dynamic URL with the optional input field, which value is added automatically to the end of buttons URL (Select PnP Search solution on, if you are using PnP Search webparts). "
       },
       displayGroupsAsAccordion: true,
       groups: [ 
@@ -181,19 +181,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
             }),
             PropertyPaneTextField('css', {
               label: "Button CSS",
-              multiline: true
+              multiline: true,
+              rows: 6
             }),
             PropertyPaneTextField('css_hover', {
               label: "Hover CSS",
-              multiline: true
+              multiline: true,
+              rows: 6
             }),
             PropertyPaneTextField('css_icon', {
               label: "Icon CSS",
-              multiline: true
+              multiline: true,
+              rows: 6
             }),
             PropertyPaneTextField('css_label', {
               label: "Label CSS",
-              multiline: true
+              multiline: true,
+              rows: 6
             })
           ]
         },
@@ -239,19 +243,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css2', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css2_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css2_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css2_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -298,19 +306,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css3', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css3_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css3_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css3_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -356,19 +368,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css4', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css4_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css4_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css4_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -414,19 +430,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css5', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css5_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css5_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css5_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -472,19 +492,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css6', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css6_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css6_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css6_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -530,19 +554,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css7', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css7_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css7_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css7_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -588,19 +616,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css8', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css8_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css8_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css8_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -646,19 +678,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css9', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css9_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css9_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css9_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }
@@ -704,19 +740,23 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('css10', {
                 label: "Add CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css10_hover', {
                 label: "Hover CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css10_icon', {
                 label: "Icon CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               }),
               PropertyPaneTextField('css10_label', {
                 label: "Label CSS",
-                multiline: true
+                multiline: true,
+                rows: 6
               })
             ]
           }

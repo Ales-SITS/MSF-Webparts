@@ -1,24 +1,30 @@
 import * as React from 'react';
 import { useState } from 'react';
-import  AnchorLink from './AnchorLink'
 import styles from './AnchorListMsf.module.scss';
 
 
 interface anchorObj {
     link:string;
-    title:string
+    title:string;
+    tag: string
   } 
 
 interface inlineStylesObj {
   anchorListBoxInline: Object;
   anchorAlignment: Object;
   headerInline: Object;
-  linkInline: Object
+  anchor: Object;
+  h2anchor: Object;
+  h2symbol: Object;
+  h3anchor: Object;
+  h3symbol: Object;
+  h4anchor: Object;
+  h4symbol: Object
 }
 
 export default function AnchorList (props:any) {
 
-  let anchorlink: anchorObj[]=[]
+  let anchorlinks: anchorObj[]=[]
   let anchorInit = document.querySelectorAll('a[data-sp-anchor-id]')
 
    async function anchorlinkcreator(){
@@ -30,18 +36,32 @@ export default function AnchorList (props:any) {
 
   const {
         AnchorListTitle,
-        AnchorListSymbol,
         ListAlignment,
         TextAlignment,
         BorderRadius,
         ListBG,
-        ListColor,
         HeaderBG,
         HeaderColor,
+        header_size,
         Line,
-      } = props.details;
+        h2_toggle,
+        h2_size,
+        h2_ind,
+        h2_color,
+        h2_symbol,
+        h3_toggle,
+        h3_size,
+        h3_ind,
+        h3_color,
+        h3_symbol,
+        h4_toggle,
+        h4_size,
+        h4_ind,
+        h4_color,
+        h4_symbol,
+        } = props.details;
       
-
+        console.log(h2_size)
     const inlineStyles: inlineStylesObj = {
         anchorAlignment:{
           alignItems: `${ListAlignment}`,
@@ -50,45 +70,107 @@ export default function AnchorList (props:any) {
           alignItems:`${TextAlignment}`,
           borderRadius:`${BorderRadius===undefined || BorderRadius==='' ? "0" : BorderRadius}px`,
           backgroundColor: `${ListBG===undefined || ListBG==='' ? "" : ListBG}`,
-          color: `${ListColor===undefined || ListColor==='' ? "" : ListColor}`,
         },
         headerInline: {
           justifyContent:`${TextAlignment}`,
           backgroundColor: `${HeaderBG===undefined || HeaderBG==='' ? "" : HeaderBG}`,
           color: `${HeaderColor===undefined || HeaderColor==='' ? "" : HeaderColor}`,
-          borderBottom: `${Line===undefined || Line==='' ? "" : Line}`
+          borderBottom: `${Line===undefined || Line==='' ? "" : Line}`,
+          fontSize: `${header_size}px`
         },
-        linkInline: {
+        anchor: {
           justifyContent:`${TextAlignment}`,
           backgroundColor: `${ListBG===undefined || ListBG==='' ? "" : ListBG}`,
-          color: `${ListColor===undefined || ListColor==='' ? "" : ListColor}`,
-        }
+        },
+        h2anchor: {
+          fontSize: `${h2_size}px`,
+          color: `${h2_color === undefined || h2_color ==='' ? "" : h2_color}`,
+        },
+        h2symbol: {
+          marginLeft: `${h2_ind}px`,
+          marginRight:'5px'
+        },
+        h3anchor: {
+          fontSize: `${h3_size}px`,
+          color: `${h3_color === undefined || h3_color ==='' ? "" : h3_color}`,
+        },
+        h3symbol: {
+          marginLeft: `${h3_ind}px`,
+          marginRight:'5px'
+        },
+        h4anchor: {
+          fontSize: `${h4_size}px`,
+          color: `${h4_color === undefined || h4_color ==='' ? "" : h4_color}`,
+        },
+        h4symbol: {
+          marginLeft: `${h4_ind}px`,
+          marginRight:'5px'
+        },
        }
 
 
     const [anchor,setAnchor] = useState(anchorInit)
     const setAnchorHandler = () => {
-        anchorlink=[]
+        anchorlinks=[]
         setAnchor(document.querySelectorAll('a[data-sp-anchor-id]'))
       }
   
+
+    const visible:string[]=[!h2_toggle? 'H2' : null, !h3_toggle? 'H3' : null, !h4_toggle? 'H4' : null]
+
     anchor.forEach(function(node:any){
         let anchorObject: anchorObj={
           link:node.getAttribute("href"),
-          title:node.getAttribute("aria-label").replace("Permalink for ","")
+          title:node.getAttribute("aria-label").replace("Permalink for ",""),
+          tag: node.previousElementSibling.tagName
         };
-          anchorlink.push(anchorObject)    
+          console.log(anchorObject)
+          visible.includes(anchorObject.tag) ? anchorlinks.push(anchorObject) : null    
         }
       )
 
+      console.log(anchor)
+      console.log(visible)
+      console.log(anchorlinks)
+      console.log(document.location.href.indexOf('Mode=Edit')===1)
  return (
   <div className={styles.anchorListWrapper} style={inlineStyles.anchorAlignment}>
     <div className={styles.anchorListBox} style={inlineStyles.anchorListBoxInline}>
       <div onClick={setAnchorHandler} className={styles.header} style={inlineStyles.headerInline}>
         <span>{AnchorListTitle}</span>
       </div>
+      {}
       <div className={styles.anchorLinksWrapper}>
-        {anchorlink.map(item =>  <AnchorLink symbol={AnchorListSymbol} link={item.link} title={item.title} linkStyle={inlineStyles.linkInline}/>)}
+        {document.location.href.indexOf('Mode=Edit')===1 ? 
+        <>
+          <a className={styles.anchorLink} href="" style={inlineStyles.anchor}>
+            <div className={styles.anchorWrapper}>
+              <span style={inlineStyles.h2symbol}>{h2_symbol}</span>
+              <span style={inlineStyles.h2anchor}>Heading 1</span>      
+            </div>
+          </a> 
+          <a className={styles.anchorLink} href="" style={inlineStyles.anchor}>
+            <div className={styles.anchorWrapper}>
+              <span style={inlineStyles.h3symbol}>{h3_symbol}</span>
+              <span style={inlineStyles.h3anchor}>Heading 2</span>     
+            </div> 
+          </a> 
+          <a className={styles.anchorLink} href="" style={inlineStyles.anchor}>
+            <div className={styles.anchorWrapper}>
+              <span style={inlineStyles.h4symbol}>{h4_symbol}</span>
+              <span style={inlineStyles.h4anchor}>Heading 3</span>   
+            </div>
+          </a> 
+        </>
+        : null }
+        {anchorlinks.map (item => 
+                  <a className={styles.anchorLink} href={item.link} style={inlineStyles.anchor}>
+                    <div className={styles.anchorWrapper}>
+                      <span style={item.tag ==="H2" ? inlineStyles.h2symbol : item.tag === "H3" ? inlineStyles.h3symbol : inlineStyles.h4symbol}>{h4_symbol}</span>
+                      <span style={item.tag ==="H2" ? inlineStyles.h2anchor : item.tag === "H3" ? inlineStyles.h3anchor : inlineStyles.h4anchor}>{item.title}</span>   
+                    </div>
+                  </a>      
+          )}
       </div>      
     </div>
   </div>
