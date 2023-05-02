@@ -9,10 +9,8 @@ import {
   PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import * as strings from 'AnchorListMsfWebPartStrings';
 import AnchorListMsf from './components/AnchorListMsf';
 import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
-
 import { IAnchorListMsfProps } from './components/IAnchorListMsfProps';
 
 export interface IAnchorListMsfWebPartProps {
@@ -20,6 +18,7 @@ export interface IAnchorListMsfWebPartProps {
   ListAlignment:string;
   TextAlignment:string;
   BorderRadius: string;
+  Border: string;
   ListBG: string;
   HeaderBG:string;
   HeaderColor:string;
@@ -30,16 +29,19 @@ export interface IAnchorListMsfWebPartProps {
   h2_ind: string;
   h2_color: string;
   h2_symbol: string;
+  h2s_color: string;
   h3_toggle: boolean;
   h3_size: string;
   h3_ind: string;
   h3_color: string;
   h3_symbol: string;
+  h3s_color: string;
   h4_toggle: boolean;
   h4_size: string;
   h4_ind: string;
   h4_color: string;
   h4_symbol: string;
+  h4s_color: string;
 }
 
 export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorListMsfWebPartProps> {
@@ -52,6 +54,7 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
         ListAlignment:this.properties.ListAlignment,
         TextAlignment:this.properties.TextAlignment,
         BorderRadius: this.properties.BorderRadius,
+        Border: this.properties.Border,
         ListBG: this.properties.ListBG,
         HeaderBG: this.properties.HeaderBG,
         HeaderColor: this.properties.HeaderColor,
@@ -62,16 +65,19 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
         h2_ind: this.properties.h2_ind,
         h2_color: this.properties.h2_color,
         h2_symbol: this.properties.h2_symbol,
+        h2s_color: this.properties.h2s_color,
         h3_toggle: this.properties.h3_toggle,
         h3_size: this.properties.h3_size,
         h3_ind: this.properties.h3_ind,
         h3_color: this.properties.h3_color,
         h3_symbol: this.properties.h3_symbol,
+        h3s_color: this.properties.h3s_color,
         h4_toggle: this.properties.h4_toggle,
         h4_size: this.properties.h4_size,
         h4_ind: this.properties.h4_ind,
         h4_color: this.properties.h4_color,
         h4_symbol: this.properties.h4_symbol,
+        h4s_color: this.properties.h4s_color,
       }
     );
 
@@ -136,6 +142,10 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                 PropertyPaneTextField('BorderRadius', {
                   label: "Border radius (px)"
                 }),
+                PropertyPaneTextField('Border', {
+                  description:"Use CSS format with size, type and possibly color, i.e. '2px solid red' ",
+                  label: "Anchor list border"
+                }),
               ]
             },
             {
@@ -191,13 +201,10 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   checked: false
                 }),
                 PropertyPaneTextField('h2_size', {
-                  label: "Font size (px)"
-                }),
-                PropertyPaneTextField('h2_ind', {
-                  label: "Indentation (px)"
+                  label: "1 Font size (px)"
                 }),
                 PropertyFieldColorPicker('h2_color', {
-                  label: 'Font color',
+                  label: '1 Font color',
                   selectedColor: this.properties.h2_color,
                   onPropertyChange: this.onPropertyPaneFieldChanged,
                   properties: this.properties,
@@ -210,9 +217,9 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   key: 'colorFieldId'
                 }),
                 PropertyPaneDropdown('h2_symbol',{
-                  label: "Prefix" ,
+                  label: "1 Prefix" ,
                   options: [
-                    { key: '', text: 'none'},
+                    { key: '', text: 'none'}, //●
                     { key: '●', text: '●'},
                     { key: '⬤', text: '⬤' },
                     { key: '○', text: '○' },
@@ -224,6 +231,22 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                     { key: '◆', text: '◆'},
                     { key: '◇', text: '◇'},
                   ] 
+                }),
+                PropertyFieldColorPicker('h2s_color', {
+                  label: '1 Prefix color',
+                  selectedColor: this.properties.h2s_color,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
+                PropertyPaneTextField('h2_ind', {
+                  label: "1 Indentation (px)"
                 })
               ]
             },
@@ -238,14 +261,11 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   checked: false
               }),
               PropertyPaneTextField('h3_size', {
-                label: "Font size (px)"
-              }),
-              PropertyPaneTextField('h3_ind', {
-                label: "Indentation (px)"
+                label: "2 Font size (px)"
               }),
               PropertyFieldColorPicker('h3_color', {
-                label: 'Font color',
-                selectedColor: this.properties.h3_color,
+                label: '2 Font color',
+                selectedColor: this.properties.h3s_color,
                 onPropertyChange: this.onPropertyPaneFieldChanged,
                 properties: this.properties,
                 disabled: false,
@@ -257,7 +277,7 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                 key: 'colorFieldId'
               }),
               PropertyPaneDropdown('h3_symbol',{
-                label: "Prefix" ,
+                label: "2 Prefix" ,
                 options: [
                   { key: '', text: 'none'},
                   { key: '●', text: '●'},
@@ -271,6 +291,22 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   { key: '◆', text: '◆'},
                   { key: '◇', text: '◇'},
                 ] 
+              }),
+              PropertyFieldColorPicker('h3s_color', {
+                label: '2 Prefix color',
+                selectedColor: this.properties.h3s_color,
+                onPropertyChange: this.onPropertyPaneFieldChanged,
+                properties: this.properties,
+                disabled: false,
+                debounce: 1000,
+                isHidden: false,
+                alphaSliderHidden: false,
+                style: PropertyFieldColorPickerStyle.Inline,
+                iconName: 'Precipitation',
+                key: 'colorFieldId'
+              }),
+              PropertyPaneTextField('h3_ind', {
+                label: "2 Indentation (px)"
               })
               ]
             },
@@ -285,13 +321,10 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   checked: false
               }),
               PropertyPaneTextField('h4_size', {
-                label: "Font size (px)"
-              }),
-              PropertyPaneTextField('h4_ind', {
-                label: "Indentation (px)"
+                label: "3 Font size (px)"
               }),
               PropertyFieldColorPicker('h4_color', {
-                label: 'Font color',
+                label: '3 Font color',
                 selectedColor: this.properties.h4_color,
                 onPropertyChange: this.onPropertyPaneFieldChanged,
                 properties: this.properties,
@@ -304,7 +337,7 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                 key: 'colorFieldId'
               }),
               PropertyPaneDropdown('h4_symbol',{
-                label: "Prefix" ,
+                label: "3 Prefix" ,
                 options: [
                   { key: '', text: 'none'},
                   { key: '●', text: '●'},
@@ -318,6 +351,22 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                   { key: '◆', text: '◆'},
                   { key: '◇', text: '◇'},
                 ] 
+              }),
+              PropertyFieldColorPicker('h4s_color', {
+                label: '3 Prefix color',
+                selectedColor: this.properties.h4s_color,
+                onPropertyChange: this.onPropertyPaneFieldChanged,
+                properties: this.properties,
+                disabled: false,
+                debounce: 1000,
+                isHidden: false,
+                alphaSliderHidden: false,
+                style: PropertyFieldColorPickerStyle.Inline,
+                iconName: 'Precipitation',
+                key: 'colorFieldId'
+              }),
+              PropertyPaneTextField('h4_ind', {
+                label: "3 Indentation (px)"
               })
               ]
             }

@@ -6,11 +6,11 @@ import { FontIcon } from '@fluentui/react/lib/Icon';
 function ButtonDetail (props:any) {
 
   const[
-    d_link, d_label, d_blank, d_icon, d_iconPicker, d_width, d_height, d_borderRadius, d_color, d_margin, d_textColor, d_textAlignment, d_textSize
+    d_link, d_suffix, d_label, d_blank, d_icon, d_iconPicker, d_width, d_height, d_borderRadius, d_color, d_margin, d_textColor, d_textAlignment, d_textSize
    ] = props.details[0];
   
   const[
-    link, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize
+    link, suffix, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize
    ] = props.details[1];
 
    
@@ -27,21 +27,16 @@ function ButtonDetail (props:any) {
     }
    }
 
-    const searchTerm = props.search[0]
-    const searchOption = props.search[1]
+    const searchTerm = props.search
 
     let searchTermOption 
     if (searchTerm === ""){
       searchTermOption = `${escape(link)}`
     } else {
-        if(searchOption === false){
-          searchTermOption = `${escape(link)}${searchTerm}`
-        } else if (searchOption === true) {
-          searchTermOption = `${escape(link)}#${searchTerm}*`
-        }
+      searchTermOption = `${escape(link)}${searchTerm}${escape(suffix)}`
     }  
 
-    const url = searchTermOption.replace("amp;","")
+    const url = searchTermOption.includes("amp;")? searchTermOption.replace("amp;","") : searchTermOption
 
 
     return (

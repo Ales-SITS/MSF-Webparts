@@ -7,11 +7,11 @@ import { FontIcon } from '@fluentui/react/lib/Icon';
 function ButtoncssDetail (props:any) {
 
   const[
-    d_link, d_label, d_blank, d_icon, d_iconPicker, d_css, d_css_hover, d_css_icon, d_css_label
+    d_link, d_suffix, d_label, d_blank, d_icon, d_iconPicker, d_css, d_css_hover, d_css_icon, d_css_label
    ] = props.details[0];
   
   const[
-    link, label, blank, icon, iconPicker, css, css_hover, css_icon, css_label
+    link, suffix, label, blank, icon, iconPicker, css, css_hover, css_icon, css_label
    ] = props.details[1];
 
    let buttonCSS
@@ -43,21 +43,16 @@ function ButtoncssDetail (props:any) {
         return cssObject
    } 
 
-    const searchTerm = props.search[0]
-    const searchOption = props.search[1]
+   const searchTerm = props.search
 
-    let searchTermOption 
-    if (searchTerm === ""){
-      searchTermOption = `${escape(link)}`
-    } else {
-        if(searchOption === false){
-          searchTermOption = `${escape(link)}${searchTerm}`
-        } else if (searchOption === true) {
-          searchTermOption = `${escape(link)}#${searchTerm}*`
-        }
-    }  
+   let searchTermOption 
+   if (searchTerm === ""){
+     searchTermOption = `${escape(link)}`
+   } else {
+     searchTermOption = `${escape(link)}${searchTerm}${escape(suffix)}`
+   }  
 
-    const url = searchTermOption.replace("amp;","")
+   const url = searchTermOption.includes("amp;")? searchTermOption.replace("amp;","") : searchTermOption
 
     const [butCSS, setButCSS] = useState(buttonCSS)
     const butCSSHandler = (state) => {
