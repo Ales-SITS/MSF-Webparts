@@ -65,7 +65,7 @@ export default function AnchorList (props:any) {
         h4_symbol,
         } = props.details;
       
-        console.log(h2_size)
+       
     const inlineStyles: inlineStylesObj = {
         anchorAlignment:{
           alignItems: `${ListAlignment}`
@@ -132,8 +132,7 @@ export default function AnchorList (props:any) {
           title:node.getAttribute("aria-label").replace("Permalink for ",""),
           tag: node.previousElementSibling.tagName
         };
-          console.log(anchorObject)
-          visible.includes(anchorObject.tag) ? anchorlinks.push(anchorObject) : null    
+         visible.includes(anchorObject.tag) ? anchorlinks.push(anchorObject) : null    
         }
       )
 
