@@ -6,8 +6,7 @@ import {
   PropertyPaneTextField,
   PropertyPaneToggle,
   PropertyPaneChoiceGroup,
-  PropertyPaneSlider,
-  IPropertyPaneGroup
+  PropertyPaneSlider
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import ButtonMsfHandler from './components/ButtonMsfHandler';
@@ -70,6 +69,9 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
     ReactDom.render(element, this.domElement);
   }
 
+  protected onDispose(): void {
+    ReactDom.unmountComponentAtNode(this.domElement);
+  }
  
   protected get dataVersion(): Version {
     return Version.parse('1.0');

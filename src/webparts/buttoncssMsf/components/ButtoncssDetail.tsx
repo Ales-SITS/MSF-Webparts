@@ -24,10 +24,13 @@ function ButtoncssDetail (props:any) {
    d_css_icon === undefined ? "" : css_icon === undefined || css_icon === "" ? buttonCSSIcon = cssfactory(d_css_icon) : buttonCSSIcon = cssfactory(css_icon)
    d_css_label === undefined ? "" : css_label === undefined || css_label ==="" ? buttonCSSLabel = cssfactory(d_css_label) : buttonCSSLabel = cssfactory(css_label)
 
+   interface CSSObject {
+    [key: string]: string;
+  }
 
-   function cssfactory (code) {
+   function cssfactory (code:string) {
       const cssArr: string[] = code.split(';') 
-      const cssObject_raw:any = cssArr.reduce((acc, curr) => {
+      const cssObject_raw:CSSObject = cssArr.reduce((acc, curr) => {
         const [property, value] = curr.split(':');
         acc [property.trim()] = value.trim();
         return acc;
@@ -60,7 +63,7 @@ function ButtoncssDetail (props:any) {
     }
 
     return (
-        <a className={styles.ButtoncssMsfLink} href={url} target={blank ? "_blank":"_self"} data-interception="off" >
+        <a className={styles.ButtoncssMsfLink} href={url} target={blank ? "_blank":"_self"} rel = {blank? "noreferrer" : ""} data-interception="off" >
           <div className={styles.ButtoncssMsf} style={butCSS}
             onMouseEnter={()=>butCSSHandler(false)}
             onMouseLeave={()=>butCSSHandler(true)}

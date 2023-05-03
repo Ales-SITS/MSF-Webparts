@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState, useMemo, CSSProperties, useCallback} from 'react'
+import {useState, useMemo, CSSProperties} from 'react'
 import styles from './DropzoneMsf.module.scss';
 import {useDropzone} from 'react-dropzone'
 import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
@@ -12,8 +12,7 @@ import "@pnp/sp/files";
 import "@pnp/sp/folders";
 import "@pnp/sp/sites";
 import { Web } from "@pnp/sp/webs";
-
-const mime: MimeTypes = require('./mime.json');
+import mime from './mime.json';
 
 export interface ChunkedFileUploadProgressData {
   stage: "starting" | "continue" | "finishing";
@@ -28,15 +27,11 @@ interface dropfile extends File{
   path: string
 }
 
-interface MimeTypes {
-  [key: string]: string;
-}
-
 interface Accept {
   [key: string]: string[];
 }
 
-export default function DropzoneMsf (props) {
+export default function DropzoneMsf (props): React.ReactElement {
   
   const context = props.context
 
@@ -90,7 +85,7 @@ export default function DropzoneMsf (props) {
       fontSize: `${fontSize}px`
     }
 
-  let itemObj: Accept = {}
+  const itemObj: Accept = {}
   accArr.forEach( item => {
      itemObj[mime[item]] = [item]
   })
@@ -137,9 +132,9 @@ const inputProps = getInputProps({
 
     const [stateStatus, setStateStatus] = useState ('progress')
     
-    let chunkSize = 2000000
+    const chunkSize = 2000000
   
-    async function uploadFile (files: any[]) {
+    async function uploadFile (files: File[]):Promise<void> {
          
       if (files.length === 0) {
         setState({
@@ -161,7 +156,7 @@ const inputProps = getInputProps({
           await files.forEach((file,indx) => {
             const fileNamePath = encodeURI(file.name)
             sp.web.getFolderByServerRelativePath(relativePath).files.addChunked(fileNamePath, file, data => {
-                let percent = (data.blockNumber / data.totalBlocks)
+                const percent = (data.blockNumber / data.totalBlocks)
                 setState({
                   progressPercent: percent,
                   progressDescription: "Uploading ... ",
@@ -204,7 +199,7 @@ const inputProps = getInputProps({
               const fileNamePath = encodeURI(file.name)
               const w = Web([sp.web, eSiteUrl])
               w.getFolderByServerRelativePath(eRelativePath).files.addChunked(fileNamePath, file, data => {
-                  let percent = (data.blockNumber / data.totalBlocks)
+                  const percent = (data.blockNumber / data.totalBlocks)
                   setState({
                     progressPercent: percent,
                     progressDescription: "Uploading ... ",  //`${isNaN(Math.round(percent * 100)) ? "-" : Math.round(percent * 100)} %`,
@@ -239,8 +234,8 @@ const inputProps = getInputProps({
     }
   }
 
-  const filesToDisplay = acceptedFiles.map((file: dropfile) => ( 
-    <div className={styles.file}>
+  const filesToDisplay = acceptedFiles.map((file: dropfile, index: number) => ( 
+    <div className={styles.file} key={index}>
       <span>{file.path} </span>
       <span className={styles.filesize}>{(file.size/1000000).toFixed(2)} MB</span>
     </div>
@@ -251,10 +246,9 @@ const inputProps = getInputProps({
       <div {...getRootProps({style})}>
         <input {...inputProps}/>
         <p style={style_instruction}>{instructions}</p>
-        
       {typeIcons ?
         <div className={styles.iconwrapper}>
-            {accArr.map( file => <div className={styles.icon}>{file.toUpperCase()}</div>)}
+            {accArr.map( (file,index) => <div className={styles.icon} key={index}>{file.toUpperCase()}</div>)}
         </div>
         : null}
       </div>

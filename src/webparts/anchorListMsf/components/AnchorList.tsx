@@ -10,30 +10,23 @@ interface anchorObj {
   } 
 
 interface inlineStylesObj {
-  anchorListBoxInline: Object;
-  anchorAlignment: Object;
-  headerInline: Object;
-  anchor: Object;
-  h2anchor: Object;
-  h2symbol: Object;
-  h3anchor: Object;
-  h3symbol: Object;
-  h4anchor: Object;
-  h4symbol: Object
+  anchorListBoxInline: {};
+  anchorAlignment: {};
+  headerInline: {};
+  anchor: {};
+  h2anchor: {};
+  h2symbol: {};
+  h3anchor:{};
+  h3symbol:{};
+  h4anchor:{};
+  h4symbol:{}
 }
 
-export default function AnchorList (props:any) {
+export default function AnchorList (props:any):JSX.Element {
 
   let anchorlinks: anchorObj[]=[]
-  let anchorInit = document.querySelectorAll('a[data-sp-anchor-id]')
-/*
-   async function anchorlinkcreator(){
-      anchorInit = await new Promise ((resolve,reject)=>{resolve(
-        anchorInit = document.querySelectorAll('a[data-sp-anchor-id]')
-        )})
-      return anchorInit
-   }
-*/
+  const anchorInit = document.querySelectorAll('a[data-sp-anchor-id]')
+
   const {
         AnchorListTitle,
         ListAlignment,
@@ -118,7 +111,7 @@ export default function AnchorList (props:any) {
 
 
     const [anchor,setAnchor] = useState(anchorInit)
-    const setAnchorHandler = () => {
+    const setAnchorHandler = ():void => {
         anchorlinks=[]
         setAnchor(document.querySelectorAll('a[data-sp-anchor-id]'))
       }
@@ -126,13 +119,15 @@ export default function AnchorList (props:any) {
 
     const visible:string[]=[!h2_toggle? 'H2' : null, !h3_toggle? 'H3' : null, !h4_toggle? 'H4' : null]
 
-    anchor.forEach(function(node:any){
-        let anchorObject: anchorObj={
+    anchor.forEach(function(node:Element){
+        const anchorObject: anchorObj={
           link:node.getAttribute("href"),
           title:node.getAttribute("aria-label").replace("Permalink for ",""),
           tag: node.previousElementSibling.tagName
         };
-         visible.includes(anchorObject.tag) ? anchorlinks.push(anchorObject) : null    
+        if (visible.includes(anchorObject.tag)) {
+          anchorlinks.push(anchorObject);
+        }
         }
       )
 
@@ -168,8 +163,8 @@ export default function AnchorList (props:any) {
           </a> : null } 
         </>
         : null }
-        {anchorlinks.map (item => 
-                  <a className={styles.anchorLink} href={item.link} style={inlineStyles.anchor}>
+        {anchorlinks.map ((item,index) => 
+                  <a key={index} className={styles.anchorLink} href={item.link} style={inlineStyles.anchor}>
                     <div className={styles.anchorWrapper}>
                       <span style={item.tag ==="H2" ? inlineStyles.h2symbol : item.tag === "H3" ? inlineStyles.h3symbol : inlineStyles.h4symbol}>{item.tag === "H2" ?  h2_symbol : item.tag === "H3" ? h3_symbol : h4_symbol}</span>
                       <span style={item.tag ==="H2" ? inlineStyles.h2anchor : item.tag === "H3" ? inlineStyles.h3anchor : inlineStyles.h4anchor}>{item.title}</span>   

@@ -41,11 +41,17 @@ export interface IDropzoneMsfWebPartProps {
   typeIcons: boolean
 }
 
-let foldersOptions:any[] = []
+interface FolderOption {
+  key: string;
+  text: string;
+  library: string;
+}
+
+let foldersOptions:FolderOption[] = []
 export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneMsfWebPartProps> {
-  public async getFolders(): Promise<any> {
+  public async getFolders(): Promise<void> {
     const sp = spfi().using(SPFx(this.context));
-    let Options = [{key:"", text:"", library: ""}]
+    const Options = [{key:"", text:"", library: ""}]
     this.properties.listObj.id !== "" ? 
     await sp.web.lists.getById(this.properties.listObj.id).rootFolder.folders().then((fs)=>{
       if (Array.isArray(fs)){
@@ -57,9 +63,6 @@ export default class DropzoneMsfWebPart extends BaseClientSideWebPart<IDropzoneM
       foldersOptions = Options
       this.context.propertyPane.refresh()
     } 
-  }
-
-  public reloader(folder): any {
   }
 
   public digest: string = "";

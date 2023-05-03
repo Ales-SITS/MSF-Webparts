@@ -3,7 +3,7 @@ import styles from './ButtonMsf.module.scss';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { FontIcon } from '@fluentui/react/lib/Icon';
 
-function ButtonDetail (props:any) {
+function ButtonDetail (props:any): React.ReactElement {
 
   const[
     d_link, d_suffix, d_label, d_blank, d_icon, d_iconPicker, d_width, d_height, d_borderRadius, d_color, d_margin, d_textColor, d_textAlignment, d_textSize
@@ -40,7 +40,7 @@ function ButtonDetail (props:any) {
 
 
     return (
-        <a className={styles.ButtonMsfLink} href={url} target={blank ? "_blank":"_self"} data-interception="off" >
+        <a className={styles.ButtonMsfLink} href={url} target={blank ? "_blank":"_self"} rel = {blank? "noreferrer" : ""} data-interception="off" >
           <div className={styles.ButtonMsf} style={inlineStyles.container}>
             {icon===false? "":<FontIcon aria-label={iconPicker} iconName={iconPicker} className={`${styles.iconClass}`} style={{fontSize:`${textSize===undefined || textSize==='' ? d_textSize : textSize}px`}}/>}
             {label===undefined || label=== "" ? "":<span className={`${styles.ButtonMsfText}`} style={{fontSize:`${textSize===undefined || textSize==='' ? d_textSize : textSize}px`}}>{label}</span>}

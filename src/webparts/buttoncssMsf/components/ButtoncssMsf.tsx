@@ -3,7 +3,7 @@ import { useState} from 'react';
 import styles from './ButtoncssMsf.module.scss';
 import ButtoncssDetail from './ButtoncssDetail'
 
-export default function ButtoncssMsf (props) {
+export default function ButtoncssMsf (props): React.ReactElement {
     const {
       inputToggle,
       inputAlignment,
@@ -80,11 +80,26 @@ export default function ButtoncssMsf (props) {
    }
     
    const[searchTerm,setSearchTerm] = useState("")
-   const setSearchTermHandler = (event) => {
+   const setSearchTermHandler = (event):void => {
     setSearchTerm(event.target.value)
    }
 
-  const inputInlineStyles:any = {
+   interface InputInlineStyles {
+    container: {
+      width: string;
+      borderRadius: string;
+      fontSize: string;
+      border: string;
+    }
+  }
+
+  interface InputInlineAlignment {
+    container: {
+      justifyContent: string
+    }
+  }
+
+  const inputInlineStyles:InputInlineStyles = {
     container: {
       width:`${inputWidth}px`,
       borderRadius:`${inputBorderRadius}px`,
@@ -93,7 +108,7 @@ export default function ButtoncssMsf (props) {
     }
    }
 
-   const inputInlineAlignment:any = {
+   const inputInlineAlignment:InputInlineAlignment = {
     container: {
       justifyContent: `${inputAlignment}`
     }
@@ -109,7 +124,7 @@ export default function ButtoncssMsf (props) {
         onChange={setSearchTermHandler}
         value={searchTerm}
         placeholder={inputPlaceholderText}
-        ></input>
+        />
       </div>)}
       <div className={`${styles.ButtoncssMsfWrapper} ${wrapperAlignment} ${wrapperDirection}`}>
         <ButtoncssDetail details={detailsArr1} search={inputToggle === false? "": searchTerm}/>

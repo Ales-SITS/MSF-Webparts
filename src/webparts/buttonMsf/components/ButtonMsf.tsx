@@ -3,10 +3,9 @@ import { useState } from 'react';
 import styles from './ButtonMsf.module.scss';
 import ButtonDetail from './ButtonDetail'
 
-export default function ButtonMsf (props) {
+export default function ButtonMsf (props): React.ReactElement {
     const {
       inputToggle,
-      inputPnP,
       inputAlignment,
       inputPlaceholderText,
       inputWidth,
@@ -85,7 +84,22 @@ export default function ButtonMsf (props) {
     setSearchTerm(event.target.value)
    }
 
-  const inputInlineStyles:any = {
+   interface InputInlineStyles {
+    container: {
+      width: string;
+      borderRadius: string;
+      fontSize: string;
+      border: string;
+    };
+  }
+  
+  interface InputInlineAlignment {
+    container: {
+      justifyContent: string;
+    };
+  }
+
+  const inputInlineStyles:InputInlineStyles = {
     container: {
       width:`${inputWidth}px`,
       borderRadius:`${inputBorderRadius}px`,
@@ -94,7 +108,7 @@ export default function ButtonMsf (props) {
     }
    }
 
-   const inputInlineAlignment:any = {
+   const inputInlineAlignment:InputInlineAlignment = {
     container: {
       justifyContent: `${inputAlignment}`
     }
@@ -110,7 +124,7 @@ export default function ButtonMsf (props) {
         onChange={setSearchTermHandler}
         value={searchTerm}
         placeholder={inputPlaceholderText}
-        ></input>
+        />
       </div>)}
       <div className={`${styles.ButtonMsfWrapper} ${wrapperAlignment} ${wrapperDirection}`}>
         <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm}/>
