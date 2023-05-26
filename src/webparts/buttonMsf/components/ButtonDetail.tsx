@@ -28,12 +28,13 @@ function ButtonDetail (props:any): React.ReactElement {
    }
 
     const searchTerm = props.search
+    const dropdown = props.dropdown
 
     let searchTermOption 
     if (searchTerm === ""){
       searchTermOption = `${escape(link)}`
     } else {
-      searchTermOption = `${escape(link)}${searchTerm}${escape(suffix)}`
+      searchTermOption = `${escape(link)}${searchTerm}${escape(suffix)}_${escape(dropdown)}_xxx`
     }  
 
     const url = searchTermOption.includes("amp;")? searchTermOption.replace("amp;","") : searchTermOption

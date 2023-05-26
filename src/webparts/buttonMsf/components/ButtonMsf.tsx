@@ -5,6 +5,9 @@ import ButtonDetail from './ButtonDetail'
 
 export default function ButtonMsf (props): React.ReactElement {
     const {
+      solutionDirection,
+      solutionAlignment,
+
       inputToggle,
       inputAlignment,
       inputPlaceholderText,
@@ -12,6 +15,15 @@ export default function ButtonMsf (props): React.ReactElement {
       inputFont,
       inputBorderRadius,
       inputBorder,
+
+      dropdownToggle,
+      dropdownAlignment,
+      dropdownValues,
+      dropdownWidth,
+      dropdownFont,
+      dropdownBorderRadius,
+      dropdownBorder,
+
       buttonsNumber,
       buttonAlignment,
       buttonsDirection,
@@ -84,22 +96,14 @@ export default function ButtonMsf (props): React.ReactElement {
     setSearchTerm(event.target.value)
    }
 
-   interface InputInlineStyles {
+  const solutionInlineStyle = {
     container: {
-      width: string;
-      borderRadius: string;
-      fontSize: string;
-      border: string;
-    };
-  }
-  
-  interface InputInlineAlignment {
-    container: {
-      justifyContent: string;
-    };
+      flexDirection: solutionDirection,
+      justifyContent:  `${solutionAlignment}`,
+    }
   }
 
-  const inputInlineStyles:InputInlineStyles = {
+  const inputInlineStyles = {
     container: {
       width:`${inputWidth}px`,
       borderRadius:`${inputBorderRadius}px`,
@@ -108,16 +112,44 @@ export default function ButtonMsf (props): React.ReactElement {
     }
    }
 
-   const inputInlineAlignment:InputInlineAlignment = {
+   const inputInlineAlignment = {
     container: {
       justifyContent: `${inputAlignment}`
     }
    }
 
+   
+  const dropdownInlineStyles = {
+    container: {
+      width:`${dropdownWidth}px`,
+      borderRadius:`${dropdownBorderRadius}px`,
+      fontSize:`${dropdownFont}px`,
+      border: `${dropdownBorder}`,
+      padding: '2px'
+    }
+   }
+
+   const dropdownInlineAlignment = {
+    container: {
+      justifyContent: `${dropdownAlignment}`
+    }
+   }
+
+
+   const dropdownValues_arr = dropdownValues.split(",")
+
+   const [dropdownValue, setDropdownValue] = useState('fruit');
+
+   const dropdownHandler = (event) => {
+  
+      setDropdownValue(event.target.value);
+  
+   };
+
 
     return (
-      <>
-      {inputToggle === false || inputToggle === undefined ? "" : (<div className={styles.InputWrapper}  style={inputInlineAlignment.container}>
+      <div className={styles.solutionWrapper} style={solutionInlineStyle.container}>
+      {inputToggle === false || inputToggle === undefined ? null : (<div className={styles.InputWrapper}  style={inputInlineAlignment.container}>
         <input 
         style={inputInlineStyles.container}
         type="text"
@@ -126,8 +158,16 @@ export default function ButtonMsf (props): React.ReactElement {
         placeholder={inputPlaceholderText}
         />
       </div>)}
+      {dropdownToggle === false || dropdownToggle === undefined ? null : 
+      <div className={styles.InputWrapper}  style={dropdownInlineAlignment.container}>
+        <select value={dropdownValue} onChange={dropdownHandler}  style={dropdownInlineStyles.container}>
+          {dropdownValues_arr.map(e => {
+            return <option value={e}>{e}</option>
+          })}
+        </select>
+      </div>}
       <div className={`${styles.ButtonMsfWrapper} ${wrapperAlignment} ${wrapperDirection}`}>
-        <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm}/>
+        <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm} dropdown={dropdownToggle === false? "" : dropdownValue}/>
         {buttonsNumber > 1 ? <ButtonDetail details={detailsArr2} search={inputToggle === false ?  "" : searchTerm}/> : ""}
         {buttonsNumber > 2 ? <ButtonDetail details={detailsArr3} search={inputToggle === false ?  "" : searchTerm}/> : ""}
         {buttonsNumber > 3 ? <ButtonDetail details={detailsArr4} search={inputToggle === false ? "" : searchTerm}/> : ""}
@@ -138,6 +178,6 @@ export default function ButtonMsf (props): React.ReactElement {
         {buttonsNumber > 8 ? <ButtonDetail details={detailsArr9} search={inputToggle === false ? "" : searchTerm}/> : ""}
         {buttonsNumber > 9 ? <ButtonDetail details={detailsArr10} search={inputToggle === false ? "" : searchTerm}/> : ""}
       </div>
-      </>
+      </div>
     );
 }

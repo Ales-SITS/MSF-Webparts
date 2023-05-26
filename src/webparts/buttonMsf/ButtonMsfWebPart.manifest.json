@@ -18,7 +18,10 @@
     "description": { "default": "Create and designe your own button(s)" },
     "iconImageUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAO8lK0OWB/UAAAABdFJOUwBA5thmAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABFklEQVRoQ+3MoQ0DQBDEwE//TYcMWpRIhjfUkt855/znkzFcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasDwnHN+8t4XResVZeGEBvUAAAAASUVORK5CYII=",
     "properties": {
-      "description": "Button (MSF)"
+      "description": "Button (MSF)",
+      "inputToggle":false,
+      "dropdownToggle":false,
+      "dropdownValues":""
     }
   }]
 }

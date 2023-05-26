@@ -14,6 +14,8 @@ import { PropertyFieldIconPicker } from '@pnp/spfx-property-controls/lib/Propert
 import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
 
 export interface IButtonMsfProps {
+  solutionDirection: string;
+  solutionAlignment: string;
   inputToggle:boolean;
   inputAlignment: string;
   inputPlaceholderText: string;
@@ -21,6 +23,13 @@ export interface IButtonMsfProps {
   inputFont: string;
   inputBorderRadius: string;
   inputBorder: string;
+  dropdownToggle:boolean;
+  dropdownAlignment: string;
+  dropdownValues: string;
+  dropdownWidth: string;
+  dropdownFont: string;
+  dropdownBorderRadius: string;
+  dropdownBorder: string;
   buttonsNumber: number;
   buttonAlignment: string;
   buttonsDirection:string;
@@ -43,6 +52,9 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
     const element: React.ReactElement<IButtonMsfProps> = React.createElement(
       ButtonMsfHandler,
       {
+        solutionDirection: this.properties.solutionDirection,
+        solutionAlignment: this.properties.solutionAlignment,
+
         inputToggle: this.properties.inputToggle,
         inputAlignment: this.properties.inputAlignment,
         inputPlaceholderText: this.properties.inputPlaceholderText,
@@ -50,6 +62,15 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
         inputFont: this.properties.inputFont,
         inputBorderRadius: this.properties.inputBorderRadius,
         inputBorder: this.properties.inputBorder,
+
+        dropdownToggle:this.properties.dropdownToggle,
+        dropdownAlignment: this.properties. dropdownAlignment,
+        dropdownValues: this.properties.dropdownValues,
+        dropdownWidth: this.properties.dropdownWidth,
+        dropdownFont: this.properties.dropdownFont,
+        dropdownBorderRadius: this.properties.dropdownBorderRadius,
+        dropdownBorder: this.properties.dropdownBorder,
+
         buttonsNumber: this.properties.buttonsNumber,
         buttonAlignment: this.properties.buttonAlignment,
         buttonsDirection:this.properties.buttonsDirection,
@@ -77,11 +98,8 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
     return Version.parse('1.0');
   }
 
-  
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
-    console.log(this.properties.inputToggle)
-
 
     const pagesArray = [ 
       {
@@ -90,6 +108,28 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
       },
       displayGroupsAsAccordion: true,
       groups: [ 
+        { 
+          groupName: "General settings",
+          isCollapsed:true,
+          groupFields: [
+            PropertyPaneChoiceGroup("solutionDirection", {
+              label: "Fields direction",
+              options: [
+                { key: "column", text: "Vertical" },
+                { key: "row", text: "Horizontal" },
+              ]
+            }),
+            PropertyPaneChoiceGroup("solutionAlignment", {
+              label: "Fields alignemnt",
+              options: [
+                { key: "start", text: "Start" },
+                { key: "center", text: "Center" },
+                { key: "end", text: "End" }
+              ]
+            }),
+
+          ]
+        },
         { 
           groupName: "Input field settings",
           isCollapsed:true,
@@ -122,10 +162,46 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
               description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
             }),
           ]
-        },          
+        },
         { 
-          groupName: "General settings",
-          isCollapsed:false,
+          groupName: "Dropdown field settings",
+          isCollapsed:true,
+          groupFields: [
+            PropertyPaneToggle('dropdownToggle',{
+              label:"Display connected dropdown menu?"
+            }),
+            PropertyPaneChoiceGroup("dropdownAlignment", {
+              label: "dropdown field alignment",
+              options: [
+                { key: "start", text: "Start" },
+                { key: "center", text: "Center" },
+                { key: "end", text: "End" }
+              ]
+            }),
+            PropertyPaneTextField('dropdownValues', {
+              label: "Add placeholder text", 
+              multiline: true,
+              rows: 6,
+              description: "List separated by comma i.e: car, bike, plane"         
+            }),
+            PropertyPaneTextField('dropdownWidth', {
+              label: "Set width (px)",
+            }),
+            PropertyPaneTextField('dropdownFont', {
+              label: "Set font size (px)",
+            }),
+            PropertyPaneTextField('dropdownBorderRadius', {
+              label: "Set border radius (px)",
+            }),
+            PropertyPaneTextField('dropdownBorder', {
+              label: "Set border",
+              description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
+            }),
+          ]
+        },         
+        { 
+          groupName: "Buttons field settings",
+          isCollapsed:true,
           groupFields: [
             PropertyPaneSlider('buttonsNumber',{  
               label:"Number of buttons",  
@@ -154,7 +230,7 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
         },
         {
           groupName: "Button 1 basic settings",
-          isCollapsed:false,
+          isCollapsed:true,
           groupFields: [
             PropertyPaneTextField('link', {
               label: "Add URL link",
