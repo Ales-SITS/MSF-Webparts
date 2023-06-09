@@ -4,6 +4,7 @@
   display: flex;
   justify-content: start;
   flex-direction: column;
+  padding: 5px
 }
 
 .InputWrapper {
@@ -13,17 +14,32 @@
 }
 
 .InputWrapper input[type=text] {
-  padding: 5px
+  padding: 5px;
+  box-sizing: border-box;
+  height: fit-content
 }
 
 .InputWrapper input[type=text]:focus {
   outline: none;
 }
 
+.InputWrapper select:focus {
+  outline: none;
+}
+
+.InputWrapper select {
+  padding: 6px;
+  box-sizing: border-box;
+  height: fit-content
+}
+
+.InputWrapper select option{
+  margin: 2px
+}
+
 .ButtonMsfWrapper {
  display: flex;
  align-content: center;
- 
 }
 
 .ButtonMsfWrapperLeft {

@@ -19,6 +19,8 @@ export interface IAnchorListMsfWebPartProps {
   TextAlignment:string;
   BorderRadius: string;
   Border: string;
+  fixed_toggle: boolean;
+  fixed_top: string;
   ListBG: string;
   HeaderBG:string;
   HeaderColor:string;
@@ -55,6 +57,8 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
         TextAlignment:this.properties.TextAlignment,
         BorderRadius: this.properties.BorderRadius,
         Border: this.properties.Border,
+        fixed_toggle: this.properties.fixed_toggle,
+        fixed_top: this.properties.fixed_top,
         ListBG: this.properties.ListBG,
         HeaderBG: this.properties.HeaderBG,
         HeaderColor: this.properties.HeaderColor,
@@ -145,6 +149,15 @@ export default class AnchorListMsfWebPart extends BaseClientSideWebPart<IAnchorL
                 PropertyPaneTextField('Border', {
                   description:"Use CSS format with size, type and possibly color, i.e. '2px solid red' ",
                   label: "Anchor list border"
+                }),
+                PropertyPaneToggle('fixed_toggle', {
+                  label: "Fixed position?",
+                  offText: "Off",
+                  onText: "On",
+                  checked: false
+                }),
+                PropertyPaneTextField('fixed_top', {
+                  label: "Distance from the window top (px)"
                 }),
               ]
             },

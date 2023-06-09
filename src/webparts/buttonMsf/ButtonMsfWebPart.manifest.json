@@ -15,13 +15,11 @@
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
     "group": { "default": "Advanced" },
     "title": { "default": "Button (MSF)" },
-    "description": { "default": "Create and designe your own button(s)" },
+    "description": { "default": "Create and design your own button(s)" },
     "iconImageUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAMAAADVRocKAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURQAAAO8lK0OWB/UAAAABdFJOUwBA5thmAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABFklEQVRoQ+3MoQ0DQBDEwE//TYcMWpRIhjfUkt855/znkzFcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasBwqQHDpQYMlxowXGrAcKkBw6UGDJcaMFxqwHCpAcOlBgyXGjBcasDwnHN+8t4XResVZeGEBvUAAAAASUVORK5CYII=",
     "properties": {
       "description": "Button (MSF)",
-      "inputToggle":false,
-      "dropdownToggle":false,
-      "dropdownValues":""
+      "icon": false
     }
   }]
 }

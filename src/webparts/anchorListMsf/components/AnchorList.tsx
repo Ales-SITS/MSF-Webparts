@@ -33,6 +33,8 @@ export default function AnchorList (props:any):JSX.Element {
         TextAlignment,
         BorderRadius,
         Border,
+        fixed_toggle,
+        fixed_top,
         ListBG,
         HeaderBG,
         HeaderColor,
@@ -61,7 +63,10 @@ export default function AnchorList (props:any):JSX.Element {
        
     const inlineStyles: inlineStylesObj = {
         anchorAlignment:{
-          alignItems: `${ListAlignment}`
+          alignItems: `${ListAlignment}`,
+          position: `${fixed_toggle ? 'fixed' : 'static'}`,
+          top: `${fixed_top}px`,
+          zIndex: '10'
         },
         anchorListBoxInline: {
           alignItems:`${TextAlignment}`,

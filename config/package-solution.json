@@ -3,7 +3,7 @@
   "solution": {
     "name": "MSF webparts package",
     "id": "8e76caf6-67fb-48dd-94e8-87cf9db80c85",
-    "version": "6.0.4.2",
+    "version": "6.0.6.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -31,7 +31,7 @@
         "title": "MSF webparts package",
         "description": "The feature that activates elements of the msf-webparts solution.",
         "id": "e0da02d2-a66d-47be-8dd7-844c1d9c8848",
-        "version": "6.0.4.2"
+        "version": "6.0.6.1"
       }
     ]
   },

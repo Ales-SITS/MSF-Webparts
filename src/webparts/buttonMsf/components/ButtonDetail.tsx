@@ -13,7 +13,7 @@ function ButtonDetail (props:any): React.ReactElement {
     link, suffix, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize
    ] = props.details[1];
 
-   
+  
    const inlineStyles:any = {
     container: {
       margin: `${margin===undefined || margin==='' ? d_margin : margin}`,
@@ -29,16 +29,22 @@ function ButtonDetail (props:any): React.ReactElement {
 
     const searchTerm = props.search
     const dropdown = props.dropdown
+    const order = props.order === undefined? [1,2,3] : props.order
+
+    const orderArray = [[order[0],searchTerm],[order[1],dropdown],[order[2],link]]
 
     let searchTermOption 
     if (searchTerm === ""){
       searchTermOption = `${escape(link)}`
     } else {
-      searchTermOption = `${escape(link)}${searchTerm}${escape(suffix)}_${escape(dropdown)}_xxx`
+      console.log("Confirmed")
+      const urlArrOrd =orderArray.sort(function(a, b) {return a[0] - b[0];});
+      const urlOrd = `${[urlArrOrd[0][1]]}${[urlArrOrd[1][1]]}${[urlArrOrd[2][1]]}`
+      searchTermOption = urlOrd//`${escape(link)}${escape(dropdown)}${searchTerm}${escape(suffix)}`
     }  
 
-    const url = searchTermOption.includes("amp;")? searchTermOption.replace("amp;","") : searchTermOption
-
+     const url = searchTermOption.includes("amp;") ? searchTermOption.replace("amp;","") : searchTermOption
+     console.log(url)
 
     return (
         <a className={styles.ButtonMsfLink} href={url} target={blank ? "_blank":"_self"} rel = {blank? "noreferrer" : ""} data-interception="off" >

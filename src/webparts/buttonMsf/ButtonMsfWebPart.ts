@@ -6,7 +6,8 @@ import {
   PropertyPaneTextField,
   PropertyPaneToggle,
   PropertyPaneChoiceGroup,
-  PropertyPaneSlider
+  PropertyPaneSlider,
+  PropertyPaneDropdown
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import ButtonMsfHandler from './components/ButtonMsfHandler';
@@ -16,21 +17,33 @@ import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/sp
 export interface IButtonMsfProps {
   solutionDirection: string;
   solutionAlignment: string;
+  solutionJustify: string;
+  solutionBG: string;
+  solutionBorderRadius: string;
+
   inputToggle:boolean;
+  inputOrder: string;
   inputAlignment: string;
   inputPlaceholderText: string;
   inputWidth: string;
   inputFont: string;
   inputBorderRadius: string;
+  inputMargin: string;
   inputBorder: string;
+
   dropdownToggle:boolean;
+  dropdownOrder: string;
   dropdownAlignment: string;
   dropdownValues: string;
+  dropdownLabels: string;
   dropdownWidth: string;
   dropdownFont: string;
   dropdownBorderRadius: string;
+  dropdownMargin: string;
   dropdownBorder: string;
+
   buttonsNumber: number;
+  buttonOrder: string;
   buttonAlignment: string;
   buttonsDirection:string;
   link: string; suffix: string; label: string; blank: boolean; icon: boolean; iconPicker: string; width: string; height: string; borderRadius: string; color: string; margin: string; textAlignment:string; textSize:string; textColor: string;
@@ -54,24 +67,33 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
       {
         solutionDirection: this.properties.solutionDirection,
         solutionAlignment: this.properties.solutionAlignment,
+        solutionJustify: this.properties.solutionJustify,
+        solutionBG: this.properties.solutionBG,
+        solutionBorderRadius: this.properties.solutionBorderRadius,
 
         inputToggle: this.properties.inputToggle,
+        inputOrder: this.properties.inputOrder,
         inputAlignment: this.properties.inputAlignment,
         inputPlaceholderText: this.properties.inputPlaceholderText,
         inputWidth: this.properties.inputWidth,
         inputFont: this.properties.inputFont,
         inputBorderRadius: this.properties.inputBorderRadius,
+        inputMargin: this.properties.inputMargin,
         inputBorder: this.properties.inputBorder,
 
         dropdownToggle:this.properties.dropdownToggle,
+        dropdownOrder: this.properties.dropdownOrder,
         dropdownAlignment: this.properties. dropdownAlignment,
         dropdownValues: this.properties.dropdownValues,
+        dropdownLabels: this.properties.dropdownLabels,
         dropdownWidth: this.properties.dropdownWidth,
         dropdownFont: this.properties.dropdownFont,
         dropdownBorderRadius: this.properties.dropdownBorderRadius,
+        dropdownMargin: this.properties.dropdownMargin,
         dropdownBorder: this.properties.dropdownBorder,
 
         buttonsNumber: this.properties.buttonsNumber,
+        buttonOrder: this.properties.buttonOrder,
         buttonAlignment: this.properties.buttonAlignment,
         buttonsDirection:this.properties.buttonsDirection,
         link: this.properties.link, suffix: this.properties.suffix, label: this.properties.label, blank: this.properties.blank, icon: this.properties.icon, iconPicker: this.properties.iconPicker, width: this.properties.width, height: this.properties.height, borderRadius: this.properties.borderRadius, color: this.properties.color, margin: this.properties.margin, textAlignment:this.properties.textAlignment, textSize:this.properties.textSize, textColor:this.properties.textColor,
@@ -120,12 +142,36 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
               ]
             }),
             PropertyPaneChoiceGroup("solutionAlignment", {
-              label: "Fields alignemnt",
+              label: "Fields alignemnt x",
               options: [
                 { key: "start", text: "Start" },
                 { key: "center", text: "Center" },
                 { key: "end", text: "End" }
               ]
+            }),
+            PropertyPaneChoiceGroup("solutionJustify", {
+              label: "Fields alignemnt y",
+              options: [
+                { key: "start", text: "Start" },
+                { key: "center", text: "Center" },
+                { key: "end", text: "End" }
+              ]
+            }),
+            PropertyFieldColorPicker('solutionBG', {
+              label: 'Color',
+              selectedColor: this.properties.color,
+              onPropertyChange: this.onPropertyPaneFieldChanged,
+              properties: this.properties,
+              disabled: false,
+              debounce: 1000,
+              isHidden: false,
+              alphaSliderHidden: false,
+              style: PropertyFieldColorPickerStyle.Inline,
+              iconName: 'Precipitation',
+              key: 'colorFieldId'
+            }),
+            PropertyPaneTextField('solutionBorderRadius', {
+              label: "Set border radius (px)",
             }),
 
           ]
@@ -136,6 +182,14 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
           groupFields: [
             PropertyPaneToggle('inputToggle',{
               label:"Display connected input field?"
+            }),
+            PropertyPaneDropdown('inputOrder',{
+              label: "Input value URL position.",
+              options: [
+                {key: '1', text: '1'},
+                {key: '2', text: '2'},
+                {key: '3', text: '3'}
+            ]
             }),
             PropertyPaneChoiceGroup("inputAlignment", {
               label: "Input field alignment",
@@ -157,6 +211,10 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
             PropertyPaneTextField('inputBorderRadius', {
               label: "Set border radius (px)",
             }),
+            PropertyPaneTextField('inputMargin', {
+              label: "Set margin",
+              description: "Use CSS pattern and include unit, i.e. '5px' for all direction or '2px 4px' for bottom-up and left-right etc.",
+            }),
             PropertyPaneTextField('inputBorder', {
               label: "Set border",
               description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
@@ -170,19 +228,33 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
             PropertyPaneToggle('dropdownToggle',{
               label:"Display connected dropdown menu?"
             }),
+            PropertyPaneDropdown('dropdownOrder',{
+              label: "Dropdown value URL position.",
+              options: [
+                {key: '1', text: '1'},
+                {key: '2', text: '2'},
+                {key: '3', text: '3'}
+            ]
+            }),
+            PropertyPaneTextField('dropdownValues', {
+              label: "Add choices for URL", 
+              multiline: true,
+              rows: 4,
+              description: "List separated by comma i.e: car, bike, plane"         
+            }),
+            PropertyPaneTextField('dropdownLabels', {
+              label: "Add labels for the choices above", 
+              multiline: true,
+              rows: 4,
+              description: "List separated by comma i.e: car, bike, plane"         
+            }),
             PropertyPaneChoiceGroup("dropdownAlignment", {
-              label: "dropdown field alignment",
+              label: "Dropdown field alignment",
               options: [
                 { key: "start", text: "Start" },
                 { key: "center", text: "Center" },
                 { key: "end", text: "End" }
               ]
-            }),
-            PropertyPaneTextField('dropdownValues', {
-              label: "Add placeholder text", 
-              multiline: true,
-              rows: 6,
-              description: "List separated by comma i.e: car, bike, plane"         
             }),
             PropertyPaneTextField('dropdownWidth', {
               label: "Set width (px)",
@@ -192,6 +264,10 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
             }),
             PropertyPaneTextField('dropdownBorderRadius', {
               label: "Set border radius (px)",
+            }),
+            PropertyPaneTextField('dropdownMargin', {
+              label: "Set margin",
+              description: "Use CSS pattern and include unit, i.e. '5px' for all direction or '2px 4px' for bottom-up and left-right etc.",
             }),
             PropertyPaneTextField('dropdownBorder', {
               label: "Set border",
@@ -203,6 +279,14 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
           groupName: "Buttons field settings",
           isCollapsed:true,
           groupFields: [
+            PropertyPaneDropdown('buttonOrder',{
+              label: "Button value URL position.",
+              options: [
+                {key: '1', text: '1'},
+                {key: '2', text: '2'},
+                {key: '3', text: '3'}
+            ]
+            }),
             PropertyPaneSlider('buttonsNumber',{  
               label:"Number of buttons",  
               min:1,  
@@ -400,7 +484,7 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
                 key: 'colorFieldId'
               }),
             PropertyPaneTextField('margin2', {
-              label: "Set margin"
+              label: "Set margin."
             }),
             ]
           },

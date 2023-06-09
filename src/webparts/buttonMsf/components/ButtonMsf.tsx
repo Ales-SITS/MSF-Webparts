@@ -7,24 +7,33 @@ export default function ButtonMsf (props): React.ReactElement {
     const {
       solutionDirection,
       solutionAlignment,
+      solutionJustify,
+      solutionBG,
+      solutionBorderRadius,
 
       inputToggle,
+      inputOrder,
       inputAlignment,
       inputPlaceholderText,
       inputWidth,
       inputFont,
       inputBorderRadius,
+      inputMargin,
       inputBorder,
 
       dropdownToggle,
+      dropdownOrder,
       dropdownAlignment,
       dropdownValues,
+      dropdownLabels,
       dropdownWidth,
       dropdownFont,
       dropdownBorderRadius,
+      dropdownMargin,
       dropdownBorder,
 
       buttonsNumber,
+      buttonOrder,
       buttonAlignment,
       buttonsDirection,
       link, suffix, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize,
@@ -50,7 +59,6 @@ export default function ButtonMsf (props): React.ReactElement {
    const details_9 = [link9, suffix9, label9, blank9, icon9, iconPicker9, width9, height9, borderRadius9, color9, margin9, textColor9, textAlignment9, textSize9]
    const details_10 = [link10, suffix10, label10, blank10, icon10, iconPicker10, width10, height10, borderRadius10, color10, margin10, textColor10, textAlignment10, textSize10]
 
-
    const detailsArr1 =[details_1,details_1]
    const detailsArr2 =[details_1,details_2]
    const detailsArr3 =[details_1,details_3]
@@ -61,8 +69,6 @@ export default function ButtonMsf (props): React.ReactElement {
    const detailsArr8 =[details_1,details_8]
    const detailsArr9 =[details_1,details_9] 
    const detailsArr10 =[details_1,details_10]    
-
-
 
    let wrapperDirection
    let wrapperAlignment
@@ -96,62 +102,59 @@ export default function ButtonMsf (props): React.ReactElement {
     setSearchTerm(event.target.value)
    }
 
-  const solutionInlineStyle = {
-    container: {
+  const inlineStyles = {
+    solution: {
       flexDirection: solutionDirection,
       justifyContent:  `${solutionAlignment}`,
-    }
-  }
-
-  const inputInlineStyles = {
-    container: {
+      alignItems: `${solutionJustify}`,
+      backgroundColor: `${solutionBG}`,
+      borderRadius: `${solutionBorderRadius}px`
+    },
+    input: {
       width:`${inputWidth}px`,
       borderRadius:`${inputBorderRadius}px`,
       fontSize:`${inputFont}px`,
-      border: `${inputBorder}`
-    }
-   }
-
-   const inputInlineAlignment = {
-    container: {
+      border: `${inputBorder}`,
+      margin: `${inputMargin}`,
+    },
+    input_alignment: {
       justifyContent: `${inputAlignment}`
-    }
-   }
-
-   
-  const dropdownInlineStyles = {
-    container: {
+    },
+    dropdown: {
       width:`${dropdownWidth}px`,
       borderRadius:`${dropdownBorderRadius}px`,
       fontSize:`${dropdownFont}px`,
       border: `${dropdownBorder}`,
-      padding: '2px'
-    }
-   }
-
-   const dropdownInlineAlignment = {
-    container: {
+      margin: `${dropdownMargin}`
+    },
+    dropdown_alignment: {
       justifyContent: `${dropdownAlignment}`
     }
+  }
+
+   let dropdownValues_arr
+   let dropdownLabels_arr
+
+   if (dropdownValues !== undefined ) {
+    dropdownValues_arr = dropdownValues.split(",")
+   }
+  
+   if ( dropdownLabels !== undefined ) {
+    dropdownLabels_arr = dropdownLabels.split(",")
    }
 
-
-   const dropdownValues_arr = dropdownValues.split(",")
-
-   const [dropdownValue, setDropdownValue] = useState('fruit');
-
+   const [dropdownValue, setDropdownValue] = useState('');
    const dropdownHandler = (event) => {
-  
-      setDropdownValue(event.target.value);
-  
-   };
+        setDropdownValue(event.target.value);
+     };
 
+    const order = [inputOrder,dropdownOrder,buttonOrder]
 
     return (
-      <div className={styles.solutionWrapper} style={solutionInlineStyle.container}>
-      {inputToggle === false || inputToggle === undefined ? null : (<div className={styles.InputWrapper}  style={inputInlineAlignment.container}>
+      <div className={styles.solutionWrapper} style={inlineStyles.solution}>
+      {inputToggle === false || inputToggle === undefined ? null : (<div className={styles.InputWrapper}  style={inlineStyles.input_alignment}>
         <input 
-        style={inputInlineStyles.container}
+        style={inlineStyles.input}
         type="text"
         onChange={setSearchTermHandler}
         value={searchTerm}
@@ -159,15 +162,16 @@ export default function ButtonMsf (props): React.ReactElement {
         />
       </div>)}
       {dropdownToggle === false || dropdownToggle === undefined ? null : 
-      <div className={styles.InputWrapper}  style={dropdownInlineAlignment.container}>
-        <select value={dropdownValue} onChange={dropdownHandler}  style={dropdownInlineStyles.container}>
-          {dropdownValues_arr.map(e => {
-            return <option value={e}>{e}</option>
-          })}
+      <div className={styles.InputWrapper} style={inlineStyles.dropdown_alignment}>
+        <select className={styles.InputWrapper}value={dropdownValue} onChange={dropdownHandler} style={inlineStyles.dropdown}>
+         <option value="" disabled selected>Select option</option>
+          {typeof dropdownValues_arr !== 'undefined' && dropdownValues_arr.length > 0 ? dropdownValues_arr.map((e , i ) => {
+            return i === 0 ? <option value={e} disabled selected>{dropdownLabels_arr[i]}</option> : <option value={e} >{dropdownLabels_arr[i]}</option>
+          }): null}
         </select>
       </div>}
       <div className={`${styles.ButtonMsfWrapper} ${wrapperAlignment} ${wrapperDirection}`}>
-        <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm} dropdown={dropdownToggle === false? "" : dropdownValue}/>
+        <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm} dropdown={dropdownToggle === false? "" : dropdownValue} order={order}/>
         {buttonsNumber > 1 ? <ButtonDetail details={detailsArr2} search={inputToggle === false ?  "" : searchTerm}/> : ""}
         {buttonsNumber > 2 ? <ButtonDetail details={detailsArr3} search={inputToggle === false ?  "" : searchTerm}/> : ""}
         {buttonsNumber > 3 ? <ButtonDetail details={detailsArr4} search={inputToggle === false ? "" : searchTerm}/> : ""}

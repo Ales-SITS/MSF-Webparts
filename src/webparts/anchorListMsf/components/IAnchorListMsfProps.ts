@@ -4,6 +4,8 @@ export interface IAnchorListMsfProps {
   TextAlignment:string;
   BorderRadius: string;
   Border: string;
+  fixed_toggle: boolean;
+  fixed_top: string;
   ListBG: string;
   HeaderBG:string;
   HeaderColor:string;
