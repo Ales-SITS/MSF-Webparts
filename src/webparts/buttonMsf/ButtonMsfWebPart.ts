@@ -31,17 +31,6 @@ export interface IButtonMsfProps {
   inputMargin: string;
   inputBorder: string;
 
-  dropdownToggle:boolean;
-  dropdownOrder: string;
-  dropdownAlignment: string;
-  dropdownValues: string;
-  dropdownLabels: string;
-  dropdownWidth: string;
-  dropdownFont: string;
-  dropdownBorderRadius: string;
-  dropdownMargin: string;
-  dropdownBorder: string;
-
   buttonsNumber: number;
   buttonOrder: string;
   buttonAlignment: string;
@@ -80,17 +69,6 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
         inputBorderRadius: this.properties.inputBorderRadius,
         inputMargin: this.properties.inputMargin,
         inputBorder: this.properties.inputBorder,
-
-        dropdownToggle:this.properties.dropdownToggle,
-        dropdownOrder: this.properties.dropdownOrder,
-        dropdownAlignment: this.properties. dropdownAlignment,
-        dropdownValues: this.properties.dropdownValues,
-        dropdownLabels: this.properties.dropdownLabels,
-        dropdownWidth: this.properties.dropdownWidth,
-        dropdownFont: this.properties.dropdownFont,
-        dropdownBorderRadius: this.properties.dropdownBorderRadius,
-        dropdownMargin: this.properties.dropdownMargin,
-        dropdownBorder: this.properties.dropdownBorder,
 
         buttonsNumber: this.properties.buttonsNumber,
         buttonOrder: this.properties.buttonOrder,
@@ -183,14 +161,6 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
             PropertyPaneToggle('inputToggle',{
               label:"Display connected input field?"
             }),
-            PropertyPaneDropdown('inputOrder',{
-              label: "Input value URL position.",
-              options: [
-                {key: '1', text: '1'},
-                {key: '2', text: '2'},
-                {key: '3', text: '3'}
-            ]
-            }),
             PropertyPaneChoiceGroup("inputAlignment", {
               label: "Input field alignment",
               options: [
@@ -220,73 +190,11 @@ export default class ButtonMsfWebPart extends BaseClientSideWebPart<IButtonMsfPr
               description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
             }),
           ]
-        },
-        { 
-          groupName: "Dropdown field settings",
-          isCollapsed:true,
-          groupFields: [
-            PropertyPaneToggle('dropdownToggle',{
-              label:"Display connected dropdown menu?"
-            }),
-            PropertyPaneDropdown('dropdownOrder',{
-              label: "Dropdown value URL position.",
-              options: [
-                {key: '1', text: '1'},
-                {key: '2', text: '2'},
-                {key: '3', text: '3'}
-            ]
-            }),
-            PropertyPaneTextField('dropdownValues', {
-              label: "Add choices for URL", 
-              multiline: true,
-              rows: 4,
-              description: "List separated by comma i.e: car, bike, plane"         
-            }),
-            PropertyPaneTextField('dropdownLabels', {
-              label: "Add labels for the choices above", 
-              multiline: true,
-              rows: 4,
-              description: "List separated by comma i.e: car, bike, plane"         
-            }),
-            PropertyPaneChoiceGroup("dropdownAlignment", {
-              label: "Dropdown field alignment",
-              options: [
-                { key: "start", text: "Start" },
-                { key: "center", text: "Center" },
-                { key: "end", text: "End" }
-              ]
-            }),
-            PropertyPaneTextField('dropdownWidth', {
-              label: "Set width (px)",
-            }),
-            PropertyPaneTextField('dropdownFont', {
-              label: "Set font size (px)",
-            }),
-            PropertyPaneTextField('dropdownBorderRadius', {
-              label: "Set border radius (px)",
-            }),
-            PropertyPaneTextField('dropdownMargin', {
-              label: "Set margin",
-              description: "Use CSS pattern and include unit, i.e. '5px' for all direction or '2px 4px' for bottom-up and left-right etc.",
-            }),
-            PropertyPaneTextField('dropdownBorder', {
-              label: "Set border",
-              description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
-            }),
-          ]
-        },         
+        },       
         { 
           groupName: "Buttons field settings",
           isCollapsed:true,
           groupFields: [
-            PropertyPaneDropdown('buttonOrder',{
-              label: "Button value URL position.",
-              options: [
-                {key: '1', text: '1'},
-                {key: '2', text: '2'},
-                {key: '3', text: '3'}
-            ]
-            }),
             PropertyPaneSlider('buttonsNumber',{  
               label:"Number of buttons",  
               min:1,  

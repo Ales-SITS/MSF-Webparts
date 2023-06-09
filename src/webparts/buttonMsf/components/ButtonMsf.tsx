@@ -12,7 +12,6 @@ export default function ButtonMsf (props): React.ReactElement {
       solutionBorderRadius,
 
       inputToggle,
-      inputOrder,
       inputAlignment,
       inputPlaceholderText,
       inputWidth,
@@ -21,19 +20,7 @@ export default function ButtonMsf (props): React.ReactElement {
       inputMargin,
       inputBorder,
 
-      dropdownToggle,
-      dropdownOrder,
-      dropdownAlignment,
-      dropdownValues,
-      dropdownLabels,
-      dropdownWidth,
-      dropdownFont,
-      dropdownBorderRadius,
-      dropdownMargin,
-      dropdownBorder,
-
       buttonsNumber,
-      buttonOrder,
       buttonAlignment,
       buttonsDirection,
       link, suffix, label, blank, icon, iconPicker, width, height, borderRadius, color, margin, textColor, textAlignment, textSize,
@@ -119,37 +106,8 @@ export default function ButtonMsf (props): React.ReactElement {
     },
     input_alignment: {
       justifyContent: `${inputAlignment}`
-    },
-    dropdown: {
-      width:`${dropdownWidth}px`,
-      borderRadius:`${dropdownBorderRadius}px`,
-      fontSize:`${dropdownFont}px`,
-      border: `${dropdownBorder}`,
-      margin: `${dropdownMargin}`
-    },
-    dropdown_alignment: {
-      justifyContent: `${dropdownAlignment}`
     }
   }
-
-   let dropdownValues_arr
-   let dropdownLabels_arr
-
-   if (dropdownValues !== undefined ) {
-    dropdownValues_arr = dropdownValues.split(",")
-   }
-  
-   if ( dropdownLabels !== undefined ) {
-    dropdownLabels_arr = dropdownLabels.split(",")
-   }
-
-   const [dropdownValue, setDropdownValue] = useState('');
-   const dropdownHandler = (event) => {
-        setDropdownValue(event.target.value);
-     };
-
-    const order = [inputOrder,dropdownOrder,buttonOrder]
-
     return (
       <div className={styles.solutionWrapper} style={inlineStyles.solution}>
       {inputToggle === false || inputToggle === undefined ? null : (<div className={styles.InputWrapper}  style={inlineStyles.input_alignment}>
@@ -161,17 +119,8 @@ export default function ButtonMsf (props): React.ReactElement {
         placeholder={inputPlaceholderText}
         />
       </div>)}
-      {dropdownToggle === false || dropdownToggle === undefined ? null : 
-      <div className={styles.InputWrapper} style={inlineStyles.dropdown_alignment}>
-        <select className={styles.InputWrapper}value={dropdownValue} onChange={dropdownHandler} style={inlineStyles.dropdown}>
-         <option value="" disabled selected>Select option</option>
-          {typeof dropdownValues_arr !== 'undefined' && dropdownValues_arr.length > 0 ? dropdownValues_arr.map((e , i ) => {
-            return i === 0 ? <option value={e} disabled selected>{dropdownLabels_arr[i]}</option> : <option value={e} >{dropdownLabels_arr[i]}</option>
-          }): null}
-        </select>
-      </div>}
       <div className={`${styles.ButtonMsfWrapper} ${wrapperAlignment} ${wrapperDirection}`}>
-        <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm} dropdown={dropdownToggle === false? "" : dropdownValue} order={order}/>
+        <ButtonDetail details={detailsArr1} search={inputToggle === false? "" : searchTerm} />
         {buttonsNumber > 1 ? <ButtonDetail details={detailsArr2} search={inputToggle === false ?  "" : searchTerm}/> : ""}
         {buttonsNumber > 2 ? <ButtonDetail details={detailsArr3} search={inputToggle === false ?  "" : searchTerm}/> : ""}
         {buttonsNumber > 3 ? <ButtonDetail details={detailsArr4} search={inputToggle === false ? "" : searchTerm}/> : ""}

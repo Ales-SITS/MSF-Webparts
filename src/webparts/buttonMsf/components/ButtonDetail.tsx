@@ -28,19 +28,13 @@ function ButtonDetail (props:any): React.ReactElement {
    }
 
     const searchTerm = props.search
-    const dropdown = props.dropdown
-    const order = props.order === undefined? [1,2,3] : props.order
-
-    const orderArray = [[order[0],searchTerm],[order[1],dropdown],[order[2],link]]
 
     let searchTermOption 
     if (searchTerm === ""){
       searchTermOption = `${escape(link)}`
     } else {
       console.log("Confirmed")
-      const urlArrOrd =orderArray.sort(function(a, b) {return a[0] - b[0];});
-      const urlOrd = `${[urlArrOrd[0][1]]}${[urlArrOrd[1][1]]}${[urlArrOrd[2][1]]}`
-      searchTermOption = urlOrd//`${escape(link)}${escape(dropdown)}${searchTerm}${escape(suffix)}`
+      searchTermOption = `${escape(link)}${searchTerm}${escape(suffix)}`
     }  
 
      const url = searchTermOption.includes("amp;") ? searchTermOption.replace("amp;","") : searchTermOption
