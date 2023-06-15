@@ -1,0 +1,49 @@
+@import '~@fluentui/react/dist/sass/References.scss';
+
+.searchMsf {
+  overflow: hidden;
+  padding: 1em;
+  color: "[theme:bodyText, default: #323130]";
+  color: var(--bodyText);
+  &.teams {
+    font-family: $ms-font-family-fallbacks;
+  }
+}
+
+.searchmsf_wrapper {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center
+}
+
+.searchmsf_wrapper input {
+  outline: none;
+}
+
+.searchmsf_wrapper input[type="text"] {
+  box-sizing: border-box;
+}
+
+.searchmsf_wrapper select {
+  outline: none;
+  box-sizing: border-box;
+  font: inherit;
+}
+
+.searchmsf_wrapper select:focus {
+  outline: none
+}
+
+.searchmsf_wrapper option{
+  margin: 2px
+}
+
+.searchmsf_wrapper button {
+  border: none;
+  cursor: pointer
+}
+
+.searchmsf_wrapper button:hover {
+  filter: brightness(117%)
+}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useRef,useEffect} from 'react';
 import styles from './AnchorListMsf.module.scss';
 
 
@@ -120,7 +120,7 @@ export default function AnchorList (props:any):JSX.Element {
         anchorlinks=[]
         setAnchor(document.querySelectorAll('a[data-sp-anchor-id]'))
       }
-  
+
 
     const visible:string[]=[!h2_toggle? 'H2' : null, !h3_toggle? 'H3' : null, !h4_toggle? 'H4' : null]
 
@@ -135,9 +135,27 @@ export default function AnchorList (props:any):JSX.Element {
         }
         }
       )
+      
+      const Ref = useRef(null)
+      const [timer,setTimer] = useState(5)
+      const interval = setInterval (() => {
+        if (timer < 1) {
+          window.location.href = "http://www.w3schools.com";
+        } else {
+          setTimer(timer-1)
+          console.log(timer)
+        }
+      }, 1000)
+
+      const stop = () => {
+        clearInterval(interval)
+      }
+
+  
 
  return (
-  <div className={styles.anchorListWrapper} style={inlineStyles.anchorAlignment}>
+  <div className={styles.anchorListWrapper} style={inlineStyles.anchorAlignment} >
+    <span>{timer}</span><button onClick={stop}>STOP</button>
     <div className={styles.anchorListBox} style={inlineStyles.anchorListBoxInline}>
       <div onClick={setAnchorHandler} className={styles.header} style={inlineStyles.headerInline}>
         <span>{AnchorListTitle}</span>

@@ -49,6 +49,22 @@
           "manifest": "./src/webparts/dropzoneMsf/DropzoneMsfWebPart.manifest.json"
         }
       ]
+    },
+    "search-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/searchMsf/SearchMsfWebPart.js",
+          "manifest": "./src/webparts/searchMsf/SearchMsfWebPart.manifest.json"
+        }
+      ]
+    },
+    "redirect-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/redirectMsf/RedirectMsfWebPart.js",
+          "manifest": "./src/webparts/redirectMsf/RedirectMsfWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -65,6 +81,8 @@
     "TabsMsfWebPartStrings": "lib/webparts/tabsMsf/loc/{locale}.js",
     "AnchorListMsfWebPartStrings": "lib/webparts/anchorListMsf/loc/{locale}.js",
     "ButtoncssMsfWebPartStrings": "lib/webparts/buttoncssMsf/loc/{locale}.js",
-    "DropzoneMsfWebPartStrings": "lib/webparts/dropzoneMsf/loc/{locale}.js"
+    "DropzoneMsfWebPartStrings": "lib/webparts/dropzoneMsf/loc/{locale}.js",
+    "SearchMsfWebPartStrings": "lib/webparts/searchMsf/loc/{locale}.js",
+    "RedirectMsfWebPartStrings": "lib/webparts/redirectMsf/loc/{locale}.js"
   }
 }
