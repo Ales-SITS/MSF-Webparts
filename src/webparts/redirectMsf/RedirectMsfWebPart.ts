@@ -3,89 +3,72 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField,
+  PropertyPaneSlider,
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
+import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'RedirectMsfWebPartStrings';
-import RedirectMsf from './components/RedirectMsf';
+import RedirectMsfHandler from './components/RedirectMsfHandler';
 import { IRedirectMsfProps } from './components/IRedirectMsfProps';
 
 export interface IRedirectMsfWebPartProps {
-  description: string;
+  redirect_default_url: string;
+
+  redirect_message: string;
+  redirect_url: string;
+  redirect_counter: number;
+
+  redirect_BG: string; 
+  redirect_BR: number;
+  redirect_size: number;
+  redirect_FC: string;
+
+  redirect_counter_display: boolean;
+  redirect_counter_size: number;
+  redirect_counter_FC: string;
+
+  redirect_stop_display: boolean;
+  redirect_stop_text: string;
+  redirect_stop_size: string;
+  redirect_stop_BG: string;
+  redirect_stop_BR: number;
+  redirect_stop_FC: string
 }
 
 export default class RedirectMsfWebPart extends BaseClientSideWebPart<IRedirectMsfWebPartProps> {
-
-  private _isDarkTheme: boolean = false;
-  private _environmentMessage: string = '';
-
   public render(): void {
     const element: React.ReactElement<IRedirectMsfProps> = React.createElement(
-      RedirectMsf,
+      RedirectMsfHandler,
       {
-        description: this.properties.description,
-        isDarkTheme: this._isDarkTheme,
-        environmentMessage: this._environmentMessage,
-        hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
+        redirect_default_url: window.location.href,
+
+        redirect_message: this.properties.redirect_message,
+        redirect_url: this.properties.redirect_url,
+        redirect_counter: this.properties.redirect_counter,
+
+        redirect_BG: this.properties.redirect_BG, 
+        redirect_BR: this.properties.redirect_BR,
+        redirect_size: this.properties.redirect_size,
+        redirect_FC: this.properties.redirect_FC,
+
+        redirect_counter_display: this.properties.redirect_counter_display,
+        redirect_counter_size: this.properties.redirect_counter_size,
+        redirect_counter_FC: this.properties.redirect_counter_FC,
+
+        redirect_stop_display: this.properties.redirect_stop_display,
+        redirect_stop_text: this.properties.redirect_stop_text,
+        redirect_stop_size: this.properties.redirect_stop_size,
+        redirect_stop_BG: this.properties.redirect_stop_BG,
+        redirect_stop_BR: this.properties.redirect_stop_BR,
+        redirect_stop_FC: this.properties.redirect_stop_FC
       }
     );
 
     ReactDom.render(element, this.domElement);
-  }
-
-  protected onInit(): Promise<void> {
-    return this._getEnvironmentMessage().then(message => {
-      this._environmentMessage = message;
-    });
-  }
-
-
-
-  private _getEnvironmentMessage(): Promise<string> {
-    if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
-      return this.context.sdks.microsoftTeams.teamsJs.app.getContext()
-        .then(context => {
-          let environmentMessage: string = '';
-          switch (context.app.host.name) {
-            case 'Office': // running in Office
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOffice : strings.AppOfficeEnvironment;
-              break;
-            case 'Outlook': // running in Outlook
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOutlook : strings.AppOutlookEnvironment;
-              break;
-            case 'Teams': // running in Teams
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentTeams : strings.AppTeamsTabEnvironment;
-              break;
-            default:
-              throw new Error('Unknown host');
-          }
-
-          return environmentMessage;
-        });
-    }
-
-    return Promise.resolve(this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment);
-  }
-
-  protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
-    if (!currentTheme) {
-      return;
-    }
-
-    this._isDarkTheme = !!currentTheme.isInverted;
-    const {
-      semanticColors
-    } = currentTheme;
-
-    if (semanticColors) {
-      this.domElement.style.setProperty('--bodyText', semanticColors.bodyText || null);
-      this.domElement.style.setProperty('--link', semanticColors.link || null);
-      this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered || null);
-    }
-
   }
 
   protected onDispose(): void {
@@ -101,15 +84,161 @@ export default class RedirectMsfWebPart extends BaseClientSideWebPart<IRedirectM
       pages: [
         {
           header: {
-            description: strings.PropertyPaneDescription
+            description: "This"
           },
+          displayGroupsAsAccordion: true,
           groups: [
             {
-              groupName: strings.BasicGroupName,
+              groupName: "General settings",
+              isCollapsed:false,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('redirect_message', {
+                  label: "Redirect message",
+                  multiline: true,
+                  resizable: true,
+                  rows: 2,
+                  placeholder: "i.e. You will redirect to msf.org in"
+                }),
+                PropertyPaneTextField('redirect_url', {
+                  label: "Redirect to",
+                  multiline: true,
+                  resizable: true,
+                  rows: 2,
+                  placeholder: "https://msfintl.sharepoint.com/sites/..."
+                }),
+                PropertyPaneSlider('redirect_counter', {
+                  label: "Set seconds till redirect",
+                  min: 0,
+                  max: 60,
+                  showValue: true,
+
+                }),
+               
+              ]
+            },
+            {
+              groupName: "General visuals",
+              isCollapsed:true,
+              groupFields: [
+                PropertyFieldColorPicker('redirect_BG', {
+                  label: 'Background color',
+                  selectedColor: this.properties.redirect_BG,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
+                PropertyPaneSlider('redirect_BR', {
+                  label: "Border radius (px)",
+                  min: 0,
+                  max: 100,
+                  showValue: true,
+                }),
+                PropertyFieldColorPicker('redirect_FC', {
+                  label: 'Message font color',
+                  selectedColor: this.properties.redirect_FC,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
+                PropertyPaneSlider('redirect_size', {
+                  label: "Message font size (px)",
+                  min: 12,
+                  max: 60,
+                  showValue: true,
                 })
+              ]
+            },
+            {
+              groupName: "Counter visuals",
+              isCollapsed:true,
+              groupFields: [
+                PropertyPaneToggle('redirect_counter_display', {
+                  label: "Display counter?",
+                  checked: true
+                }),
+                
+                PropertyPaneSlider('redirect_counter_size', {
+                  label: "Set size of the counter (px)",
+                  min: 12,
+                  max: 60,
+                  showValue: true,
+                }),
+                PropertyFieldColorPicker('redirect_counter_FC', {
+                  label: 'Message font color',
+                  selectedColor: this.properties.redirect_counter_FC,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
+              ]
+            },
+            {
+              groupName: "Stop button visuals",
+              isCollapsed:true,
+              groupFields: [
+                PropertyPaneToggle('redirect_stop_display', {
+                  label: "Display stop button?",
+                  checked: true
+                }),
+                PropertyPaneTextField('redirect_stop_text', {
+                  label: "Stop button text",
+                }),
+                PropertyFieldColorPicker('redirect_stop_BG', {
+                  label: 'Stop button background color',
+                  selectedColor: this.properties.redirect_stop_BG,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
+                PropertyPaneSlider('redirect_stop_BR', {
+                  label: "Stop button border radius(px)",
+                  min: 0,
+                  max: 100,
+                  showValue: true,
+                }),
+                PropertyPaneSlider('redirect_stop_size', {
+                  label: "Stop button font size(px)",
+                  min: 12,
+                  max: 60,
+                  showValue: true,
+                }),
+                PropertyFieldColorPicker('redirect_stop_FC', {
+                  label: 'Stop button font color',
+                  selectedColor: this.properties.redirect_stop_FC,
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  properties: this.properties,
+                  disabled: false,
+                  debounce: 1000,
+                  isHidden: false,
+                  alphaSliderHidden: false,
+                  style: PropertyFieldColorPickerStyle.Inline,
+                  iconName: 'Precipitation',
+                  key: 'colorFieldId'
+                }),
               ]
             }
           ]

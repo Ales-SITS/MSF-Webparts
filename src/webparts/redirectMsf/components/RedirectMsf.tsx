@@ -1,43 +1,90 @@
 import * as React from 'react';
 import styles from './RedirectMsf.module.scss';
+import { useState,useRef,useEffect} from 'react';
 import { IRedirectMsfProps } from './IRedirectMsfProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 
-export default class RedirectMsf extends React.Component<IRedirectMsfProps, {}> {
-  public render(): React.ReactElement<IRedirectMsfProps> {
-    const {
-      description,
-      isDarkTheme,
-      environmentMessage,
-      hasTeamsContext,
-      userDisplayName
-    } = this.props;
+
+
+export default function ButtonMsf (props): React.ReactElement {
+
+const {
+  redirect_default_url,
+
+  redirect_message,
+  redirect_url,
+  redirect_counter,
+
+  redirect_BG,
+  redirect_BR,
+  redirect_size,
+  redirect_FC,
+
+  redirect_counter_display,
+  redirect_counter_size,
+  redirect_counter_FC,
+
+  redirect_stop_display,
+  redirect_stop_text,
+  redirect_stop_size,
+  redirect_stop_BG,
+  redirect_stop_BR,
+  redirect_stop_FC
+} = props.details
+
+const [stop, setStop] = useState(false)
+const stopHandler = () => {
+  setStop(!stop)
+  setCounter(counter)
+}
+
+const [counter, setCounter] = useState(redirect_counter);
+useEffect(()=>{
+  setCounter(redirect_counter) 
+},[redirect_counter])
+
+useEffect(() => {
+  stop === true ? 
+  null : 
+  document.location.href.indexOf('Mode=Edit') !== -1 || document.location.href.indexOf('workbench.aspx') !== -1 ?
+  null : 
+  counter > 0 && setTimeout(() => setCounter(counter - 1), 1000) 
+
+  redirect_url !== undefined && redirect_url !== '' && stop === false && counter === 0 && document.location.href.indexOf('Mode=Edit') === -1 && document.location.href.indexOf('workbench.aspx') === -1 ?
+  window.location.href = `${redirect_url}` : 
+  null 
+}, [counter, stop]);
+    
+const inlineStyle = {
+  wrapper: {
+   backgroundColor: `${redirect_BG}`,
+   borderRadius: `${redirect_BR}px`,
+   fontSize: `${redirect_size}px`,
+   color: `${redirect_FC}`
+  },
+  counter: {
+    fontSize: `${redirect_counter_size}px`,
+    color: `${redirect_counter_FC}`
+  },
+   button: {
+    backgroundColor: `${redirect_stop_BG}`,
+    borderRadius: `${ redirect_stop_BR}px`,
+    fontSize: `${redirect_stop_size}px`,
+    color: `${redirect_stop_FC}`
+  }
+}
 
     return (
-      <section className={`${styles.redirectMsf} ${hasTeamsContext ? styles.teams : ''}`}>
-        <div className={styles.welcome}>
-          <img alt="" src={isDarkTheme ? require('../assets/welcome-dark.png') : require('../assets/welcome-light.png')} className={styles.welcomeImage} />
-          <h2>Well done, {escape(userDisplayName)}!</h2>
-          <div>{environmentMessage}</div>
-          <div>Web part property value: <strong>{escape(description)}</strong></div>
-        </div>
-        <div>
-          <h3>Welcome to SharePoint Framework!</h3>
-          <p>
-            The SharePoint Framework (SPFx) is a extensibility model for Microsoft Viva, Microsoft Teams and SharePoint. It&#39;s the easiest way to extend Microsoft 365 with automatic Single Sign On, automatic hosting and industry standard tooling.
-          </p>
-          <h4>Learn more about SPFx development:</h4>
-          <ul className={styles.links}>
-            <li><a href="https://aka.ms/spfx" target="_blank" rel="noreferrer">SharePoint Framework Overview</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank" rel="noreferrer">Use Microsoft Graph in your solution</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank" rel="noreferrer">Build for Microsoft Teams using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank" rel="noreferrer">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-store" target="_blank" rel="noreferrer">Publish SharePoint Framework applications to the marketplace</a></li>
-            <li><a href="https://aka.ms/spfx-yeoman-api" target="_blank" rel="noreferrer">SharePoint Framework API reference</a></li>
-            <li><a href="https://aka.ms/m365pnp" target="_blank" rel="noreferrer">Microsoft 365 Developer Community</a></li>
-          </ul>
+      <section className={styles.redirect_section}>
+        <div className={styles.redirect_wrapper} style={inlineStyle.wrapper}>
+            <span>{redirect_message}</span>
+            {redirect_counter_display ?
+             <span style={inlineStyle.counter}>{counter}</span>
+            : null }
+            {redirect_stop_display ? 
+            <button className={styles.redirect_button} style={inlineStyle.button} onClick={stopHandler}>{redirect_stop_text}</button> 
+            : null}
         </div>
       </section>
     );
-  }
 }
