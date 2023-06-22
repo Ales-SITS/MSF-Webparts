@@ -18,7 +18,9 @@ import { IRedirectMsfProps } from './components/IRedirectMsfProps';
 export interface IRedirectMsfWebPartProps {
   redirect_default_url: string;
 
-  redirect_message: string;
+  redirect_message_l: string;
+  redirect_message_link: string;
+  redirect_message_r: string;
   redirect_url: string;
   redirect_counter: number;
 
@@ -46,8 +48,10 @@ export default class RedirectMsfWebPart extends BaseClientSideWebPart<IRedirectM
       {
         redirect_default_url: window.location.href,
 
-        redirect_message: this.properties.redirect_message,
         redirect_url: this.properties.redirect_url,
+        redirect_message_l: this.properties.redirect_message_l,
+        redirect_message_link: this.properties.redirect_message_link,
+        redirect_message_r: this.properties.redirect_message_r,
         redirect_counter: this.properties.redirect_counter,
 
         redirect_BG: this.properties.redirect_BG, 
@@ -84,7 +88,7 @@ export default class RedirectMsfWebPart extends BaseClientSideWebPart<IRedirectM
       pages: [
         {
           header: {
-            description: "This"
+            description: "Create a simple automated redirect to your new sites or pages. You can set redirect countdown (0-60s) and a include a stop button, plus play with all visuals. In case you set coundown to 0, the site will be redirected immidiately. To access it you will have to open it in maintenance mode '<site url .aspx>?maintenancemode=true' or edit mode '<site url .aspx>?Mode=Edit'!"
           },
           displayGroupsAsAccordion: true,
           groups: [
@@ -92,13 +96,6 @@ export default class RedirectMsfWebPart extends BaseClientSideWebPart<IRedirectM
               groupName: "General settings",
               isCollapsed:false,
               groupFields: [
-                PropertyPaneTextField('redirect_message', {
-                  label: "Redirect message",
-                  multiline: true,
-                  resizable: true,
-                  rows: 2,
-                  placeholder: "i.e. You will redirect to msf.org in"
-                }),
                 PropertyPaneTextField('redirect_url', {
                   label: "Redirect to",
                   multiline: true,
@@ -111,9 +108,28 @@ export default class RedirectMsfWebPart extends BaseClientSideWebPart<IRedirectM
                   min: 0,
                   max: 60,
                   showValue: true,
-
                 }),
-               
+                PropertyPaneTextField('redirect_message_l', {
+                  label: "Redirect message (left)",
+                  multiline: true,
+                  resizable: true,
+                  rows: 1,
+                  placeholder: "i.e. You will redirect to"
+                }),
+                PropertyPaneTextField('redirect_message_link', {
+                  label: "Redirect message (link)",
+                  multiline: true,
+                  resizable: true,
+                  rows: 1,
+                  placeholder: "i.e. msf.org"
+                }),
+                PropertyPaneTextField('redirect_message_r', {
+                  label: "Redirect message (right)",
+                  multiline: true,
+                  resizable: true,
+                  rows: 1,
+                  placeholder: "i.e. in"
+                })               
               ]
             },
             {

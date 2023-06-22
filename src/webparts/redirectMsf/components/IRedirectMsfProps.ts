@@ -1,7 +1,9 @@
 export interface IRedirectMsfProps {
     redirect_default_url: string;
 
-    redirect_message: string;
+    redirect_message_l: string;
+    redirect_message_link: string;
+    redirect_message_r: string;
     redirect_url: string;
     redirect_counter: number;
   
