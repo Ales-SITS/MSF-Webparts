@@ -1,7 +1,5 @@
+import { IPropertyFieldGroupOrPerson } from "@pnp/spfx-property-controls/lib/PropertyFieldPeoplePicker";
 export interface IOrgchartMsfProps {
   description: string;
-  isDarkTheme: boolean;
-  environmentMessage: string;
-  hasTeamsContext: boolean;
-  userDisplayName: string;
+  topperson: IPropertyFieldGroupOrPerson[];
 }

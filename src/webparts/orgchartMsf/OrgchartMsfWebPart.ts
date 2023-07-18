@@ -5,31 +5,26 @@ import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField
 } from '@microsoft/sp-property-pane';
+import { PropertyFieldPeoplePicker, PrincipalType } from '@pnp/spfx-property-controls/lib/PropertyFieldPeoplePicker';
+import { IPropertyFieldGroupOrPerson } from "@pnp/spfx-property-controls/lib/PropertyFieldPeoplePicker";
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import * as strings from 'OrgchartMsfWebPartStrings';
 import OrgchartMsf from './components/OrgchartMsf';
 import { IOrgchartMsfProps } from './components/IOrgchartMsfProps';
 
-export interface IOrgchartMsfWebPartProps {
-  description: string;
-}
+//Graph toolkit
+import { SharePointProvider, Providers } from '@microsoft/mgt-spfx';
 
-export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartMsfWebPartProps> {
+export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartMsfProps> {
 
-  private _isDarkTheme: boolean = false;
-  private _environmentMessage: string = '';
 
   public render(): void {
     const element: React.ReactElement<IOrgchartMsfProps> = React.createElement(
       OrgchartMsf,
       {
         description: this.properties.description,
-        isDarkTheme: this._isDarkTheme,
-        environmentMessage: this._environmentMessage,
-        hasTeamsContext: !!this.context.sdks.microsoftTeams,
-        userDisplayName: this.context.pageContext.user.displayName
+        topperson: this.properties.topperson
       }
     );
 
@@ -37,56 +32,13 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
   }
 
   protected onInit(): Promise<void> {
-    return this._getEnvironmentMessage().then(message => {
-      this._environmentMessage = message;
-    });
-  }
 
-
-
-  private _getEnvironmentMessage(): Promise<string> {
-    if (!!this.context.sdks.microsoftTeams) { // running in Teams, office.com or Outlook
-      return this.context.sdks.microsoftTeams.teamsJs.app.getContext()
-        .then(context => {
-          let environmentMessage: string = '';
-          switch (context.app.host.name) {
-            case 'Office': // running in Office
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOffice : strings.AppOfficeEnvironment;
-              break;
-            case 'Outlook': // running in Outlook
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentOutlook : strings.AppOutlookEnvironment;
-              break;
-            case 'Teams': // running in Teams
-              environmentMessage = this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentTeams : strings.AppTeamsTabEnvironment;
-              break;
-            default:
-              throw new Error('Unknown host');
-          }
-
-          return environmentMessage;
-        });
+    if (!Providers.globalProvider) {
+      Providers.globalProvider = new SharePointProvider(this.context);
     }
 
-    return Promise.resolve(this.context.isServedFromLocalhost ? strings.AppLocalEnvironmentSharePoint : strings.AppSharePointEnvironment);
-  }
-
-  protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
-    if (!currentTheme) {
-      return;
-    }
-
-    this._isDarkTheme = !!currentTheme.isInverted;
-    const {
-      semanticColors
-    } = currentTheme;
-
-    if (semanticColors) {
-      this.domElement.style.setProperty('--bodyText', semanticColors.bodyText || null);
-      this.domElement.style.setProperty('--link', semanticColors.link || null);
-      this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered || null);
-    }
-
-  }
+    return super.onInit();
+}
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
@@ -109,6 +61,19 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
               groupFields: [
                 PropertyPaneTextField('description', {
                   label: strings.DescriptionFieldLabel
+                }),
+                PropertyFieldPeoplePicker('topperson', {
+                  label: 'PropertyFieldPeoplePicker',
+                  initialData: this.properties.topperson,
+                  allowDuplicate: false,
+                  multiSelect: false,
+                  principalType: [PrincipalType.Users, PrincipalType.SharePoint, PrincipalType.Security],
+                  onPropertyChange: this.onPropertyPaneFieldChanged,
+                  context: this.context as any,
+                  properties: this.properties,
+                  onGetErrorMessage: null,
+                  deferredValidationTime: 0,
+                  key: 'peopleFieldId'
                 })
               ]
             }
