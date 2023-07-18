@@ -65,6 +65,14 @@
           "manifest": "./src/webparts/redirectMsf/RedirectMsfWebPart.manifest.json"
         }
       ]
+    },
+    "orgchart-msf-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/orgchartMsf/OrgchartMsfWebPart.js",
+          "manifest": "./src/webparts/orgchartMsf/OrgchartMsfWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {
@@ -83,6 +91,7 @@
     "ButtoncssMsfWebPartStrings": "lib/webparts/buttoncssMsf/loc/{locale}.js",
     "DropzoneMsfWebPartStrings": "lib/webparts/dropzoneMsf/loc/{locale}.js",
     "SearchMsfWebPartStrings": "lib/webparts/searchMsf/loc/{locale}.js",
-    "RedirectMsfWebPartStrings": "lib/webparts/redirectMsf/loc/{locale}.js"
+    "RedirectMsfWebPartStrings": "lib/webparts/redirectMsf/loc/{locale}.js",
+    "OrgchartMsfWebPartStrings": "lib/webparts/orgchartMsf/loc/{locale}.js"
   }
 }
