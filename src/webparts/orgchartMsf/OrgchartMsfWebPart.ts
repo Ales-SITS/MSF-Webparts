@@ -10,39 +10,42 @@ import { IPropertyFieldGroupOrPerson } from "@pnp/spfx-property-controls/lib/Pro
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
 import * as strings from 'OrgchartMsfWebPartStrings';
-import OrgchartMsf from './components/OrgchartMsf';
 import { IOrgchartMsfProps } from './components/IOrgchartMsfProps';
 
 //Graph toolkit
-import { SharePointProvider, Providers } from '@microsoft/mgt-spfx';
+import { Providers } from '@microsoft/mgt-element/dist/es6/providers/Providers';
+import { customElementHelper } from '@microsoft/mgt-element/dist/es6/components/customElementHelper';
+import { SharePointProvider } from '@microsoft/mgt-sharepoint-provider/dist/es6/SharePointProvider';
+import { lazyLoadComponent } from '@microsoft/mgt-spfx-utils';
 
+
+const OrgchartMsfWrapper = React.lazy(() => import('./components/OrgchartMsfWrapper'))
+
+customElementHelper.withDisambiguation('bar');
 export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartMsfProps> {
 
-
-  public render(): void {
-    const element: React.ReactElement<IOrgchartMsfProps> = React.createElement(
-      OrgchartMsf,
-      {
-        description: this.properties.description,
-        topperson: this.properties.topperson
-      }
-    );
-
-    ReactDom.render(element, this.domElement);
-  }
-
-  protected onInit(): Promise<void> {
-
+  protected async onInit(): Promise<void> {
     if (!Providers.globalProvider) {
       Providers.globalProvider = new SharePointProvider(this.context);
     }
 
-    return super.onInit();
-}
+    //return super.onInit();
+  }
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
   }
+
+  public render(): void {
+    const element = lazyLoadComponent(OrgchartMsfWrapper, { 
+      description: this.properties.description,
+      topperson: this.properties.topperson,
+      context: this.context
+     });
+   
+    ReactDom.render(element, this.domElement);
+  }
+
 
   protected get dataVersion(): Version {
     return Version.parse('1.0');

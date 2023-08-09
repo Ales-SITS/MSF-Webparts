@@ -1,5 +1,33 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
+
+.orgchart_wide {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  position: fixed;
+  top: 5vh;
+  left: 5vw;
+  width: 90vw;
+  height: 90vh;
+  padding: 10px;
+  overflow: scroll;
+  z-index: 100;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  cursor: grab;
+}
+
+.orgchart_standard {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  position: static;
+  background-color: white;
+}
+
+
 .orgchartMsf {
   overflow: hidden;
   padding: 1em;
@@ -10,25 +38,61 @@
   }
 }
 
-.welcome {
-  text-align: center;
+.orgchar_l1_connector {
+  width: 2px;
+  height: 20px;
+  background-color:  rgb(105, 105, 105);
 }
 
-.welcomeImage {
+.orgchar_l1_wrapper {
+  display:flex;
+  //flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
+  border-top: 2px solid rgb(105, 105, 105);
   width: 100%;
-  max-width: 420px;
 }
 
-.links {
-  a {
-    text-decoration: none;
-    color: "[theme:link, default:#03787c]";
-    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
-
-    &:hover {
-      text-decoration: underline;
-      color: "[theme:linkHovered, default: #014446]";
-      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
-    }
-  }
+.top_person {
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
 }
+
+.person_wrapper {
+  transform: scale(0.9);
+  transform-origin: top;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  height: fit-content;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.persons_box {
+  /*display: grid;
+  grid-template-columns: 50% 50%*/
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  //flex-wrap: wrap;
+  //width: 33%;
+  /*max-width: 300%;*/
+}
+
+
+.person { 
+   /*--person-background-color: #ffffff;
+  --person-background-border-radius: 30%;
+  --person-avatar-border: 3px solid rgb(255, 255, 255);*/
+}
+
+.person-card { z-index: 13000 !important; }
+.user-avatar { z-index: 13000 !important; }

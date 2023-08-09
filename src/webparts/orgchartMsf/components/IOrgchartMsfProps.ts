@@ -2,4 +2,5 @@ import { IPropertyFieldGroupOrPerson } from "@pnp/spfx-property-controls/lib/Pro
 export interface IOrgchartMsfProps {
   description: string;
   topperson: IPropertyFieldGroupOrPerson[];
+  context: any
 }
