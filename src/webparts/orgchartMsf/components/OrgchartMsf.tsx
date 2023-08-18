@@ -17,76 +17,125 @@ import PersonWrapper from './PersonWrapper'
 
 export default function OrgchartMsf (props) {
     const {
-      description,
+      charttitle,
       topperson,
+      searchfield,
+      widedisplay,
+      color,
       context
     } = props.details;
     
+   
+    //STATES
+    const [manager,setManager] = useState(null)
+    getManager(topperson[0].email)
+
+    const [top_person,setTop_person] = useState(topperson[0].email)
+    const [title,setTitle] = useState(charttitle)
+    const [data,setData] = useState([]);
+    const [isLoading,setIsLoading] = useState(true);
+
+
+    //VISUAL
+    const [wide,setWide] = useState(widedisplay)
+    const wideHandler = () => {
+        setWide(!wide)
+    }
+
+    //DRAGGER
     const dragger = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;; 
     const { events } = useDraggable(dragger, {
       applyRubberBandEffect: false, // activate rubber band effect
     }); 
 
-    const [top_person,setTop_person] = useState(topperson[0].email)
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    
-    const [wide,setWide] = useState(false)
-    const wideHandler = () => {
-        setWide(!wide)
-    }
 
-
+    //FETCHING INFO
     async function getInfo() {
         const graph = graphfi().using(SPFx(context))
-        //const meData = await graph.me();
         const userData = await graph.users.getById(`${top_person}`).directReports()
         return await userData
     }
   
-     const onChangePeople = (e) => {
-        setTop_person(null)  
-        e.detail[0] === undefined? setTop_person(topperson[0].email) : setTop_person(e.detail[0].userPrincipalName)     
+    async function getManager(user){    
+
+      setIsLoading(true)  
+      const graph = graphfi().using(SPFx(context))
+      const newman = await graph.users.getById(user).manager()
+      setManager(newman.mail)
+      
+      setIsLoading(false)
+    }
+
+  
+    //ON CHANGES
+    const onChangePeople = (e) => {
+    
+      //setTop_person(null)  
+        e.detail[0] === undefined ? setTop_person(topperson[0].email) : setTop_person(e.detail[0].userPrincipalName)
+        setManager(null)
+        e.detail[0] === undefined ? getManager(topperson[0].email) :  getManager(e.detail[0].userPrincipalName)  
+        
+        e.detail[0] === undefined ? setTitle(charttitle) : titleCreator(e.detail[0].userPrincipalName)  
     }
    
+
+    const titleCreator = (manager) => {
+        console.log(manager)
+        console.log(topperson[0].email)
+        manager === topperson[0].email ? setTitle(charttitle) : setTitle(`MSF organization chart`)
+    }
+
+    const selectManager = (man) =>{
+      setData([])
+      setManager(null)
+      setTop_person(man)
+      getManager(man)
+      titleCreator(man)
+    }
+
+
     useEffect(()=>{
-        setTop_person(topperson[0].email)
+      setTop_person(topperson[0].email)
+      getManager(topperson[0].email)
     },[props.details])
   
 
     useEffect(() => { 
       async function fetchData() {
         setIsLoading(true)
+
         const result = await getInfo();
         setData(result);
+
         setIsLoading(false);
       }
       fetchData();
     }, [top_person]);
 
-console.log(data)
-
-    return (
-        <div className={wide ? styles.orgchart_wide : styles.orgchart_standard} {...events} ref={dragger}>
-          <div>
-            <h1>{props.description}</h1>
-            <button onClick={wideHandler}>WIDE</button>
-
+     return (
+        <div style={{backgroundColor:`${color}`}} className={wide ? styles.orgchart_wide : styles.orgchart_standard} {...events} ref={dragger} >
+          <button className={styles.wideButton} onClick={wideHandler}>{wide ? "> <" : "< >"}</button>
+          <div className={styles.orgchartHeader}><h1>{title}</h1></div> 
+          <div className={styles.topWrapper}>
+                
             {topperson === undefined ? null : 
             <>
-              <PeoplePicker selectionMode="single"  selectionChanged={onChangePeople}/>
-              {top_person === null ? null : <TopPersonWrapper personselected={top_person} peoplearray={data}/>}
+              {searchfield && <div style={{width:'375px'}}><PeoplePicker selectionMode="single" selectionChanged={onChangePeople}/></div>}
+              {top_person === null || isLoading === true ? null :
+               <TopPersonWrapper personselected={top_person}  manager={manager} onSelectManager={selectManager} />
+               }
             </>}
           </div>
-          <div className={styles.orgchar_l1_connector}>{""}</div>
+          <div className={styles.orgchar_l1_connector}>x</div>
           <div className={styles.orgchar_l1_wrapper} >
             {isLoading ? (
-              <div>Loading...</div> // Show a loading message or spinner
+              <div>Loading...</div>
             ) : (
               <>
-                {data.map((user,idx) =>
-                      <PersonWrapper  key={idx} person={user.mail} context={context}/>)}
-                      </>
+                {data.length < 1 ? null : data.map((user,idx) =>
+                      <PersonWrapper key={idx} person={user.mail} context={context} position={idx === 0 ? "first" : idx === data.length-1 ? "last" : "middle"} onSelectManager={selectManager}/>
+                )}
+               </>
             )}
           </div>
          </div>

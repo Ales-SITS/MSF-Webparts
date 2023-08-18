@@ -30,18 +30,20 @@ function ButtoncssDetail (props:any) {
 
    function cssfactory (code:string) {
       const cssArr: string[] = code.split(';') 
+
       const cssObject_raw:CSSObject = cssArr.reduce((acc, curr) => {
-        const [property, value] = curr.split(':');
-        acc [property.trim()] = value.trim();
+        const [property, ...value] = curr.split(':');  //split string on first occurence => property, [value, value]
+        const step = value.join(':') // connects value array to value:value, i.e [https,//msfintl.sharepoint] => https://msfintl.sharepoint.com/
+        acc [property.trim()] = step.trim();
         return acc;
       },{})
-
+     
      const cssObject = Object.keys(cssObject_raw).reduce((acc, curr) => {
         const camelCasedKey = curr.replace(/-([a-z])/g, (match, group1) => group1.toUpperCase());
         acc[camelCasedKey] = cssObject_raw[curr];
         return acc;
       }, {});
-
+    
  
         return cssObject
    } 

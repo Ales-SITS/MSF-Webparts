@@ -88,12 +88,11 @@ export default function SearchMsf (props): React.ReactElement  {
 
     const [selectedUrl, setSelectedUrl] = useState(options_url[0]); 
     const selectedUrlHandler = (e) => {
-      console.log(e.target.value)
+
       setSelectedUrl(e.target.value)
     }
    
-    console.log(`${selectedUrl}${searchWord}${input_suffix === undefined ? "" : input_suffix}`)
-    console.log("CCC")
+
 
     const navigation = (e) => {
        e === "Enter" || e.key ==="Enter" ? 

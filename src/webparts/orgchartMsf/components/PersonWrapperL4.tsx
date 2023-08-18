@@ -5,13 +5,17 @@ import { IOrgchartMsfProps } from './IOrgchartMsfProps';
 import { Person, People } from '@microsoft/mgt-react/dist/es6/spfx';
 import { PersonCard } from '@microsoft/mgt-react/dist/es6/spfx';
 import { ViewType } from '@microsoft/mgt-spfx';
-import PersonWrapperL5 from './PersonWrapperL3'
+import PersonWrapperL5 from './PersonWrapperL5'
 import { SPFx, graphfi } from "@pnp/graph";
+
+import { Callout} from '@fluentui/react';
+import { useId } from '@fluentui/react-hooks';
 
 
 export default function PersonWrapperL4 (props) {
     const [isLoading, setIsLoading] = useState(true);   
     const [data, setData] = useState([]);
+    const [visibleCard4, setVisibleCard4] = useState(false)  
 
     async function getInfo() {
         const graph = graphfi().using(SPFx(props.context))
@@ -20,33 +24,65 @@ export default function PersonWrapperL4 (props) {
         return await userData
     }
 
+    const managerHandler = (manager) => {
+      props.onSelectManager(manager)
+    }
+
     useEffect(() => { 
         async function fetchData() {
         setIsLoading(true)
           const result = await getInfo();
-          console.log(result)
+
           setData(result);
           setIsLoading(false);
         }
         fetchData();
       }, [props.person]);
 
+      const personId4 = useId('callout-personL4');
+
+      
+
     return (
-        <div className={styles.person_wrapper}>
-            <Person 
-                      className={styles.person}               
+        <div className={`
+            ${styles['person_wrapper']} 
+            ${styles['person_wrapper4']}         
+            `}
+            onMouseLeave={()=>setVisibleCard4(false)}
+        >
+            <Person   
+                      onClick={()=>managerHandler(props.person)}
+                      className={styles.person4}               
                       personQuery={props.person}
                       view={ViewType.threelines} 
+                      id={personId4}
                       showPresence 
-                      personCardInteraction={1}/>
-            <div className={styles.persons_box}>
+                    />
+                     {visibleCard4 &&
+                      <Callout
+                            role="dialog"
+                            gapSpace={0}
+                            setInitialFocus
+                            target={`#${personId4}`}
+                            onMouseEnter={()=>setVisibleCard4(true)}
+                            onMouseLeave={()=>setVisibleCard4(false)}
+                                >
+                                  <PersonCard personQuery={props.person}/>
+                        </Callout>}
+           
+             <div className={styles.persons_box}>
              {isLoading ? (
-              <div>Loading...</div> //Show a loading message or spinner
+              <div>Loading...</div> 
             ) : ( <>
-                      {data.map((user,idx) =>
-                      <PersonWrapperL5  key={idx} person={user.mail} context={props.context}/>)}
+                      {data.length < 1 ? null  : data.map((user,idx) =>
+                       
+                      <PersonWrapperL5  key={idx} person={user.mail} context={props.context}/>
+                      
+                      )}
                 </>)}
             </div>
+            
           </div>
+                    
        );
   }

@@ -3,7 +3,7 @@
   "solution": {
     "name": "MSF webparts package",
     "id": "8e76caf6-67fb-48dd-94e8-87cf9db80c85",
-    "version": "8.0.1.0",
+    "version": "9.0.0.3",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -20,7 +20,7 @@
         "default": "A package with webparts created for all SPO developers in MSF. Prepared for you by MSF SITS team."
       },
       "longDescription": {
-        "default": "This package includes webparts for all SPO site designers in MSF. Presently there are 6 webpart - 1) Welcome user (MSF) which can help you to create a simple welcome message, 2) Button (MSF) which give SPO designers much more visual options than standard SPO Button or Quick Links webpart, 3) Button CSS (MSF) which takes the visualisation even further because it allows usage of CSS for advanced user, 4) Tabs (MSF) which allows designers to create dynamic content tabs, 5) Anchor list (MSF) which creates a list of clickable buttons navigation to all your headings(anchors) on your page, 6) Dropzone(MSF) which allows users to upload files by drag'n'drop to folder you specify with conditions you specify."
+        "default": "This package includes webparts for all SPO site designers in MSF. Presently there are 9 webpart - 1) Welcome user (MSF) which can help you to create a simple welcome message, 2) Button (MSF) which give SPO designers much more visual options than standard SPO Button or Quick Links webpart, 3) Button CSS (MSF) which takes the visualisation even further because it allows usage of CSS for advanced user, 4) Tabs (MSF) which allows designers to create dynamic content tabs, 5) Anchor list (MSF) which creates a list of clickable buttons navigation to all your headings(anchors) on your page, 6) Dropzone (MSF) which allows users to upload files by drag'n'drop to folder you specify with conditions you specify, 7) Redirect (MSF) which helps you to easily deploy redirect automation to your pages, 8) Search (MSF) for creating dropdown menu for various url and search options, 9) Orgchart (MSF), automated organization chart connected to msf AzureAD database."
       },
       "screenshotPaths": [],
       "videoUrl": "",
@@ -31,7 +31,7 @@
         "title": "MSF webparts package",
         "description": "The feature that activates elements of the msf-webparts solution.",
         "id": "e0da02d2-a66d-47be-8dd7-844c1d9c8848",
-        "version": "8.0.1.0"
+        "version": "9.0.0.3"
       }
     ]
   },

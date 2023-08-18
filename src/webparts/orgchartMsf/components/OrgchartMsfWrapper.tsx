@@ -5,16 +5,10 @@ import OrgchartMsf from './OrgchartMsf';
 
 export default class OrgchartMsfWrapper extends React.Component<IOrgchartMsfProps, {}> {
   public render(): React.ReactElement<IOrgchartMsfProps> {
-    const {
-      description,
-      topperson,
-      context
-    } = this.props;
 
-  
     return (
       <section>
-        {topperson.length === 0 ? null : <OrgchartMsf details={this.props}/>}
+        {this.props.topperson.length === 0 ? null : <OrgchartMsf details={this.props}/>}
       </section>
     );
   }

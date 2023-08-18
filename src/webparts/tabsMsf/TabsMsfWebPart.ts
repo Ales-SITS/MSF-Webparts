@@ -51,7 +51,7 @@ export default class TabsMsfWebPart extends BaseClientSideWebPart<ITabsMsfWebPar
   
 
   public render(): void {
-    //console.log('Web Part Render Called');
+
     this.properties.tabContent = "";
     this.properties.tabs.map((tab: any, tabindex: number) => {
       this.properties.tabContent += tab.Title + "," + tab.Content + "|";

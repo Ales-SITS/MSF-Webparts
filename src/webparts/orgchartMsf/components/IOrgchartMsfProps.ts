@@ -1,6 +1,9 @@
 import { IPropertyFieldGroupOrPerson } from "@pnp/spfx-property-controls/lib/PropertyFieldPeoplePicker";
 export interface IOrgchartMsfProps {
-  description: string;
+  charttitle: string;
   topperson: IPropertyFieldGroupOrPerson[];
+  searchfield: boolean;
+  widedisplay: boolean;
+  color: string;
   context: any
 }

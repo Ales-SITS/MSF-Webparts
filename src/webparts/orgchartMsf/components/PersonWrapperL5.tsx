@@ -33,7 +33,7 @@ export default function PersonWrapperL5 (props) {
     return (
         <div className={styles.person_wrapper}>
             <Person 
-                      className={styles.person}               
+                      className={styles.person5}               
                       personQuery={props.person}
                       view={ViewType.threelines} 
                       showPresence 

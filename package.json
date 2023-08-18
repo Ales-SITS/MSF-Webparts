@@ -9,6 +9,7 @@
     "test": "gulp test"
   },
   "dependencies": {
+    "@fluentui/react-hooks": "^8.6.29",
     "@microsoft/mgt-react": "^3.0.0",
     "@microsoft/mgt-spfx": "^3.0.0",
     "@microsoft/mgt-spfx-utils": "^3.0.0",
