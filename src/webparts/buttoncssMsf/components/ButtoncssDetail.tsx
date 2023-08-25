@@ -7,11 +7,11 @@ import { FontIcon } from '@fluentui/react/lib/Icon';
 function ButtoncssDetail (props:any) {
 
   const[
-    d_link, d_suffix, d_label, d_blank, d_icon, d_iconPicker, d_css, d_css_hover, d_css_icon, d_css_label
+    d_link, d_suffix, d_label, d_linklabel, d_blank, d_icon, d_iconPicker, d_css, d_css_hover, d_css_icon, d_css_label
    ] = props.details[0];
   
   const[
-    link, suffix, label, blank, icon, iconPicker, css, css_hover, css_icon, css_label
+    link, suffix, label, linklabel, blank, icon, iconPicker, css, css_hover, css_icon, css_label
    ] = props.details[1];
 
    let buttonCSS
@@ -65,7 +65,7 @@ function ButtoncssDetail (props:any) {
     }
 
     return (
-        <a className={styles.ButtoncssMsfLink} href={url} target={blank ? "_blank":"_self"} rel = {blank? "noreferrer" : ""} data-interception="off" >
+        <a className={styles.ButtoncssMsfLink} href={url} title={linklabel} target={blank ? "_blank":"_self"} rel = {blank? "noreferrer" : ""} data-interception="off" >
           <div className={styles.ButtoncssMsf} style={butCSS}
             onMouseEnter={()=>butCSSHandler(false)}
             onMouseLeave={()=>butCSSHandler(true)}

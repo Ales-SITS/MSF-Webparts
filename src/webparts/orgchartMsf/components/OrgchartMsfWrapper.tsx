@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IOrgchartMsfProps } from './IOrgchartMsfProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 import OrgchartMsf from './OrgchartMsf';
 
 export default class OrgchartMsfWrapper extends React.Component<IOrgchartMsfProps, {}> {

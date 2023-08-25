@@ -1,9 +1,6 @@
 import * as React from 'react';
 import styles from './RedirectMsf.module.scss';
-import { useState,useRef,useEffect} from 'react';
-import { IRedirectMsfProps } from './IRedirectMsfProps';
-import { escape } from '@microsoft/sp-lodash-subset';
-
+import { useState,useEffect} from 'react';
 
 
 export default function ButtonMsf (props): React.ReactElement {

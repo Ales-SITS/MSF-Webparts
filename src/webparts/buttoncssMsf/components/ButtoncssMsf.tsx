@@ -15,28 +15,28 @@ export default function ButtoncssMsf (props): React.ReactElement {
       buttonsNumber,
       buttonAlignment,
       buttonsDirection,
-      link, suffix, label, blank, icon, iconPicker, css, css_hover, css_icon, css_label,
-      link2, suffix2, label2, blank2, icon2, iconPicker2, css2, css2_hover, css2_icon, css2_label,
-      link3, suffix3, label3, blank3, icon3, iconPicker3, css3, css3_hover, css3_icon, css3_label,
-      link4, suffix4, label4, blank4, icon4, iconPicker4, css4, css4_hover, css4_icon, css4_label,
-      link5, suffix5, label5, blank5, icon5, iconPicker5, css5, css5_hover, css5_icon, css5_label,
-      link6, suffix6, label6, blank6, icon6, iconPicker6, css6, css6_hover, css6_icon, css6_label,
-      link7, suffix7, label7, blank7, icon7, iconPicker7, css7, css7_hover, css7_icon, css7_label,
-      link8, suffix8, label8, blank8, icon8, iconPicker8, css8, css8_hover, css8_icon, css8_label,
-      link9, suffix9, label9, blank9, icon9, iconPicker9, css9, css9_hover, css9_icon, css9_label,
-      link10, suffix10, label10, blank10, icon10, iconPicker10, css10, css10_hover, css10_icon, css10_label,
+      link, suffix, label, linklabel, blank, icon, iconPicker, css, css_hover, css_icon, css_label,
+      link2, suffix2, label2, linklabel2, blank2, icon2, iconPicker2, css2, css2_hover, css2_icon, css2_label,
+      link3, suffix3, label3, linklabel3, blank3, icon3, iconPicker3, css3, css3_hover, css3_icon, css3_label,
+      link4, suffix4, label4, linklabel4, blank4, icon4, iconPicker4, css4, css4_hover, css4_icon, css4_label,
+      link5, suffix5, label5, linklabel5, blank5, icon5, iconPicker5, css5, css5_hover, css5_icon, css5_label,
+      link6, suffix6, label6, linklabel6, blank6, icon6, iconPicker6, css6, css6_hover, css6_icon, css6_label,
+      link7, suffix7, label7, linklabel7, blank7, icon7, iconPicker7, css7, css7_hover, css7_icon, css7_label,
+      link8, suffix8, label8, linklabel8, blank8, icon8, iconPicker8, css8, css8_hover, css8_icon, css8_label,
+      link9, suffix9, label9, linklabel9, blank9, icon9, iconPicker9, css9, css9_hover, css9_icon, css9_label,
+      link10, suffix10, label10, linklabel10, blank10, icon10, iconPicker10, css10, css10_hover, css10_icon, css10_label,
     } = props.details;
 
-   const details_1 = [link, suffix, label, blank, icon, iconPicker, css, css_hover, css_icon, css_label]
-   const details_2 = [link2, suffix2, label2, blank2, icon2, iconPicker2, css2, css2_hover, css2_icon, css2_label]
-   const details_3 = [link3, suffix3, label3, blank3, icon3, iconPicker3, css3, css3_hover, css3_icon, css3_label]
-   const details_4 = [link4, suffix4, label4, blank4, icon4, iconPicker4, css4, css4_hover, css4_icon, css4_label]
-   const details_5 = [link5, suffix5, label5, blank5, icon5, iconPicker5, css5, css5_hover, css5_icon, css5_label]
-   const details_6 = [link6, suffix6, label6, blank6, icon6, iconPicker6, css6, css6_hover, css6_icon, css6_label]
-   const details_7 = [link7, suffix7, label7, blank7, icon7, iconPicker7, css7, css7_hover, css7_icon, css7_label]
-   const details_8 = [link8, suffix8, label8, blank8, icon8, iconPicker8, css8, css8_hover, css8_icon, css8_label]
-   const details_9 = [link9, suffix9, label9, blank9, icon9, iconPicker9, css9, css9_hover, css9_icon, css9_label]
-   const details_10 = [link10, suffix10, label10, blank10, icon10, iconPicker10, css10, css10_hover, css10_icon, css10_label]
+   const details_1 = [link, suffix, label, linklabel, blank, icon, iconPicker, css, css_hover, css_icon, css_label]
+   const details_2 = [link2, suffix2, label2, linklabel2, blank2, icon2, iconPicker2, css2, css2_hover, css2_icon, css2_label]
+   const details_3 = [link3, suffix3, label3, linklabel3, blank3, icon3, iconPicker3, css3, css3_hover, css3_icon, css3_label]
+   const details_4 = [link4, suffix4, label4, linklabel4, blank4, icon4, iconPicker4, css4, css4_hover, css4_icon, css4_label]
+   const details_5 = [link5, suffix5, label5, linklabel5, blank5, icon5, iconPicker5, css5, css5_hover, css5_icon, css5_label]
+   const details_6 = [link6, suffix6, label6, linklabel6, blank6, icon6, iconPicker6, css6, css6_hover, css6_icon, css6_label]
+   const details_7 = [link7, suffix7, label7, linklabel7, blank7, icon7, iconPicker7, css7, css7_hover, css7_icon, css7_label]
+   const details_8 = [link8, suffix8, label8, linklabel8, blank8, icon8, iconPicker8, css8, css8_hover, css8_icon, css8_label]
+   const details_9 = [link9, suffix9, label9, linklabel9, blank9, icon9, iconPicker9, css9, css9_hover, css9_icon, css9_label]
+   const details_10 = [link10, suffix10, label10, linklabel10, blank10, icon10, iconPicker10, css10, css10_hover, css10_icon, css10_label]
 
 
    const detailsArr1 =[details_1,details_1]

@@ -25,16 +25,16 @@ export interface IButtoncssMsfProps {
   buttonsNumber: number;
   buttonAlignment: string;
   buttonsDirection:string;
-  link: string; suffix: string; label: string; blank: boolean; icon: boolean; iconPicker: string; css: string; css_hover: string; css_icon:string; css_label:string
-  link2: string; suffix2: string; label2: string; blank2: boolean; icon2: boolean; iconPicker2: string; css2: string; css2_hover: string; css2_icon:string; css2_label:string
-  link3: string; suffix3: string; label3: string; blank3: boolean; icon3: boolean; iconPicker3: string; css3: string; css3_hover: string; css3_icon:string; css3_label:string
-  link4: string; suffix4: string; label4: string; blank4: boolean; icon4: boolean; iconPicker4: string; css4: string; css4_hover: string; css4_icon:string; css4_label:string
-  link5: string; suffix5: string; label5: string; blank5: boolean; icon5: boolean; iconPicker5: string; css5: string; css5_hover: string; css5_icon:string; css5_label:string
-  link6: string; suffix6: string; label6: string; blank6: boolean; icon6: boolean; iconPicker6: string; css6: string; css6_hover: string; css6_icon:string; css6_label:string
-  link7: string; suffix7: string; label7: string; blank7: boolean; icon7: boolean; iconPicker7: string; css7: string; css7_hover: string; css7_icon:string; css7_label:string
-  link8: string; suffix8: string; label8: string; blank8: boolean; icon8: boolean; iconPicker8: string; css8: string; css8_hover: string; css8_icon:string; css8_label:string
-  link9: string; suffix9: string; label9: string; blank9: boolean; icon9: boolean; iconPicker9: string; css9: string; css9_hover: string; css9_icon:string; css9_label:string
-  link10: string; suffix10: string; label10: string; blank10: boolean; icon10: boolean; iconPicker10: string; css10: string; css10_hover: string; css10_icon:string; css10_label:string
+  link: string; suffix: string; label: string; linklabel:string; blank: boolean; icon: boolean; iconPicker: string; css: string; css_hover: string; css_icon:string; css_label:string
+  link2: string; suffix2: string; label2: string; linklabel2:string; blank2: boolean; icon2: boolean; iconPicker2: string; css2: string; css2_hover: string; css2_icon:string; css2_label:string
+  link3: string; suffix3: string; label3: string; linklabel3:string; blank3: boolean; icon3: boolean; iconPicker3: string; css3: string; css3_hover: string; css3_icon:string; css3_label:string
+  link4: string; suffix4: string; label4: string; linklabel4:string; blank4: boolean; icon4: boolean; iconPicker4: string; css4: string; css4_hover: string; css4_icon:string; css4_label:string
+  link5: string; suffix5: string; label5: string; linklabel5:string; blank5: boolean; icon5: boolean; iconPicker5: string; css5: string; css5_hover: string; css5_icon:string; css5_label:string
+  link6: string; suffix6: string; label6: string; linklabel6:string; blank6: boolean; icon6: boolean; iconPicker6: string; css6: string; css6_hover: string; css6_icon:string; css6_label:string
+  link7: string; suffix7: string; label7: string; linklabel7:string; blank7: boolean; icon7: boolean; iconPicker7: string; css7: string; css7_hover: string; css7_icon:string; css7_label:string
+  link8: string; suffix8: string; label8: string; linklabel8:string; blank8: boolean; icon8: boolean; iconPicker8: string; css8: string; css8_hover: string; css8_icon:string; css8_label:string
+  link9: string; suffix9: string; label9: string; linklabel9:string; blank9: boolean; icon9: boolean; iconPicker9: string; css9: string; css9_hover: string; css9_icon:string; css9_label:string
+  link10: string; suffix10: string; label10: string; linklabel10:string; blank10: boolean; icon10: boolean; iconPicker10: string; css10: string; css10_hover: string; css10_icon:string; css10_label:string
 }
 
 export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncssMsfProps> {
@@ -55,16 +55,16 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
         buttonsNumber: this.properties.buttonsNumber,
         buttonAlignment: this.properties.buttonAlignment,
         buttonsDirection:this.properties.buttonsDirection,
-        link: this.properties.link, suffix: this.properties.suffix, label: this.properties.label, blank: this.properties.blank, icon: this.properties.icon, iconPicker: this.properties.iconPicker, css: this.properties.css, css_hover:this.properties.css_hover, css_icon:this.properties.css_icon, css_label:this.properties.css_label,
-        link2: this.properties.link2, suffix2: this.properties.suffix2, label2: this.properties.label2, blank2: this.properties.blank2, icon2: this.properties.icon2, iconPicker2: this.properties.iconPicker2, css2: this.properties.css2, css2_hover:this.properties.css2_hover, css2_icon:this.properties.css2_icon, css2_label:this.properties.css2_label,
-        link3: this.properties.link3, suffix3: this.properties.suffix3, label3: this.properties.label3, blank3: this.properties.blank3, icon3: this.properties.icon3, iconPicker3: this.properties.iconPicker3, css3: this.properties.css3, css3_hover:this.properties.css3_hover, css3_icon:this.properties.css3_icon, css3_label:this.properties.css3_label,
-        link4: this.properties.link4, suffix4: this.properties.suffix4, label4: this.properties.label4, blank4: this.properties.blank4, icon4: this.properties.icon4, iconPicker4: this.properties.iconPicker4, css4: this.properties.css4, css4_hover:this.properties.css4_hover, css4_icon:this.properties.css4_icon, css4_label:this.properties.css4_label,
-        link5: this.properties.link5, suffix5: this.properties.suffix5, label5: this.properties.label5, blank5: this.properties.blank5, icon5: this.properties.icon5, iconPicker5: this.properties.iconPicker5, css5: this.properties.css5, css5_hover:this.properties.css5_hover, css5_icon:this.properties.css5_icon, css5_label:this.properties.css5_label,
-        link6: this.properties.link6, suffix6: this.properties.suffix6, label6: this.properties.label6, blank6: this.properties.blank6, icon6: this.properties.icon6, iconPicker6: this.properties.iconPicker6, css6: this.properties.css6, css6_hover:this.properties.css6_hover, css6_icon:this.properties.css6_icon, css6_label:this.properties.css6_label,
-        link7: this.properties.link7, suffix7: this.properties.suffix7, label7: this.properties.label7, blank7: this.properties.blank7, icon7: this.properties.icon7, iconPicker7: this.properties.iconPicker7, css7: this.properties.css7, css7_hover:this.properties.css7_hover, css7_icon:this.properties.css7_icon, css7_label:this.properties.css7_label,
-        link8: this.properties.link8, suffix8: this.properties.suffix8, label8: this.properties.label8, blank8: this.properties.blank8, icon8: this.properties.icon8, iconPicker8: this.properties.iconPicker8, css8: this.properties.css8, css8_hover:this.properties.css8_hover, css8_icon:this.properties.css8_icon, css8_label:this.properties.css8_label,
-        link9: this.properties.link9, suffix9: this.properties.suffix9, label9: this.properties.label9, blank9: this.properties.blank9, icon9: this.properties.icon9, iconPicker9: this.properties.iconPicker9, css9: this.properties.css9, css9_hover:this.properties.css9_hover, css9_icon:this.properties.css9_icon, css9_label:this.properties.css9_label,
-        link10: this.properties.link10, suffix10: this.properties.suffix10, label10: this.properties.label10, blank10: this.properties.blank10, icon10: this.properties.icon10, iconPicker10: this.properties.iconPicker10, css10: this.properties.css10, css10_hover:this.properties.css10_hover, css10_icon:this.properties.css10_icon, css10_label:this.properties.css10_label,
+        link: this.properties.link, suffix: this.properties.suffix, label: this.properties.label, linklabel:this.properties.linklabel,  blank: this.properties.blank, icon: this.properties.icon, iconPicker: this.properties.iconPicker, css: this.properties.css, css_hover:this.properties.css_hover, css_icon:this.properties.css_icon, css_label:this.properties.css_label,
+        link2: this.properties.link2, suffix2: this.properties.suffix2, label2: this.properties.label2, linklabel2:this.properties.linklabel2, blank2: this.properties.blank2, icon2: this.properties.icon2, iconPicker2: this.properties.iconPicker2, css2: this.properties.css2, css2_hover:this.properties.css2_hover, css2_icon:this.properties.css2_icon, css2_label:this.properties.css2_label,
+        link3: this.properties.link3, suffix3: this.properties.suffix3, label3: this.properties.label3, linklabel3:this.properties.linklabel3, blank3: this.properties.blank3, icon3: this.properties.icon3, iconPicker3: this.properties.iconPicker3, css3: this.properties.css3, css3_hover:this.properties.css3_hover, css3_icon:this.properties.css3_icon, css3_label:this.properties.css3_label,
+        link4: this.properties.link4, suffix4: this.properties.suffix4, label4: this.properties.label4, linklabel4:this.properties.linklabel4, blank4: this.properties.blank4, icon4: this.properties.icon4, iconPicker4: this.properties.iconPicker4, css4: this.properties.css4, css4_hover:this.properties.css4_hover, css4_icon:this.properties.css4_icon, css4_label:this.properties.css4_label,
+        link5: this.properties.link5, suffix5: this.properties.suffix5, label5: this.properties.label5, linklabel5:this.properties.linklabel5, blank5: this.properties.blank5, icon5: this.properties.icon5, iconPicker5: this.properties.iconPicker5, css5: this.properties.css5, css5_hover:this.properties.css5_hover, css5_icon:this.properties.css5_icon, css5_label:this.properties.css5_label,
+        link6: this.properties.link6, suffix6: this.properties.suffix6, label6: this.properties.label6, linklabel6:this.properties.linklabel6, blank6: this.properties.blank6, icon6: this.properties.icon6, iconPicker6: this.properties.iconPicker6, css6: this.properties.css6, css6_hover:this.properties.css6_hover, css6_icon:this.properties.css6_icon, css6_label:this.properties.css6_label,
+        link7: this.properties.link7, suffix7: this.properties.suffix7, label7: this.properties.label7, linklabel7:this.properties.linklabel7, blank7: this.properties.blank7, icon7: this.properties.icon7, iconPicker7: this.properties.iconPicker7, css7: this.properties.css7, css7_hover:this.properties.css7_hover, css7_icon:this.properties.css7_icon, css7_label:this.properties.css7_label,
+        link8: this.properties.link8, suffix8: this.properties.suffix8, label8: this.properties.label8, linklabel8:this.properties.linklabel8, blank8: this.properties.blank8, icon8: this.properties.icon8, iconPicker8: this.properties.iconPicker8, css8: this.properties.css8, css8_hover:this.properties.css8_hover, css8_icon:this.properties.css8_icon, css8_label:this.properties.css8_label,
+        link9: this.properties.link9, suffix9: this.properties.suffix9, label9: this.properties.label9, linklabel9:this.properties.linklabel9, blank9: this.properties.blank9, icon9: this.properties.icon9, iconPicker9: this.properties.iconPicker9, css9: this.properties.css9, css9_hover:this.properties.css9_hover, css9_icon:this.properties.css9_icon, css9_label:this.properties.css9_label,
+        link10: this.properties.link10, suffix10: this.properties.suffix10, label10: this.properties.label10, linklabel10:this.properties.linklabel10, blank10: this.properties.blank10, icon10: this.properties.icon10, iconPicker10: this.properties.iconPicker10, css10: this.properties.css10, css10_hover:this.properties.css10_hover, css10_icon:this.properties.css10_icon, css10_label:this.properties.css10_label,
       }
     );
 
@@ -85,7 +85,7 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
     const pagesArray = [ 
       {
       header: {
-        description: "Welcome! Welcome! On this page (1), you can set number of buttons (up to 10) and their general layout. You can also set all the details for your first button, which visuals works as default for other buttons too. In the next pages (i.e. button 2 = page(2)) you can set other buttons and rewrite the default visual settings for that specific button if needed. You can also use dynamic URL with the optional input field, which value is added automatically to the end of buttons URL (Select PnP Search solution on, if you are using PnP Search webparts). "
+        description: "Welcome! On this page (1), you can set number of buttons (up to 10) and their general layout. You can also set all the details for your first button, which visuals works as default for other buttons too. In the next pages (i.e. button 2 = page(2)) you can set other buttons and rewrite the default visual settings for that specific button if needed. You can also use dynamic URL with the optional input field, which value is added automatically to the end of buttons URL (Select PnP Search solution on, if you are using PnP Search webparts). "
       },
       displayGroupsAsAccordion: true,
       groups: [ 
@@ -168,6 +168,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               label: "Add button label",
               description:"If the label is not properly centered try to ON/OFF the icon. And if icon is not centered, type something in label and delete."
             }),
+            PropertyPaneTextField('linklabel', {
+              label: "Alt text",
+              description:"Small text label displayed on hover."
+            }),
             PropertyPaneToggle('blank',{
               label:"Open in new tab?"
             }),
@@ -236,6 +240,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               PropertyPaneTextField('label2', {
                 label: "Add button label"
               }),
+              PropertyPaneTextField('linklabel2', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
+              }),
               PropertyPaneToggle('blank2',{
                 label:"Open in new tab?"
               }),
@@ -302,6 +310,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('label3', {
                 label: "Add button label"
+              }),
+              PropertyPaneTextField('linklabel3', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
               }),
               PropertyPaneToggle('blank3',{
                 label:"Open in new tab?"
@@ -371,6 +383,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               PropertyPaneTextField('label4', {
                 label: "Add button label"
               }),
+              PropertyPaneTextField('linklabel4', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
+              }),
               PropertyPaneToggle('blank4',{
                 label:"Open in new tab?"
               }),
@@ -437,6 +453,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('label5', {
                 label: "Add button label"
+              }),
+              PropertyPaneTextField('linklabel5', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
               }),
               PropertyPaneToggle('blank5',{
                 label:"Open in new tab?"
@@ -505,6 +525,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               PropertyPaneTextField('label6', {
                 label: "Add button label"
               }),
+              PropertyPaneTextField('linklabel6', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
+              }),
               PropertyPaneToggle('blank6',{
                 label:"Open in new tab?"
               }),
@@ -571,6 +595,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('label7', {
                 label: "Add button label"
+              }),
+              PropertyPaneTextField('linklabel7', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
               }),
               PropertyPaneToggle('blank7',{
                 label:"Open in new tab?"
@@ -639,6 +667,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               PropertyPaneTextField('label8', {
                 label: "Add button label"
               }),
+              PropertyPaneTextField('linklabel8', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
+              }),
               PropertyPaneToggle('blank8',{
                 label:"Open in new tab?"
               }),
@@ -706,6 +738,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               PropertyPaneTextField('label9', {
                 label: "Add button label"
               }),
+              PropertyPaneTextField('linklabel9', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
+              }),
               PropertyPaneToggle('blank9',{
                 label:"Open in new tab?"
               }),
@@ -772,6 +808,10 @@ export default class ButtoncssMsfWebPart extends BaseClientSideWebPart<IButtoncs
               }),
               PropertyPaneTextField('label10', {
                 label: "Add button label"
+              }),
+              PropertyPaneTextField('linklabel10', {
+                label: "Alt text",
+                description:"Small text label displayed on hover."
               }),
               PropertyPaneToggle('blank10',{
                 label:"Open in new tab?"

@@ -2,17 +2,11 @@ import * as React from 'react';
 import {useState, useEffect, useRef} from 'react';
 import { useDraggable } from "react-use-draggable-scroll";
 import styles from './OrgchartMsf.module.scss';
-import { IOrgchartMsfProps } from './IOrgchartMsfProps';
-import { escape } from '@microsoft/sp-lodash-subset';
-import { Person } from '@microsoft/mgt-react/dist/es6/spfx';
-import { PersonCard } from '@microsoft/mgt-react/dist/es6/spfx';
 import {  PeoplePicker } from '@microsoft/mgt-react';
-import { ViewType } from '@microsoft/mgt-spfx';
 import TopPersonWrapper from './TopPersonWrapper';
 import { SPFx, graphfi } from "@pnp/graph";
 import "@pnp/graph/users";
 import PersonWrapper from './PersonWrapper'
-
 
 
 export default function OrgchartMsf (props) {
