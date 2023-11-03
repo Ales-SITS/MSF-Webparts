@@ -5,5 +5,7 @@ export interface IOrgchartMsfProps {
   searchfield: boolean;
   widedisplay: boolean;
   color: string;
-  context: any
+  context: any;
+  assistant: boolean;
+  userfilter: string
 }

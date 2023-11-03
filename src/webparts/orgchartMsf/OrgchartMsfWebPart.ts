@@ -20,7 +20,7 @@ import { customElementHelper } from '@microsoft/mgt-element/dist/es6/components/
 import { SharePointProvider } from '@microsoft/mgt-sharepoint-provider/dist/es6/SharePointProvider';
 import { lazyLoadComponent } from '@microsoft/mgt-spfx-utils';
 
-
+//import OrgchartMsfWrapper from './components/OrgchartMsfWrapper';
 
 const OrgchartMsfWrapper = React.lazy(() => import('./components/OrgchartMsfWrapper'))
 
@@ -40,13 +40,17 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
   }
 
   public render(): void {
-    const element = lazyLoadComponent(OrgchartMsfWrapper, { 
+    const element = lazyLoadComponent(
+      OrgchartMsfWrapper,
+      { 
       charttitle: this.properties.charttitle,
       topperson: this.properties.topperson,
       searchfield: this.properties.searchfield,
       context: this.context,
       widedisplay:this.properties.widedisplay,
-      color: this.properties.color
+      color: this.properties.color,
+      assistant: this.properties.assistant,
+      userfilter: this.properties.userfilter
      });
    
     ReactDom.render(element, this.domElement);
@@ -86,6 +90,15 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
                 }),
                 PropertyPaneToggle('searchfield',{
                   label:"Include people search field?"
+                }),
+                PropertyPaneToggle('assistant',{
+                  label:"Special assistant box?",
+                }),
+                PropertyPaneTextField('userfilter', {
+                  label: 'Filters',
+                  rows: 2,
+                  resizable: true,
+                  description: "Excludes user if their email address includes the text you enter. Multiple filters possible (separate by ;)"
                 }),
               ]
             },

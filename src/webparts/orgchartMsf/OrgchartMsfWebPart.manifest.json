@@ -15,13 +15,14 @@
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70",
     "group": { "default": "Advanced" },
-    "title": { "default": "Orgchart (MSF) (preview)" },
-    "description": { "default": "Orgchart (MSF) webpart preview version" },
+    "title": { "default": "Orgchart (MSF)" },
+    "description": { "default": "Orgchart (MSF) webpart to display organigram from Azure AD" },
     "iconImageUrl":"data:image/png;base64,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",
     "properties": {
       "description": "Organization chart",
       "searchfield": true,
-      "widedisplat": false
+      "widedisplat": false,
+      "assistant": false
     }
   }]
 }

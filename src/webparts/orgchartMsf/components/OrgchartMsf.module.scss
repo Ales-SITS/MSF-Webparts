@@ -5,41 +5,45 @@
   display:flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
   position: fixed;
   top: 5vh;
   left: 5vw;
   width: 90vw;
   height: 90vh;
-  padding: 10px;
-  padding-top: 40px;
+  padding: 2px;
   border-radius: 10px;
-  overflow: scroll;
   z-index: 100;
   background-color: white;
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
-  cursor: grab;
+
 }
 
 .orgchart_standard {
   display:flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
   position: static;
   background-color: white;
-  overflow: scroll;
   width: 100%;
+  padding: 2px;
   max-height: 500px;
-  padding: 10px;
-  padding-top: 40px;
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
   border-radius: 10px;
+}
+
+.orgchart_content {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+  box-sizing: border-box;
   cursor: grab;
+  overflow: scroll;
 }
 
 .wideButton {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 40px;
   font-size: 30px;
@@ -57,10 +61,12 @@
   color: orangered
 }
 
-.orgchartHeader {
+.orgchartHeader { 
   width: 100%;
-  display: flex;
-  justify-content: center;
+  border-radius: 10px 10px 0 0 ;
+  text-align: center;
+  margin: 0;
+  padding: 5px 0
 }
 
 .orgchartHeader h1 {
@@ -78,12 +84,23 @@
   }
 }
 
+.inputs_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .topWrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
+}
+
+.top_person_wrapper {
+  display: flex;
+  align-items: end;
 }
 
 .orgchar_l1_connector {
@@ -104,12 +121,13 @@
 .top_person {
   box-shadow: 0 0 5px rgba(0,0,0,0.3);
   padding: 10px;
-  margin: 10px;
+  margin: 10px 10px 0 10px;
   border-radius: 10px;
   background-color: white;
+  min-width: 315px;
 }
 
-.top_person-manager {
+.top_person_manager {
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
   padding: 5px;
   margin: 5px;
@@ -120,23 +138,23 @@
   cursor: pointer;
 }
 
-.top_person-manager:hover, .person_wrapper:hover {
+.top_person_manager:hover, .person_wrapper:hover {
   box-shadow: 0 0 2px rgb(0, 0, 0);
 }
 
-.person_wrapper-first {
+.person_wrapper_first {
   position: relative
 }
 
-.person_wrapper-middle {
+.person_wrapper_middle {
   position: relative;
 }
 
-.person_wrapper-last{
+.person_wrapper_last{
   position: relative;
 }
 
-.person_wrapper-first:before {
+.person_wrapper_first:before {
   content:'';
   position:absolute;
   top: -25px;
@@ -146,7 +164,7 @@
   border-left: 2px solid rgb(170, 170, 170); 
 }
 
-.person_wrapper-middle:before {
+.person_wrapper_middle:before {
   content:'';
   position:absolute;
   top: -15px;
@@ -158,7 +176,7 @@
 }
 
 
-.person_wrapper-last:before {
+.person_wrapper_last:before {
   content:'';
   position:absolute;
   top: -15px;
@@ -186,7 +204,8 @@
 }
 
 .person_wrapper1 {
-  width: 300px
+  min-width: 300px;
+  max-width: 300px
 }
 
 .person_wrapper2 {
@@ -219,6 +238,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  width: 100%;
 }
 
 .person1 {  

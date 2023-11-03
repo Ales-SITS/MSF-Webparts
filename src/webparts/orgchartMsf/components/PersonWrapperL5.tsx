@@ -6,6 +6,7 @@ import { ViewType } from '@microsoft/mgt-spfx';
 //import PersonWrapperL6 from './PersonWrapperL3'
 import { SPFx, graphfi } from "@pnp/graph";
 
+import Loader from './Visual/Loader'
 
 export default function PersonWrapperL5 (props) {
     const [isLoading, setIsLoading] = useState(true);   
@@ -21,8 +22,9 @@ export default function PersonWrapperL5 (props) {
     useEffect(() => { 
         async function fetchData() {
         setIsLoading(true)
-          const result = await getInfo();
-          setData(result);
+        const result = await getInfo();
+        const clearResult = result.filter((user:any) => user.mail !== null)
+        setData(clearResult)
           setIsLoading(false);
         }
         fetchData();

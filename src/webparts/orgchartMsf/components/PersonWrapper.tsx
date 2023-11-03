@@ -11,10 +11,14 @@ import { Callout } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 import "@pnp/graph/users";
 
+import Loader from './Visual/Loader'
 
 export default function PersonWrapper (props) {
 
     const pos = props.position
+    const job = props.job
+    const highlighted = props.highlighted
+    const filter_array = props.filter_array
 
     const [isLoading, setIsLoading] = useState(true);
     const [visibleCard, setVisibleCard] = useState(false)  
@@ -22,7 +26,6 @@ export default function PersonWrapper (props) {
   
     async function getInfo() {
         const graph = graphfi().using(SPFx(props.context))
-        //const meData = await graph.me();
         const userData = await graph.users.getById(`${props.person}`).directReports()
         return await userData
     }
@@ -35,7 +38,8 @@ export default function PersonWrapper (props) {
         async function fetchData() {
         setIsLoading(true)
           const result = await getInfo();
-          setData(result);
+          const clearResult = result.filter((user:any) => user.mail !== null)
+          setData(clearResult);
           setIsLoading(false);
         }
         fetchData();
@@ -44,26 +48,34 @@ export default function PersonWrapper (props) {
     //Callout
     const personId = useId('callout-person');
 
+    const filtered_data = filter_array.length < 1 ? 
+                          data :
+                          data.filter(user => {
+                            return filter_array?.every(filterStr => !user.userPrincipalName?.toLowerCase().includes(filterStr));
+                          })
+
+     console.log(job)
+     console.log(highlighted)       
+
     return (  
         <div className={`
-        ${styles['person_wrapper']} 
-        ${styles['person_wrapper1']} 
-        ${pos==='first' ? styles['person_wrapper-first'] :
-          pos==='last' ?  styles['person_wrapper-last'] :
-          styles['person_wrapper-middle']
-      }
-        
-        `}
+          ${styles['person_wrapper']} 
+          ${styles['person_wrapper1']} 
+          ${pos==='first' ? styles['person_wrapper_first'] :
+            pos==='last' ?  styles['person_wrapper_last'] :
+            styles['person_wrapper_middle']} 
+          `}
         onMouseLeave={()=>setVisibleCard(false)}
-        >
-      
-            <Person   onClick={()=>managerHandler(props.person)}
-                      className={styles.person1}               
-                      personQuery={props.person}
-                      view={ViewType.threelines} 
-                      showPresence     
-                      id={personId}
-                      onMouseEnter={()=>setVisibleCard(true)} 
+        style={{backgroundColor: job?.toLowerCase().includes(`${highlighted ? highlighted.toLowerCase() : "Darth Vader"}`) ? "#fff4b8" : 'white'}}
+        > 
+            <Person   
+                onClick={()=>managerHandler(props.person)}
+                personQuery={props.person}
+                className={styles.person1}               
+                view={ViewType.threelines} 
+                showPresence     
+                id={personId}
+                onMouseEnter={()=>setVisibleCard(true)} 
                       
                      />
             {visibleCard &&
@@ -81,12 +93,16 @@ export default function PersonWrapper (props) {
                
               <div className={styles.persons_box}>
                   {isLoading ? (
-                  <div>Loading...</div> //Show a loading message or spinner
+                  <Loader/> //Show a loading message or spinner
                     ) : ( <>
-                          {data.length < 1 ? null  : data.map((user,idx) => 
-                         
-                          <PersonWrapperL2 key={idx} person={user.mail} context={props.context} onSelectManager={managerHandler}/>
-                         
+                          {filtered_data.length < 1 ? null  : filtered_data.map((user,idx) =>                          
+                          <PersonWrapperL2 
+                          key={idx} 
+                          person={user.mail} 
+                          context={props.context} 
+                          onSelectManager={managerHandler}
+                          filter_array={filter_array}
+                          />                   
                           )}
                   </>)}
               </div>

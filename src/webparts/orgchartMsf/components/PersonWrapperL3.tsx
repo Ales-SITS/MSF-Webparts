@@ -10,6 +10,8 @@ import { SPFx, graphfi } from "@pnp/graph";
 import { Callout} from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 
+import Loader from './Visual/Loader'
+
 export default function PersonWrapperL3 (props) {
     const [isLoading, setIsLoading] = useState(true);   
     const [data, setData] = useState([]);
@@ -17,7 +19,6 @@ export default function PersonWrapperL3 (props) {
 
     async function getInfo() {
         const graph = graphfi().using(SPFx(props.context))
-        //const meData = await graph.me();
         const userData = await graph.users.getById(`${props.person}`).directReports()
         return await userData
     }
@@ -31,7 +32,8 @@ export default function PersonWrapperL3 (props) {
         async function fetchData() {
         setIsLoading(true)
           const result = await getInfo();
-          setData(result);
+          const clearResult = result.filter((user:any) => user.mail !== null)
+          setData(clearResult);
           setIsLoading(false);
         }
         fetchData();
@@ -70,7 +72,7 @@ export default function PersonWrapperL3 (props) {
           
              <div className={styles.persons_box}>
                 {isLoading ? (
-                <div>Loading...</div> //Show a loading message or spinner
+                 <Loader/> //Show a loading message or spinner
                 ) : ( <>
                         {data.length < 1 ? null  : data.map((user,idx) =>
                         

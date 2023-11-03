@@ -22,7 +22,7 @@ export default class CTab extends React.Component<ICTabProps, {}> {
   
 
   public render(): React.ReactElement<ICTabProps> {   
-    console.log(this.props.tabs);
+    //console.log(this.props.tabs);
     if(this.props.displayMode === DisplayMode.Edit)  
     {
       return (
@@ -56,6 +56,7 @@ export default class CTab extends React.Component<ICTabProps, {}> {
                             itemKey={this.props.guid + '-editor-' + tabindex} 
                             value={tab.Content}
                             init={{
+                              convert_urls: false,
                               content_style: "a {color:rgb(0,120,212) !important}",
                               plugins: 'link image table lists media code',                            
                               menubar: 'edit insert format table lists view',  // skip file

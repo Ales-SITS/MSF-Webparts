@@ -10,7 +10,11 @@ import { SPFx, graphfi } from "@pnp/graph";
 import { Callout} from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 
+import Loader from './Visual/Loader'
+
 export default function PersonWrapperL2 (props) {
+
+    const filter_array = props.filter_array
     const [isLoading, setIsLoading] = useState(true);   
     const [data, setData] = useState([]);
     const [visibleCard2, setVisibleCard2] = useState(false)  
@@ -30,13 +34,20 @@ export default function PersonWrapperL2 (props) {
         async function fetchData() {
         setIsLoading(true)
           const result = await getInfo();
-          setData(result);
+          const clearResult = result.filter((user:any) => user.mail !== null)
+          setData(clearResult);
           setIsLoading(false);
         }
         fetchData();
       }, [props.person]);
 
     const personId2 = useId('callout-personL2');
+
+    const filtered_data = filter_array.length < 1 ? 
+          data :
+          data.filter(user => {
+            return filter_array?.every(filterStr => !user.userPrincipalName?.toLowerCase().includes(filterStr));
+          })
 
     return (
         <div className={`
@@ -66,14 +77,10 @@ export default function PersonWrapperL2 (props) {
                
                 <div className={styles.persons_box}>
                     {isLoading ? (
-                    <div>Loading...</div> //Show a loading message or spinner
+                     <Loader/> //Show a loading message or spinner
                     ) : ( <>
-                            {data.length < 1 ? null : data.map((user,idx) =>
-                      
-
+                            {filtered_data.length < 1 ? null : data.map((user,idx) =>
                             <PersonWrapperL3  key={idx} person={user.mail} context={props.context} onSelectManager={managerHandler}/>
-
-                             
                             )}
                         </>)}
                 </div>

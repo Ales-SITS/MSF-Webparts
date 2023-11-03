@@ -7,41 +7,30 @@ import { ViewType } from '@microsoft/mgt-spfx';
 import "@pnp/graph/users";
 
 export default function TopPersonWrapper (props) {
-  
-    const [managerI,setManagerI] = useState(props.manager)
-    const [managerII,setManagerII] = useState(props.personselected)
     
-    const managerHandler = () => {
-        setManagerI(null)
-        setManagerII(null)
-        props.onSelectManager(managerI)
+    const managerHandler = (man) => {
+        props.onSelectManager(man)
       }
   
-    useEffect(()=>{
-        setManagerI(props.manager)
-        setManagerII(props.managerII)
-    },[props])
-
 
     return (
         <div className={styles['top_person']}>
-                    <div className={styles['top_person-manager']}>
+                  <div className={styles['top_person_manager']}>
                     <Person 
                       className={`${styles['person']}`}               
-                      personQuery={managerI}
+                      personQuery={props.manager}
                       view={ViewType.oneline} 
                       showPresence 
                       personCardInteraction={0}
-                      onClick={managerHandler}
+                      onClick={()=>managerHandler(props.manager)}
                       />
-                    </div>     
+                  </div>     
                     <Person
                     className={`${styles['person']} ${styles['personTOP']}`}    
-                    personQuery={managerII} 
+                    personQuery={props.personselected} 
                     view={ViewType.fourlines} 
                     showPresence 
                     personCardInteraction={1}/>
-        </div>
-                 
+        </div>           
        );
   }

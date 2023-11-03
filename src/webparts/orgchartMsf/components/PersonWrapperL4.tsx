@@ -10,6 +10,7 @@ import { SPFx, graphfi } from "@pnp/graph";
 import { Callout} from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
 
+import Loader from './Visual/Loader'
 
 export default function PersonWrapperL4 (props) {
     const [isLoading, setIsLoading] = useState(true);   
@@ -30,9 +31,9 @@ export default function PersonWrapperL4 (props) {
     useEffect(() => { 
         async function fetchData() {
         setIsLoading(true)
-          const result = await getInfo();
-
-          setData(result);
+        const result = await getInfo();
+        const clearResult = result.filter((user:any) => user.mail !== null)
+        setData(clearResult)
           setIsLoading(false);
         }
         fetchData();
@@ -71,7 +72,7 @@ export default function PersonWrapperL4 (props) {
            
              <div className={styles.persons_box}>
              {isLoading ? (
-              <div>Loading...</div> 
+               <Loader/>
             ) : ( <>
                       {data.length < 1 ? null  : data.map((user,idx) =>
                        
