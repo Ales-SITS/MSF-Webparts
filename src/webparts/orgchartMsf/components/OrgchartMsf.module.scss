@@ -1,5 +1,11 @@
 @import '~@fluentui/react/dist/sass/References.scss';
 
+.hidden_kitty {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: rotate(180deg);
+}
 
 .orgchart_wide {
   display:flex;
@@ -84,10 +90,28 @@
   }
 }
 
+.highligh_input {
+  width: 375px;
+  border-radius: 5px;
+  border: 1px solid #ebebeb;
+  border-bottom: 1px solid rgb(32, 32, 32);
+  transition: 0.2s
+}
+
+.highligh_input:hover {
+  background-color: #f1f1f1;
+}
+
+.highligh_input:focus {
+  border: 1px solid #ebebeb;
+  border-bottom: 2px solid darkblue
+}
+
 .inputs_wrapper {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: end;
 }
 
 .topWrapper {
@@ -169,7 +193,7 @@
   position:absolute;
   top: -15px;
   right: 50%;
-  width: 328px;
+  width: 308px;
   height: 10px;
   border-top: 2px solid rgb(170, 170, 170);
   border-right: 2px solid  rgb(170, 170, 170);
@@ -200,7 +224,12 @@
   align-items: start;
   justify-content: start;
   transition: 0.2s;
+  box-sizing: border-box;
   cursor: pointer;
+}
+
+.highlighted {
+  box-shadow: 0 0 3px rgba(255,0,0,1);
 }
 
 .person_wrapper1 {

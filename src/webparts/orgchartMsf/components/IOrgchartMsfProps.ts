@@ -7,5 +7,9 @@ export interface IOrgchartMsfProps {
   color: string;
   context: any;
   assistant: boolean;
-  userfilter: string
+  userfilter: string;
+  rule1_type: string;
+  rule1: string;
+  rule1_bg: string;
+  maxlevel: number
 }

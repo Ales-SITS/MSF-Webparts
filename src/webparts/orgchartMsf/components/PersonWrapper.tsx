@@ -4,7 +4,7 @@ import styles from './OrgchartMsf.module.scss';
 import { Person } from '@microsoft/mgt-react/dist/es6/spfx';
 import { PersonCard } from '@microsoft/mgt-react/dist/es6/spfx';
 import { ViewType } from '@microsoft/mgt-spfx';
-import PersonWrapperL2 from './PersonWrapperL2'
+import PersonWrapper_lower from './PersonWrapper'
 import { SPFx, graphfi } from "@pnp/graph";
 
 import { Callout } from '@fluentui/react';
@@ -16,9 +16,15 @@ import Loader from './Visual/Loader'
 export default function PersonWrapper (props) {
 
     const pos = props.position
+    const mail = props.person
     const job = props.job
     const highlighted = props.highlighted
     const filter_array = props.filter_array
+    const rule1_type = props.rule1_type
+    const rule1 = props.rule1
+    const rule1_bg = props.rule1_bg
+    const level = props.level + 1
+    const maxlevel = props.maxlevel
 
     const [isLoading, setIsLoading] = useState(true);
     const [visibleCard, setVisibleCard] = useState(false)  
@@ -53,25 +59,41 @@ export default function PersonWrapper (props) {
                           data.filter(user => {
                             return filter_array?.every(filterStr => !user.userPrincipalName?.toLowerCase().includes(filterStr));
                           })
+    
+  const rule_fn = () => {
+    const rule = rule1?.toLowerCase()
+    if(rule1_type === "job") {
+      return job?.toLowerCase().includes(`${rule}`) 
+    } else if (rule1_type === "mail") {
+      return mail?.toLowerCase().includes(`${rule}`)
+    } else {
+      return false
+    }
+  }
 
-     console.log(job)
-     console.log(highlighted)       
+  const rule_style = {
+      backgroundColor: `${rule_fn()? rule1_bg : '#ffffff'}`
+    }                      
+
 
     return (  
         <div className={`
-          ${styles['person_wrapper']} 
-          ${styles['person_wrapper1']} 
-          ${pos==='first' ? styles['person_wrapper_first'] :
-            pos==='last' ?  styles['person_wrapper_last'] :
-            styles['person_wrapper_middle']} 
+          ${styles.person_wrapper} 
+          ${styles[`person_wrapper${level}`]} 
+          ${job?.toLowerCase().includes(`${highlighted && highlighted.toLowerCase()}`) && highlighted !== "" && styles.highlighted}
+          ${pos==='first' ? styles.person_wrapper_first :
+            pos==='last' ?  styles.person_wrapper_last :
+            pos==='middle' ? styles.person_wrapper_middle : 
+            ""
+          }
           `}
+          style={rule_style}
         onMouseLeave={()=>setVisibleCard(false)}
-        style={{backgroundColor: job?.toLowerCase().includes(`${highlighted ? highlighted.toLowerCase() : "Darth Vader"}`) ? "#fff4b8" : 'white'}}
-        > 
+        > <span>{`person${level}`}</span>
             <Person   
                 onClick={()=>managerHandler(props.person)}
                 personQuery={props.person}
-                className={styles.person1}               
+                className={styles[`person${level}`]}               
                 view={ViewType.threelines} 
                 showPresence     
                 id={personId}
@@ -90,22 +112,47 @@ export default function PersonWrapper (props) {
                       <PersonCard personQuery={props.person}/>
                     </Callout>
               }
-               
+              {level > maxlevel ? null :
               <div className={styles.persons_box}>
-                  {isLoading ? (
-                  <Loader/> //Show a loading message or spinner
-                    ) : ( <>
+                  {isLoading ? <Loader/>  : 
+                  <>
                           {filtered_data.length < 1 ? null  : filtered_data.map((user,idx) =>                          
-                          <PersonWrapperL2 
+                          <PersonWrapper_lower 
                           key={idx} 
                           person={user.mail} 
                           context={props.context} 
                           onSelectManager={managerHandler}
+                          position={null} 
                           filter_array={filter_array}
+                          job={user.jobTitle} 
+                          highlighted={highlighted}
+                          rule1_type =  {rule1_type}
+                          rule1 = {rule1}
+                          rule1_bg = {rule1_bg}
+                          level={level}
+                          maxlevel={maxlevel}
                           />                   
                           )}
-                  </>)}
-              </div>
+                  </>
+                  }
+              </div>}
+
         </div>
        );
   }
+
+
+  /*
+                      key={idx} 
+                      person={user.mail} 
+                      context={context}
+                      job={user.jobTitle} 
+                      highlighted={highlighted}
+                      position={idx === 0 ? "first" : idx === data.length-1 ? "last" : "middle"} 
+                      onSelectManager={selectManager}
+                      filter_array={filter_array}
+                      rule1_type={rule1_type}
+                      rule1={rule1}
+                      rule1_bg={rule1_bg}
+  
+  */

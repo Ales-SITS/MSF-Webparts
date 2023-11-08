@@ -2,14 +2,15 @@ import * as React from 'react';
 import {useState, useEffect, useRef} from 'react';
 import { useDraggable } from "react-use-draggable-scroll";
 import styles from './OrgchartMsf.module.scss';
-import {  PeoplePicker } from '@microsoft/mgt-react';
-import TopPersonWrapper from './TopPersonWrapper';
-import { Person } from '@microsoft/mgt-react/dist/es6/spfx';
 import { ViewType } from '@microsoft/mgt-spfx';
 import { SPFx, graphfi } from "@pnp/graph";
 import "@pnp/graph/users";
-import PersonWrapper from './PersonWrapper'
 
+
+//Components
+import { Person } from '@microsoft/mgt-react/dist/es6/spfx';
+import TopPersonWrapper from './TopPersonWrapper';
+import PersonWrapper from './PersonWrapper'
 import Loader from './Visual/Loader'
 
 export default function OrgchartMsf (props) {
@@ -21,19 +22,23 @@ export default function OrgchartMsf (props) {
       color,
       context,
       assistant,
-      userfilter
+      userfilter,
+      rule1_type,
+      rule1,
+      rule1_bg,
+      maxlevel
     } = props.details;
 
+    const highlighted = props.highlighted
+
     const graph = graphfi().using(SPFx(context))
-
+   
     //STATES
-    const [manager,setManager] = useState(null)
-    
-    //getManager(top)
-
     const [top_person,setTop_person] = useState(props.top)
+    const [manager,setManager] = useState(null)
     const [data,setData] = useState([]);
-    const [isLoading,setIsLoading] = useState(true);
+    const [topnull,setTopnull] = useState(true)
+    //const [isLoading,setTopnull] = useState(true);
 
     //DRAGGER
     const dragger = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;; 
@@ -49,28 +54,22 @@ export default function OrgchartMsf (props) {
     }
   
     async function getManager(user){    
-      setIsLoading(true)
+      setTopnull(false)
       const newman = await graph.users.getById(user).manager()
       setManager(newman.mail)
-      setIsLoading(false)
+      setTopnull(true)
     }
   
     //ON CHANGES
-    const onChangePeople = (e) => {
-       //setTop_person(null)  
-        e.detail[0] === undefined ? setTop_person(props.top) : setTop_person(e.detail[0].userPrincipalName)
-        setManager(null)
-        e.detail[0] === undefined ? getManager(props.top) :  getManager(e.detail[0].userPrincipalName)  
-    } 
     async function fetchData(man) {
-      setIsLoading(true)
+      setTopnull(false)
       const result = await getInfo(man);
       const clearResult = result.filter((user:any) => user.mail !== null)
       setData(clearResult);
-      setIsLoading(false);
+      setTopnull(true);
     }
 
-    const [topnull,setTopnull] = useState(true)
+
     const selectManager = async(man) =>{
       setTopnull(false)
       setData([])
@@ -90,6 +89,7 @@ export default function OrgchartMsf (props) {
     },[props.top])
   
     useEffect(() => {
+
       getManager(top_person)
 
       fetchData(top_person);
@@ -117,29 +117,11 @@ export default function OrgchartMsf (props) {
                             return filter_array?.every(filterStr => !user.userPrincipalName?.toLowerCase().includes(filterStr));
                           })
 
-    const [highlighted,setHighlighted] = useState()
-    const highlightHandler = (e) => {
-      setHighlighted(e.target.value)
-    }
-
-    console.log(filtered_data)
-
      return (
           <>
           <div className={styles.orgchart_content} style={{backgroundColor:`${color}`}} {...events} ref={dragger}>
-            <div className={styles.topWrapper}> 
-                <div className={styles.inputs_wrapper}>
-                  {
-                  searchfield && 
-                    <div style={{width:'375px'}}>
-                      <PeoplePicker selectionMode="single" selectionChanged={onChangePeople}/>
-                    </div>
-                  }
-                  <input type="text" placeholder="Highlight job position" onChange={highlightHandler}/>
-                </div>           
-                
-
-                  <div className={styles.top_person_wrapper}>
+            <div className={styles.topWrapper}>        
+                  <div className={styles.top_person_wrapper} style={{backgroundColor:`${color}`}}>
                     {topnull ? 
                     <TopPersonWrapper 
                       personselected={top_person} 
@@ -147,8 +129,7 @@ export default function OrgchartMsf (props) {
                       assistant={assistant_data[0] === null || assistant_data[0] === undefined ? null : assistant_data[0].mail} 
                       onSelectManager={selectManager} />
                       : <Loader/>}
-                     {
-                      assistant_data[0] === null || assistant_data[0] === undefined || assistant === false ? null :
+                     {assistant_data[0] === null || assistant_data[0] === undefined || assistant === false ? null :
                       <div className={styles.person_wrapper}>
                         <Person 
                           className={`${styles['person']}`}               
@@ -163,9 +144,7 @@ export default function OrgchartMsf (props) {
             </div>
             <div className={styles.orgchar_l1_connector}>x</div>
             <div className={styles.orgchar_l1_wrapper} >
-              {isLoading || !topnull ? (
-                <Loader/>
-              ) : (
+              {topnull ? 
                 <>
                   {filtered_data.length < 1 ? null : filtered_data.map((user,idx) =>
                       <PersonWrapper 
@@ -177,12 +156,17 @@ export default function OrgchartMsf (props) {
                       position={idx === 0 ? "first" : idx === data.length-1 ? "last" : "middle"} 
                       onSelectManager={selectManager}
                       filter_array={filter_array}
+                      rule1_type={rule1_type}
+                      rule1={rule1}
+                      rule1_bg={rule1_bg}
+                      level = {0}
+                      maxlevel = {maxlevel}
                       />
                   )}
                 </>
-              )}
+              : null}
             </div>
-            </div>
+          </div>
          </>
     );
   }
