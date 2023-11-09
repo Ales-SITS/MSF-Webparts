@@ -122,6 +122,39 @@
   justify-content: center;
 }
 
+.legenda_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.legenda {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin: 2px;
+  padding: 4px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+.legenda div {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+
+.legenda span {
+  display: flex;
+  align-items: center;
+  margin: 5px
+}
+
+
 .top_person_wrapper {
   display: flex;
   align-items: end;
@@ -225,11 +258,34 @@
   justify-content: start;
   transition: 0.2s;
   box-sizing: border-box;
+  position: relative;
   cursor: pointer;
 }
 
 .highlighted {
-  box-shadow: 0 0 3px rgba(255,0,0,1);
+  border: 1px solid purple !important;
+  position: relative
+}
+
+.highlighted:after {
+  content:'\2755';
+  position: absolute;
+  top: -15px;
+  left: -2px;
+  font-size: 28px;
+  animation: highlight_loop 4s infinite
+}
+
+@keyframes highlight_loop {
+  0% {
+    transform: rotate(-15deg) translateY(0);
+  }
+  50% {
+    transform: rotate(15deg) translateY(-5px);
+  }
+  100%{
+    transform: rotate(-15deg) translateY(0);
+  }
 }
 
 .person_wrapper1 {
@@ -267,6 +323,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 }
 

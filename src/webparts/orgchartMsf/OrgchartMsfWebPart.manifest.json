@@ -22,7 +22,8 @@
       "description": "Organization chart",
       "searchfield": true,
       "widedisplat": false,
-      "assistant": false
+      "assistant": false,
+      "maxlevel": 2
     }
   }]
 }

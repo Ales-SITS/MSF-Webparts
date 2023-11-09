@@ -10,10 +10,10 @@ import {
 } from '@microsoft/sp-property-pane';
 import { PropertyFieldPeoplePicker, PrincipalType } from '@pnp/spfx-property-controls/lib/PropertyFieldPeoplePicker';
 import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
-import { IPropertyFieldGroupOrPerson } from "@pnp/spfx-property-controls/lib/PropertyFieldPeoplePicker";
+import { PropertyFieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
-import * as strings from 'OrgchartMsfWebPartStrings';
+
 import { IOrgchartMsfProps } from './components/IOrgchartMsfProps';
 
 //Graph toolkit
@@ -53,10 +53,8 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
       color: this.properties.color,
       assistant: this.properties.assistant,
       userfilter: this.properties.userfilter,
-      rule1_type:this.properties.rule1_type,
-      rule1:this.properties.rule1?.toLowerCase(),
-      rule1_bg:this.properties.rule1_bg,
-      maxlevel: this.properties.maxlevel
+      maxlevel: this.properties.maxlevel,
+      rules: this.properties.rules
      });
    
     ReactDom.render(element, this.domElement);
@@ -72,17 +70,17 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
       pages: [
         {
           header: {
-            description: 'This webpart is using Graph toolkit components. To make it running, install also Microsoft Graph Toolkit v2 for SPFx from the tennant app catalogue! Page ⓵ General settings, Filters and basic visuals. Page ⓶ Set specific rules to change the visuals conditionally.'
+            description: 'This webpart is using Graph toolkit components. To make it running, install also Microsoft Graph Toolkit v2 for SPFx from the tennant app catalogue!'
           },
           groups: [
             {
               groupName: 'General',
               groupFields: [
                 PropertyPaneTextField('charttitle', {
-                  label: 'Default chart title'
+                  label: 'Orgchart title'
                 }),
                 PropertyFieldPeoplePicker('topperson', {
-                  label: 'Select top person',
+                  label: 'Select the top person',
                   initialData: this.properties.topperson,
                   allowDuplicate: false,
                   multiSelect: false,
@@ -95,12 +93,12 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
                   key: 'peopleFieldId',        
                 }),
                 PropertyPaneSlider('maxlevel',{  
-                  label:"Levels down",  
-                  min:2,  
+                  label:"Levels",  
+                  min:1,  
                   max:5,  
                   value:5,  
                   showValue:true,  
-                  step:1                
+                  step:1
                 }),
                 PropertyPaneTextField('userfilter', {
                   label: 'Filters',
@@ -134,49 +132,57 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
                   style: PropertyFieldColorPickerStyle.Inline,
                   iconName: 'Precipitation',
                   key: 'colorFieldId'
-                })
-              ]
-            }
-          ]
-        },
-        {
-          header: {
-            description: 'Here you can set special rules for visuals of your dynamic chart.'
-          },
-          groups: [
-            {
-            groupName: 'Rule 1',
-            groupFields: [
-                PropertyPaneDropdown('rule1_type', {
-                  label: "Rule 1 type",
-                  options: [
-                    { key: 'mail', text: 'Email includes'}, //●
-                    { key: 'job', text: 'Job title includes'},
-                    ]     
                 }),
-                PropertyPaneTextField('rule1', {
-                  label: 'Text'
-                }),
-                PropertyFieldColorPicker('rule1_bg', {
-                  label: 'Rule 1 BG Color',
-                  selectedColor: this.properties.rule1_bg,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
-                  properties: this.properties,
-                  disabled: false,
-                  debounce: 1000,
-                  isHidden: false,
-                  alphaSliderHidden: false,
-                  style: PropertyFieldColorPickerStyle.Inline,
-                  iconName: 'Precipitation',
-                  key: 'colorFieldId'
-                }),
-          ]
-        },
-        {
-          groupName: 'To add visual rules to user boxes, go to page 2',
-          groupFields: []
-      }
-        ]
+                PropertyFieldCollectionData("rules", {
+                      key: "rules",
+                      label: "Rules",
+                      panelHeader: "Visual rule",
+                      manageBtnLabel: "Manage rules",
+                      value: this.properties.rules,
+                      fields: [
+                          {
+                            id: "rule_type",
+                            title: "Rule type",
+                            type: CustomCollectionFieldType.dropdown,
+                            options: [
+                              {
+                                key: "mail",
+                                text: "Email includes"
+                              },
+                              {
+                                key: "job",
+                                text: "Job title includes"
+                              }
+                            ],
+                            required: true
+                          },
+                        {
+                          id: "rule_text",
+                          title: "Text",
+                          type: CustomCollectionFieldType.string,
+                          required: true
+                        },
+                        {
+                          id: "rule_bg",
+                          title: "Background color",
+                          type: CustomCollectionFieldType.color
+                        },
+                        {
+                          id: "rule_border",
+                          title: "Border color",
+                          type: CustomCollectionFieldType.color
+                        },
+                        {
+                          id: "rule_legend",
+                          title: "Legent text",
+                          type: CustomCollectionFieldType.string,
+                        },
+                      ],
+                      disabled: false
+                    })
+                  ]
+                 }
+              ]          
         }
       ]
     };

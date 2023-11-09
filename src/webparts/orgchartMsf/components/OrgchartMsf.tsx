@@ -15,21 +15,11 @@ import Loader from './Visual/Loader'
 
 export default function OrgchartMsf (props) {
     const {
-      charttitle,
-      topperson,
-      searchfield,
-      widedisplay,
-      color,
       context,
+      color,
       assistant,
       userfilter,
-      rule1_type,
-      rule1,
-      rule1_bg,
-      maxlevel
     } = props.details;
-
-    const highlighted = props.highlighted
 
     const graph = graphfi().using(SPFx(context))
    
@@ -150,17 +140,13 @@ export default function OrgchartMsf (props) {
                       <PersonWrapper 
                       key={idx} 
                       person={user.mail} 
-                      context={context}
                       job={user.jobTitle} 
-                      highlighted={highlighted}
                       position={idx === 0 ? "first" : idx === data.length-1 ? "last" : "middle"} 
                       onSelectManager={selectManager}
-                      filter_array={filter_array}
-                      rule1_type={rule1_type}
-                      rule1={rule1}
-                      rule1_bg={rule1_bg}
+                      filter_array={filter_array} 
                       level = {0}
-                      maxlevel = {maxlevel}
+                      highlighted = {props.highlighted}
+                      details={props.details}
                       />
                   )}
                 </>

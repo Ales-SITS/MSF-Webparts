@@ -14,8 +14,7 @@ import Loader from './Visual/Loader'
 import {
   Input,
   makeStyles,
-  shorthands,
-
+  shorthands
 } from "@fluentui/react-components";
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 
@@ -40,6 +39,7 @@ export default function OrgchartMsfWrapper (props){
     const title = props.charttitle
     const widedisplay = props.widedisplay
     const searchfield = props.searchfield
+    const rules = props.rules
 
     const [top,setTop] = useState(null)
 
@@ -71,13 +71,9 @@ export default function OrgchartMsfWrapper (props){
     }
 
     const onChangePeople = (e) => {
-      //setTop_person(null) 
-      console.log(e) 
        e.detail[0] === undefined ?
        topHandler(urlReader()) :
        setTop(e.detail[0].userPrincipalName)
-       //setTop(null)
-       //e.detail[0] === undefined ? getManager(props.top) :  getManager(e.detail[0].userPrincipalName)  
    } 
 
     //VISUAL
@@ -107,17 +103,28 @@ export default function OrgchartMsfWrapper (props){
                     </div>
                   }
                   <FluentProvider theme={webLightTheme} >
-                    <div >
+                    <div>
                       <Input 
                       contentBefore={<Search16Regular/>} 
                       onChange={highlightHandler} 
                       type="text" 
-                      placeholder="Highlight job position"
+                      placeholder="Quickly highlight by job position ❕"
                       style={{width:"380px"}}
                       />
                     </div>
                   </FluentProvider>
-          </div>  
+          </div>
+          {rules?.length > 0 &&
+          <div className={styles.legenda_wrapper} style={{backgroundColor:`${props.color}`}}>
+            <div className={styles.legenda}>
+                          {rules?.map((rule,idx)=> 
+                            <span key={`rul-${idx}`}>
+                              <div style={{backgroundColor:`${rule.rule_bg}`, border: `1px solid ${rule.rule_border}`}}/>
+                              {rule.rule_legend}
+                            </span>
+                          )}
+            </div> 
+          </div>}
           {top === null ? 
            <Loader/> :
            <OrgchartMsf 

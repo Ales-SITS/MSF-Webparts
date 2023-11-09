@@ -12,27 +12,30 @@ import { useId } from '@fluentui/react-hooks';
 import "@pnp/graph/users";
 
 import Loader from './Visual/Loader'
+import { BasicGroupName } from 'ButtoncssMsfWebPartStrings';
 
 export default function PersonWrapper (props) {
 
     const pos = props.position
     const mail = props.person
     const job = props.job
-    const highlighted = props.highlighted
     const filter_array = props.filter_array
-    const rule1_type = props.rule1_type
-    const rule1 = props.rule1
-    const rule1_bg = props.rule1_bg
     const level = props.level + 1
-    const maxlevel = props.maxlevel
+    const highlighted = props.highlighted
+
+    const {
+      context,
+      maxlevel,
+      rules
+    } = props.details
 
     const [isLoading, setIsLoading] = useState(true);
     const [visibleCard, setVisibleCard] = useState(false)  
     const [data, setData] = useState([]);
   
     async function getInfo() {
-        const graph = graphfi().using(SPFx(props.context))
-        const userData = await graph.users.getById(`${props.person}`).directReports()
+        const graph = graphfi().using(SPFx(context))
+        const userData = await graph.users.getById(`${mail}`).directReports()
         return await userData
     }
 
@@ -60,20 +63,37 @@ export default function PersonWrapper (props) {
                             return filter_array?.every(filterStr => !user.userPrincipalName?.toLowerCase().includes(filterStr));
                           })
     
-  const rule_fn = () => {
-    const rule = rule1?.toLowerCase()
-    if(rule1_type === "job") {
-      return job?.toLowerCase().includes(`${rule}`) 
-    } else if (rule1_type === "mail") {
-      return mail?.toLowerCase().includes(`${rule}`)
-    } else {
-      return false
+  const rule_fn = (fn_type) => {
+    let bg = 'rgba(255,255,255,1)'
+    let border ='rgba(255,255,255,0)'
+
+    rules?.reverse().forEach( rule => {
+      if (rule.rule_type === "job" && job?.toLowerCase().includes(`${rule.rule_text.toLowerCase()}`)) {
+        bg = rule.rule_bg === null ? bg : rule.rule_bg
+        border = rule.rule_border === null ? border : rule.rule_border
+      } else if (rule.rule_type === "mail" && mail?.toLowerCase().includes(`${rule.rule_text}`)) {
+        bg = rule.rule_bg === null ? BasicGroupName : rule.rule_bg
+        border = rule.rule_border === null ? border : rule.rule_border
+      } else {
+        return 
+      } 
+    });
+
+    if (fn_type === 1) 
+    {
+      return bg
     }
+    else 
+    {
+      return border
+    }
+
   }
 
   const rule_style = {
-      backgroundColor: `${rule_fn()? rule1_bg : '#ffffff'}`
-    }                      
+      backgroundColor: `${rule_fn(1)}`,
+      border: `1px solid ${rule_fn(2)}`
+  }                      
 
 
     return (  
@@ -89,7 +109,7 @@ export default function PersonWrapper (props) {
           `}
           style={rule_style}
         onMouseLeave={()=>setVisibleCard(false)}
-        > <span>{`person${level}`}</span>
+        >
             <Person   
                 onClick={()=>managerHandler(props.person)}
                 personQuery={props.person}
@@ -97,9 +117,8 @@ export default function PersonWrapper (props) {
                 view={ViewType.threelines} 
                 showPresence     
                 id={personId}
-                onMouseEnter={()=>setVisibleCard(true)} 
-                      
-                     />
+                onMouseEnter={()=>setVisibleCard(true)}                   
+              />
             {visibleCard &&
                   <Callout
                       role="dialog"
@@ -112,7 +131,7 @@ export default function PersonWrapper (props) {
                       <PersonCard personQuery={props.person}/>
                     </Callout>
               }
-              {level > maxlevel ? null :
+              {level >= maxlevel ? null :
               <div className={styles.persons_box}>
                   {isLoading ? <Loader/>  : 
                   <>
@@ -125,12 +144,9 @@ export default function PersonWrapper (props) {
                           position={null} 
                           filter_array={filter_array}
                           job={user.jobTitle} 
-                          highlighted={highlighted}
-                          rule1_type =  {rule1_type}
-                          rule1 = {rule1}
-                          rule1_bg = {rule1_bg}
+                          details={props.details}
+                          highlighted = {highlighted}
                           level={level}
-                          maxlevel={maxlevel}
                           />                   
                           )}
                   </>
@@ -140,19 +156,3 @@ export default function PersonWrapper (props) {
         </div>
        );
   }
-
-
-  /*
-                      key={idx} 
-                      person={user.mail} 
-                      context={context}
-                      job={user.jobTitle} 
-                      highlighted={highlighted}
-                      position={idx === 0 ? "first" : idx === data.length-1 ? "last" : "middle"} 
-                      onSelectManager={selectManager}
-                      filter_array={filter_array}
-                      rule1_type={rule1_type}
-                      rule1={rule1}
-                      rule1_bg={rule1_bg}
-  
-  */

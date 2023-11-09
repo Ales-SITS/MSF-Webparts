@@ -8,8 +8,6 @@ export interface IOrgchartMsfProps {
   context: any;
   assistant: boolean;
   userfilter: string;
-  rule1_type: string;
-  rule1: string;
-  rule1_bg: string;
-  maxlevel: number
+  maxlevel: number;
+  rules: any[]
 }
