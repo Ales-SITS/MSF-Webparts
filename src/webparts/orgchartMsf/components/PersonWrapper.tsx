@@ -72,7 +72,7 @@ export default function PersonWrapper (props) {
         bg = rule.rule_bg === null ? bg : rule.rule_bg
         border = rule.rule_border === null ? border : rule.rule_border
       } else if (rule.rule_type === "mail" && mail?.toLowerCase().includes(`${rule.rule_text}`)) {
-        bg = rule.rule_bg === null ? BasicGroupName : rule.rule_bg
+        bg = rule.rule_bg === null ? bg : rule.rule_bg
         border = rule.rule_border === null ? border : rule.rule_border
       } else {
         return 

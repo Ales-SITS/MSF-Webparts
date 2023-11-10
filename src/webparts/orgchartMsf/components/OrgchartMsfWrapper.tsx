@@ -25,7 +25,9 @@ const kitty = require('../assets/kitty.gif')
 
 function urlReader() {
       let top_person_query
-      if (window.location.search?.split('=')[1]?.includes("&")) {
+      if(!window.location.search?.startsWith("?topperson=")) {
+        return top_person_query
+      } else if (window.location.search?.split('=')[1]?.includes("&")) {
         top_person_query = window.location.search?.split('=')[1].split('&')[0]?.replace("%40","@")
       } else {
         top_person_query = window.location.search?.split('=')[1]?.replace("%40","@")

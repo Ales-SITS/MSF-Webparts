@@ -138,6 +138,7 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
                       label: "Rules",
                       panelHeader: "Visual rule",
                       manageBtnLabel: "Manage rules",
+                      enableSorting: true,
                       value: this.properties.rules,
                       fields: [
                           {

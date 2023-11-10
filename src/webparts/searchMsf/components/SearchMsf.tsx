@@ -2,8 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import styles from './SearchMsf.module.scss';
 import { FontIcon } from '@fluentui/react/lib/Icon';
-import { ISearchMsfProps } from './ISearchMsfProps';
-import { escape } from '@microsoft/sp-lodash-subset';
 
 export default function SearchMsf (props): React.ReactElement  {
     const {
