@@ -38,7 +38,6 @@ export default function ButtoncssMsf (props): React.ReactElement {
    const details_9 = [link9, suffix9, label9, linklabel9, blank9, icon9, iconPicker9, css9, css9_hover, css9_icon, css9_label]
    const details_10 = [link10, suffix10, label10, linklabel10, blank10, icon10, iconPicker10, css10, css10_hover, css10_icon, css10_label]
 
-
    const detailsArr1 =[details_1,details_1]
    const detailsArr2 =[details_1,details_2]
    const detailsArr3 =[details_1,details_3]
@@ -49,8 +48,6 @@ export default function ButtoncssMsf (props): React.ReactElement {
    const detailsArr8 =[details_1,details_8]
    const detailsArr9 =[details_1,details_9] 
    const detailsArr10 =[details_1,details_10]    
-
-
 
    let wrapperDirection
    let wrapperAlignment

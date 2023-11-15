@@ -4,95 +4,69 @@ import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
-  PropertyPaneChoiceGroup,
-  PropertyPaneToggle
+  PropertyPaneLabel,
+  PropertyPaneToggle,
+  PropertyPaneHorizontalRule,
+  PropertyPaneLink
 } from '@microsoft/sp-property-pane';
+
+//PnP Property Pane
 import { PropertyFieldColorPicker, PropertyFieldColorPickerStyle } from '@pnp/spfx-property-controls/lib/PropertyFieldColorPicker';
+import { PropertyFieldCollectionData, CustomCollectionFieldType } from '@pnp/spfx-property-controls/lib/PropertyFieldCollectionData';
+import { PropertyFieldCodeEditor, PropertyFieldCodeEditorLanguages } from '@pnp/spfx-property-controls/lib/PropertyFieldCodeEditor';
 import { PropertyFieldIconPicker } from '@pnp/spfx-property-controls/lib/PropertyFieldIconPicker';
+import { PropertyFieldMonacoEditor } from '@pnp/spfx-property-controls/lib/PropertyFieldMonacoEditor';
+
+
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import * as strings from 'SearchMsfWebPartStrings';
+
 import SearchMsfHandler from './components/SearchMsfHandler';
-import { ISearchMsfProps } from './components/ISearchMsfProps';
-
 export interface ISearchMsfWebPartProps {
-  wrapper_justify: string;
-  wrapper_bg: string;
-  wrapper_br: string;
-
+  solution_urls: any[];
+  solution_blank: string;
+  dropdown_display: string;
+  button_display: string;
+  search_CSS: string
   input_placeholder: string;
-  input_suffix: string;
-  input_width: string;
-  input_height: string;
-  input_font: string;
-  input_margin: string;
-  input_br: string;
-  input_border:string;
-
-  dropdown_url: string;
-  dropdown_label: string;
-  dropdown_width: string;
-  dropdown_height: string;
-  dropdown_font: string;
-  dropdown_margin: string;
-  dropdown_br: string;
-  dropdown_border:string;
-
   button_label: string;
-  button_blank: string;
   button_icontoggle: boolean;
   button_icon: string;
-  button_width: string;
-  button_height: string;
-  button_borderRadius: string;
-  button_fontsize: string;
-  button_color: string;
-  button_fontcolor: string;
-  button_margin: string
+  context: any;
 }
 
 export default class SearchMsfWebPart extends BaseClientSideWebPart<ISearchMsfWebPartProps> {
-
     public render(): void {
-    const element: React.ReactElement<ISearchMsfProps> = React.createElement(
+
+    const existingStyleElement = document.head.querySelector('style[data-webpart-styles]');
+      if (existingStyleElement) {
+        existingStyleElement.remove();
+    }
+
+    const webPartId = this.context.instanceId.replaceAll("-","")
+    const dynamicStyles = document.createElement('style');
+    const dynamicStylesContent = this.properties.search_CSS.replaceAll(".searchmsf__",`.searchmsf_${webPartId}_`);
+    dynamicStyles.textContent = dynamicStylesContent;
+    
+    const element: React.ReactElement<ISearchMsfWebPartProps> = React.createElement(
       SearchMsfHandler,
       {
-        wrapper_justify: this.properties.wrapper_justify,
-        wrapper_bg: this.properties.wrapper_bg,
-        wrapper_br: this.properties.wrapper_br,
-
+        solution_urls: this.properties.solution_urls,
+        solution_blank: this.properties.solution_blank,        
         input_placeholder: this.properties.input_placeholder,
-        input_suffix: this.properties.input_suffix,
-        input_width: this.properties.input_width,
-        input_height: this.properties.input_height,
-        input_font: this.properties.input_font,
-        input_margin: this.properties.input_margin,
-        input_br: this.properties.input_br,
-        input_border: this.properties.input_border,
-
-        dropdown_url: this.properties.dropdown_url,
-        dropdown_label: this.properties.dropdown_label,
-        dropdown_width: this.properties.dropdown_width,
-        dropdown_height: this.properties.dropdown_height,
-        dropdown_font: this.properties.dropdown_font,
-        dropdown_margin: this.properties.dropdown_margin,
-        dropdown_br: this.properties.dropdown_br,
-        dropdown_border: this.properties.dropdown_border,
-
+        dropdown_display: this.properties.dropdown_display,
+        button_display: this.properties.button_display,
         button_label: this.properties.button_label,
-        button_blank: this.properties.button_blank,
         button_icontoggle: this.properties.button_icontoggle,
         button_icon: this.properties.button_icon,
-        button_width: this.properties.button_width,
-        button_height: this.properties. button_height,
-        button_borderRadius: this.properties.button_borderRadius,
-        button_fontsize: this.properties.button_fontsize,
-        button_color: this.properties.button_color,
-        button_fontcolor: this.properties.button_fontcolor,
-        button_margin: this.properties.button_margin
+        context: this.context
       }
     );
 
-    ReactDom.render(element, this.domElement);
+    document.head.appendChild(dynamicStyles);
+
+    ReactDom.render(
+      element,
+      this.domElement);
   }
 
   protected onDispose(): void {
@@ -108,116 +82,67 @@ export default class SearchMsfWebPart extends BaseClientSideWebPart<ISearchMsfWe
       pages: [
         {
           header: {
-            description: "This webpart has 3 items. Input field, dropdown menu and a button. You can create dynamic links where order is dropdown menu + input field (+suffix) and navigate to them either by pressing enter or click the button. In general section you can set your solution alignment, visuals etc."
+            description: "With this webpart you can link search input field to multiple instances on SharePoint and outside. Just set query URL(s) and customize"
           },
-          displayGroupsAsAccordion: true,
           groups: [
             {
-              groupName: "General",
-              isCollapsed:true,
+              groupName: "Webpart properties",
+              isCollapsed:false,
               groupFields: [
-                PropertyPaneChoiceGroup("wrapper_justify", {
-                  label: "Solution alignment",
-                  options: [
-                    { key: "start", text: "Start" },
-                    { key: "center", text: "Center" },
-                    { key: "end", text: "End" }
-                  ]
+                PropertyPaneHorizontalRule(),
+                PropertyFieldCollectionData("solution_urls", {
+                  key: "urls",
+                  label: "Target URL(s)",
+                  panelHeader: "Set URL and labels for dropdown",
+                  manageBtnLabel: "Manage URL(s)",
+                  enableSorting: true,
+                  value: this.properties.solution_urls,
+                  fields: [
+                    {
+                      id: "drop_url",
+                      title: "Option URL",
+                      type: CustomCollectionFieldType.url,
+                      required: true
+                    },
+                    {
+                      id: "drop_label",
+                      title: "Option text",
+                      type: CustomCollectionFieldType.string,
+                      required: false
+                    },
+                    {
+                      id: "drop_suffix",
+                      title: "Search wildcard (suffix like asterix*)",
+                      type: CustomCollectionFieldType.string,
+                      required: false
+                    },
+                    {
+                      id: "drop_icon",
+                      title: "Name of the Office UI Fabric icon",
+                      type: CustomCollectionFieldType.fabricIcon,
+                      required: false
+                    }
+                  ],
+                  disabled: false
                 }),
-                PropertyFieldColorPicker("wrapper_bg", {
-                  label: 'Solution background color',
-                  selectedColor: this.properties.wrapper_bg,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
-                  properties: this.properties,
-                  disabled: false,
-                  debounce: 1000,
-                  isHidden: false,
-                  alphaSliderHidden: false,
-                  style: PropertyFieldColorPickerStyle.Inline,
-                  iconName: 'Precipitation',
-                  key: 'colorFieldId'
-                }),
-                PropertyPaneTextField('wrapper_br', {
-                  label: "Solution border radius"
-                }),
-                PropertyPaneToggle('button_blank',{
+                PropertyPaneLink('linkProperty', {
+                  href: 'https://developer.microsoft.com/en-us/fluentui#/styles/web/icons',
+                  text: 'For list of Fluent UI Icons visit here',
+                  target: '_blank'}),
+                PropertyPaneToggle('solution_blank',{
                   label:"Open in new tab?"
-                })  
-              ]
-            },
-            {
-              groupName: "Input field",
-              isCollapsed:true,
-              groupFields: [
+                }),
                 PropertyPaneTextField('input_placeholder', {
                   label: "Input field text placeholder"
                 }),
-                PropertyPaneTextField('input_suffix', {
-                  label: "Add link suffix",
-                  description: "Add optional suffix like asterix, which will be attached to the input"
+                PropertyPaneHorizontalRule(),
+                PropertyPaneToggle('dropdown_display',{
+                  label:"Include dropdown option?"
                 }),
-                PropertyPaneTextField('input_width', {
-                  label: "Input field width (px)"
+                PropertyPaneHorizontalRule(),
+                PropertyPaneToggle('button_display',{
+                  label:"Include button?"
                 }),
-                PropertyPaneTextField('input_height', {
-                  label: "Input field height (px)"
-                }),
-                PropertyPaneTextField('input_br', {
-                  label: "Input field border radius (px)"
-                }),
-                PropertyPaneTextField('input_font', {
-                  label: "Input field font size (px)"
-                }),
-                PropertyPaneTextField('input_margin', {
-                  label: "Input field margin (px)"
-                }),
-                PropertyPaneTextField('input_border', {
-                  label: "Set border",
-                  description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
-                })
-              ]
-            },
-            {
-              groupName: "Dropdown",
-              isCollapsed:true,
-              groupFields: [
-                PropertyPaneTextField('dropdown_url', {
-                  label: "Option url",
-                  multiline: true,
-                  rows: 4,
-                  description:"Enter url addresses, seperated by ; delimiter and with no spaces."
-                }),
-                PropertyPaneTextField('dropdown_label', {
-                  label: "Option label",
-                  multiline: true,
-                  rows: 4,
-                  description:"Enter labels for the url, seperated by ; delimiter and with no spaces."
-                }),
-                PropertyPaneTextField('dropdown_width', {
-                  label: "Dropdown width (px)"
-                }),
-                PropertyPaneTextField('dropdown_height', {
-                  label: "Dropdown height (px)"
-                }),
-                PropertyPaneTextField('dropdown_br', {
-                  label: "Dropdown border radius (px)"
-                }),
-                PropertyPaneTextField('dropdown_font', {
-                  label: "Dropdown font size (px)"
-                }),
-                PropertyPaneTextField('dropdown_margin', {
-                  label: "Dropdown margin"
-                }),
-                PropertyPaneTextField('dropdown_border', {
-                  label: "Set border (px)",
-                  description:"Use CSS format 'size type color' i.e. '2px solid rgb(123,123,13)'"
-                })
-              ]
-            },
-            {
-              groupName: "Button",
-              isCollapsed:true,
-              groupFields: [
                 PropertyPaneTextField('button_label', {
                   label: "Add button label",
                   description:"If the label is not properly centered try to ON/OFF the icon. And if icon is not centered, type something in label and delete."
@@ -235,50 +160,21 @@ export default class SearchMsfWebPart extends BaseClientSideWebPart<ISearchMsfWe
                   onPropertyChange: this.onPropertyPaneFieldChanged.bind(this),
                   label: "Icon Picker",                        
                 }),
-                PropertyPaneTextField('button_width', {
-                  label: "Set width (px)"
+                PropertyPaneHorizontalRule(),
+                PropertyPaneLabel('label',{
+                  text: "CSS styling"
                 }),
-                PropertyPaneTextField('button_height', {
-                  label: "Set height (px)"
-                }),
-                PropertyPaneTextField('button_borderRadius', {
-                  label: "Set border radius (px)"
-                }),
-                PropertyPaneTextField('button_fontsize', {
-                  label: "Set font size (px)"
-                }),
-                PropertyFieldColorPicker('button_color', {
-                  label: 'Button background color',
-                  selectedColor: this.properties.button_color,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
-                  properties: this.properties,
-                  disabled: false,
-                  debounce: 1000,
-                  isHidden: false,
-                  alphaSliderHidden: false,
-                  style: PropertyFieldColorPickerStyle.Inline,
-                  iconName: 'Precipitation',
-                  key: 'colorFieldId'
-                }),
-                PropertyFieldColorPicker('button_fontcolor', {
-                  label: 'Button font color',
-                  selectedColor: this.properties.button_fontcolor,
-                  onPropertyChange: this.onPropertyPaneFieldChanged,
-                  properties: this.properties,
-                  disabled: false,
-                  debounce: 1000,
-                  isHidden: false,
-                  alphaSliderHidden: false,
-                  style: PropertyFieldColorPickerStyle.Inline,
-                  iconName: 'Precipitation',
-                  key: 'colorFieldId'
-                }),
-                PropertyPaneTextField('button_margin', {
-                  label: "Set margin (px)",
-                
-                }),
+                PropertyFieldMonacoEditor('search_CSS', {
+                  key: 'search_CSS',
+                  value: this.properties.search_CSS,
+                  onChange: (code: string) => { this.properties.search_CSS = code; },
+                  showMiniMap: true,
+                  language:"css",
+                  showLineNumbers:true,
+                  theme: 'vs-dark'
+                })
               ]
-            },
+            }
           ]
         }
       ]

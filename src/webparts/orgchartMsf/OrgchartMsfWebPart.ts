@@ -180,7 +180,7 @@ export default class OrgchartMsfWebPart extends BaseClientSideWebPart<IOrgchartM
                         },
                       ],
                       disabled: false
-                    })
+                })
                   ]
                  }
               ]          

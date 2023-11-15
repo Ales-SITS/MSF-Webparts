@@ -3,7 +3,6 @@
   "id": "c760814b-87f0-45ec-9914-a4339e5d1bd5",
   "alias": "SearchMsfWebPart",
   "componentType": "WebPart",
-
  
   "version": "*",
   "manifestVersion": 2,
@@ -16,11 +15,16 @@
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
     "group": { "default": "Advanced" },
     "title": { "default": "Search (MSF)" },
-    "description": { "default": "Small webpart to create a dynamic links with a dropdown menu." },
+    "description": { "default": "Small webpart to create a dynamic links with a dropdown menu. Fully customizable with CSS." },
     "iconImageUrl": "data:image/png;base64,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",
     "properties": {
-      "button_icontoggle" : false,
-      "button_label" : "search"
+      "input_placeholder" : "Search in",
+      "button_icontoggle" : true,
+      "button_label" : "",
+      "button_icon" : "Search",
+      "search_CSS" : ".searchmsf__wrapper {\n  width: 100%;\n  padding: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: red;\n  position: relative\n}\n.searchmsf__input {\n  outline: none;\n  border: none;\n  box-sizing: border-box;\n  width: 350px;\n  height:40px;\n  font-size: 16px;\n  padding: 0 10px\n}\n.searchmsf__dropdown {\n  box-sizing: border-box;\n  position: relative;\n  background-color: white;\n  width: 150px\n}\n.searchmsf__dropdown_header {\n  box-sizing: border-box;\n  width: 150px;\n  height: 40px;\n  padding: 0 10px;\n  background-color: bisque;\n  display: flex;\n  align-items: center;\n  cursor: pointer\n}\n.searchmsf__dropdown_header_icon {\n  width: 20px;\n  height: 20px;\n  font-size: 20px;\n  margin-right: 20px\n}\n.searchmsf__dropdown_optionblock {\n  position: absolute;\n  top:40px;\n  left:0;\n  background-color: orange;\n  width: 150px;\n  z-index: 100 !important\n}\n.searchmsf__dropdown_optionblock ul {\nlist-style: none;\n  margin:0;\n  padding: 0\n}\n  .searchmsf__dropdown_option {\n  background-color: rgb(253, 248, 186);\n  border: none;\n  height: 40px;\n  width: 150px;\n  padding: 0 10px;\n  display: flex;\n  align-items: center;\n  position: relative;\n  cursor: pointer;\n  transition: 0.2s\n}\n.searchmsf__dropdown_option:hover {\n  background-color: rgb(253, 192, 77)\n}\n.searchmsf__dropdown_option_icon {\n  width: 20px;\n  height: 20px;\n  font-size: 20px;\n  margin-right: 20px\n}\n.searchmsf__button {\n  border: none;\n  cursor: pointer;\n  height: 40px;\n  margin-left: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-color: rgba(0,0,0,0)\n}\n.searchmsf__icon {\n  width: 30px;\n  height: 30px;\n  font-size: 30px;\n  color: white;\n  transition: 0.3s\n}\n.searchmsf__icon:hover {\n  transform: rotate(-30deg)\n}\n",
+      "button_display" : true,
+      "dropdown_display": true
     }
   }]
 }

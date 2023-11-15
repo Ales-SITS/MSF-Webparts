@@ -1,122 +1,113 @@
 import * as React from 'react';
-import { useState } from 'react';
-import styles from './SearchMsf.module.scss';
+import { useState,useEffect } from 'react';
 import { FontIcon } from '@fluentui/react/lib/Icon';
 
 export default function SearchMsf (props): React.ReactElement  {
     const {
-      wrapper_justify,
-      wrapper_bg,
-      wrapper_br,
-    
+      solution_urls,
+      solution_blank,
       input_placeholder,
-      input_suffix,
-      input_width,
-      input_height,
-      input_font,
-      input_margin,
-      input_br,
-      input_border,
-
-      dropdown_url,
-      dropdown_label,
-      dropdown_width,
-      dropdown_height,
-      dropdown_font,
-      dropdown_margin,
-      dropdown_br,
-      dropdown_border,
-
+      dropdown_display,
+      button_display,
       button_label,
-      button_blank,
       button_icontoggle,
       button_icon,
-      button_width,
-      button_height,
-      button_borderRadius,
-      button_fontsize,
-      button_color,
-      button_fontcolor,
-      button_margin,
+      context
     } = props.details;
 
-    const inlineStyles = {
-      solution: {
-        justifyContent:  `${wrapper_justify}`,
-        backgroundColor: `${wrapper_bg}`,
-        borderRadius: `${wrapper_br}px`
-      },
-      input: {
-        width:`${input_width}px`,
-        height: `${input_height}px`,
-        borderRadius:`${input_br}px`,
-        fontSize:`${input_font}px`,
-        border: `${input_border}`,
-        margin: `0 ${input_margin}px`,
-      },
-      dropdown: {
-        width:`${dropdown_width}px`,
-        height: `${Number(dropdown_height)+6}px`,
-        lineHeight: `${Number(dropdown_height)+6}px`,
-        borderRadius:`${dropdown_br}px`,
-        fontSize:`${dropdown_font}px`,
-        border: `${dropdown_border}`,
-        margin: `0 ${dropdown_margin}px`,
-      },
-      button: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: `${button_icontoggle === false || button_label === "" ? "center" : "start"}`,
-        width: `${button_width}px`,
-        height: `${button_height}px`,
-        fontSize: `${ button_fontsize}px`,
-        borderRadius: `${button_borderRadius}px`,
-        margin: `0 ${button_margin}px`,
-        color: `${button_fontcolor}`,
-        backgroundColor: `${button_color}`,
-      }
-    }
-    const options_url = dropdown_url === undefined? [] : dropdown_url.split(";")
-    const options_labels = dropdown_label === undefined? [] : dropdown_label.split(";")
+    const webpartID = context.instanceId.replaceAll("-","")
 
     const[searchWord,setSearchWord] = useState("")
     const setSearchWordHandler = (e) => {
      setSearchWord(e.target.value)
     }
+ 
+    const emptyURL = {drop_icon: '',uniqueId: '', drop_url: '',drop_label: '', drop_suffix: '', sortIdx: 0}
 
-    const [selectedUrl, setSelectedUrl] = useState(options_url[0]); 
-    const selectedUrlHandler = (e) => {
-
-      setSelectedUrl(e.target.value)
+    const [selectedUrl, setSelectedUrl] = useState(solution_urls === undefined? emptyURL : solution_urls[0]); 
+    const selectedUrlHandler = (id) => {
+      console.log("triggered")
+      const selectedUniqueId = id
+      const selectedSolution = solution_urls.find(solution => solution.uniqueId === selectedUniqueId);
+      setSelectedUrl(selectedSolution);
+      setDrop(!drop)
     }
    
-
-
     const navigation = (e) => {
        e === "Enter" || e.key ==="Enter" ? 
-       window.open(`${selectedUrl}${searchWord}${input_suffix === undefined ? "" : input_suffix}`, button_blank ? "_blank" : "_self") : null
-     }
+       window.open(`${selectedUrl.drop_url}${searchWord}${selectedUrl.drop_suffix}`, solution_blank ? "_blank" : "_self") : null
+    }
+  
+
+    useEffect (()=>{
+      setSelectedUrl(solution_urls === undefined? emptyURL : solution_urls[0])
+    },[solution_urls])
+
+    const [drop,setDrop] = useState(false)
+
+    console.log(solution_urls)
 
     return (
-      <div className={styles.searchmsf_wrapper} style={inlineStyles.solution}  onKeyDown={(e)=>{navigation(e)}} tabIndex={-1}>
+      <div 
+        className={`searchmsf_${webpartID}_wrapper`}
+        onKeyDown={(e)=>{navigation(e)}} 
+      >
         <input 
-          style={inlineStyles.input}
+          className={`searchmsf_${webpartID}_input`}
           type="text"
           onChange={setSearchWordHandler}
           value={searchWord}
           placeholder={input_placeholder}
         />
-        <select style={inlineStyles.dropdown} value={selectedUrl} onChange={selectedUrlHandler}>
-          {options_url.map((url,idx) => (
-            idx === 0 ? 
-            <option value={url} selected>{options_labels[idx]}</option> :
-            <option value={url}>{options_labels[idx]}</option> 
-          ))}
-        </select>
-        <button style={inlineStyles.button} onClick={()=>{navigation("Enter")}}>
-          {button_icontoggle === false ? null : <FontIcon aria-label={button_icon} iconName={button_icon} style={{margin:"0 3px"}}/>}
+        {dropdown_display&&
+        <div className={`searchmsf_${webpartID}_dropdown`}>
+          <div 
+            className={`searchmsf_${webpartID}_dropdown_header`}
+            onClick={()=>{setDrop(!drop)}}>
+              <FontIcon 
+                aria-label={selectedUrl.drop_icon} 
+                iconName={selectedUrl.drop_icon} 
+                className={`searchmsf_${webpartID}_dropdown_header_icon`}
+              />
+            {selectedUrl.drop_label}
+          </div>
+          {drop&&
+          <div className={`searchmsf_${webpartID}_dropdown_optionblock`}>
+            <ul>
+            {solution_urls?.map((solution) => (
+                  <li>
+                      <button
+                      className={`searchmsf_${webpartID}_dropdown_option`}
+                      key={solution.uniqueId} 
+                      onClick={()=>selectedUrlHandler(solution.uniqueId)} 
+                      >
+                      <FontIcon 
+                          aria-label={solution.drop_icon} 
+                          iconName={solution.drop_icon} 
+                          className={`searchmsf_${webpartID}_dropdown_option_icon`}
+                      />
+                      {solution.drop_label}
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          </div>
+          }
+        </div>
+        }
+        {button_display &&
+        <button 
+         className={`searchmsf_${webpartID}_button`} 
+         onClick={()=>{navigation("Enter")}}>
+          {button_icontoggle === false ? null : 
+          <FontIcon 
+          aria-label={button_icon} 
+          iconName={button_icon} 
+          className={`searchmsf_${webpartID}_icon`}
+          />}
           {button_label}
         </button>
+        }
       </div>
     );
   }
